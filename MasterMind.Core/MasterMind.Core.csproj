@@ -45,7 +45,6 @@
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Extensions\GuessExtensions.cs" />
     <Compile Include="Models\FullGuessResultRow.cs" />
-    <Compile Include="Models\GameSetup.cs" />
     <Compile Include="Models\Guess.cs" />
     <Compile Include="Models\GuessResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
