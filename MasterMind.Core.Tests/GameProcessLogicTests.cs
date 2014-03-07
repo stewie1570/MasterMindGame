@@ -1,8 +1,10 @@
-﻿using MasterMind.Core.Models.Extensions;
+﻿using MasterMind.Core.Models;
+using MasterMind.Core.Models.Extensions;
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
-using System.Linq;
+using FizzWare.NBuilder;
 
 namespace MasterMind.Core.Tests
 {
@@ -14,7 +16,52 @@ namespace MasterMind.Core.Tests
         [TestInitialize]
         public void Setup()
         {
-            _game = new GameProcess(10, 4, length => "bbbb".ToGuessArray());
+            _game = new GameProcess(() => new Context
+            {
+                GuessWidth = 4,
+                MaxAttempts = 10,
+            }, length => "bbbb".ToGuessArray());
+        }
+
+        [TestMethod]
+        public void ShouldUseOriginalResulsFromContextWhenAvailable()
+        {
+            //Arrange
+            var originalResults = Builder<FullGuestResultRow>
+                .CreateListOfSize(2)
+                .All().With(row => row.Result = new GuessResult[]
+                {
+                    GuessResult.Empty, GuessResult.Empty, GuessResult.Empty, GuessResult.Empty
+                })
+                .Build()
+                .ToList();
+
+            //Act
+            var newResults = new GameProcess(() => new Context
+            {
+                GuessWidth = 4,
+                MaxAttempts = 10,
+                Results = originalResults
+            }, length => "bbbb".ToGuessArray()).Guess("rrrr");
+            
+            //Assert
+            newResults.Length.Should().Be(3);
+        }
+
+        [TestMethod]
+        public void ShouldUseOriginalActualFromContextWhenAvailable()
+        {
+            //Arrange
+            //Act
+            var game = new GameProcess(() => new Context
+            {
+                GuessWidth = 4,
+                MaxAttempts = 10,
+                Actual = "yyyy".ToGuessArray()
+            }, length => "bbbb".ToGuessArray());
+
+            //Assert
+            game.Actual.Should().BeEquivalentTo("yyyy".ToGuessArray());
         }
 
         [TestMethod]

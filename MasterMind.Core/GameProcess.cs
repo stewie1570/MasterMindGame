@@ -13,11 +13,12 @@ namespace MasterMind.Core
         private GuessResultLogic _resultLogic = new GuessResultLogic();
         private int _maxAttempts;
 
-        public GameProcess(int maxAttempts, int guessWidth, Func<int, Guess[]> actualProvider)
+        public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
         {
-            _actual = actualProvider(guessWidth);
-            _results = new List<FullGuestResultRow>();
-            _maxAttempts = maxAttempts;
+            var context = contextProvider();
+            _actual = context.Actual ?? actualProvider(context.GuessWidth);
+            _results = context.Results ?? new List<FullGuestResultRow>();
+            _maxAttempts = context.MaxAttempts;
         }
 
         public FullGuestResultRow[] Guess(string guessString)
