@@ -27,7 +27,7 @@ namespace MasterMind.Core.Tests
         public void ShouldUseOriginalResulsFromContextWhenAvailable()
         {
             //Arrange
-            var originalResults = Builder<FullGuestResultRow>
+            var originalResults = Builder<FullGuessResultRow>
                 .CreateListOfSize(2)
                 .All().With(row => row.Result = new GuessResult[]
                 {

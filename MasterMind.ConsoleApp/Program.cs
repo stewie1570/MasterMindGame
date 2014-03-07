@@ -59,7 +59,7 @@ namespace MasterMind.ConsoleApp
             Console.WriteLine();
         }
 
-        private static void OuputResults(FullGuestResultRow[] resultRow)
+        private static void OuputResults(FullGuessResultRow[] resultRow)
         {
             for(int i = 0;i < resultRow.Length;i++)
             {

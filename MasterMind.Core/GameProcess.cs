@@ -9,7 +9,7 @@ namespace MasterMind.Core
     public class GameProcess
     {
         private Guess[] _actual;
-        private List<FullGuestResultRow> _results;
+        private List<FullGuessResultRow> _results;
         private GuessResultLogic _resultLogic = new GuessResultLogic();
         private int _maxAttempts;
 
@@ -17,17 +17,17 @@ namespace MasterMind.Core
         {
             var context = contextProvider();
             _actual = context.Actual ?? actualProvider(context.GuessWidth);
-            _results = context.Results ?? new List<FullGuestResultRow>();
+            _results = context.Results ?? new List<FullGuessResultRow>();
             _maxAttempts = context.MaxAttempts;
         }
 
-        public FullGuestResultRow[] Guess(string guessString)
+        public FullGuessResultRow[] Guess(string guessString)
         {
             if (!IsOver)
             {
                 var guess = guessString.ToGuessArray(expectedLength: _actual.Length);
 
-                _results.Add(new FullGuestResultRow
+                _results.Add(new FullGuessResultRow
                 {
                     Result = _resultLogic.ResultFrom(guess, _actual),
                     Guess = guess
@@ -51,7 +51,7 @@ namespace MasterMind.Core
 
         #region Helpers
 
-        private static Func<FullGuestResultRow, bool> PerfectGuess()
+        private static Func<FullGuessResultRow, bool> PerfectGuess()
         {
             return resultArray => resultArray.Result.All(r => r == GuessResult.Red);
         }
