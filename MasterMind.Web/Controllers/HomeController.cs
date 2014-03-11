@@ -22,11 +22,13 @@ namespace MasterMind.Web.Controllers
             return View();
         }
 
+        [HttpPost]
         public JsonResult Guess(string guess)
         {
             return Json(_gameProcess.Guess(guess).AsGuessResultVM(_gameProcess));
         }
 
+        [HttpPost]
         public void Setup(int width, int maxAttempts)
         {
             _gameProcess.Setup(newWidth: width, newMaxAttempts: maxAttempts);
