@@ -38,11 +38,11 @@ namespace MasterMind.Core.Models.Extensions
         {
             char[] guessChars = guess.ToLower().ToCharArray();
 
-            if(expectedLength != null && guessChars.Length != expectedLength.Value)
+            if(expectedLength != null && guessChars.Length != expectedLength)
                 throw new InvalidGuessException(string.Format("The guess \"{0}\" has a length of {1}. Length should be {2}.",
                     guess,
                     guess.Length,
-                    expectedLength.Value));
+                    expectedLength));
 
             var invalidChars = guessChars
                 .Where(c => !_map.Select(m => m.Value).Contains(c))

@@ -12,56 +12,83 @@ namespace MasterMind.Core.Tests
     public class GameProcessLogicTests
     {
         private GameProcess _game;
+        private Context _context;
 
         [TestInitialize]
         public void Setup()
         {
-            _game = new GameProcess(() => new Context
+            _context = new Context
             {
                 GuessWidth = 4,
                 MaxAttempts = 10,
-            }, length => "bbbb".ToGuessArray());
+            };
+            _game = new GameProcess(() => _context, length => "bbbb".ToGuessArray());
         }
 
         [TestMethod]
-        public void ShouldUseOriginalResulsFromContextWhenAvailable()
+        public void SetupShouldResetGameContext()
         {
             //Arrange
-            var originalResults = Builder<FullGuessResultRow>
-                .CreateListOfSize(2)
-                .All().With(row => row.Result = new GuessResult[]
-                {
-                    GuessResult.Empty, GuessResult.Empty, GuessResult.Empty, GuessResult.Empty
-                })
-                .Build()
-                .ToList();
+            _game.Guess("rrrr");        //To start building the Results array in the context.
 
             //Act
-            var newResults = new GameProcess(() => new Context
-            {
-                GuessWidth = 4,
-                MaxAttempts = 10,
-                Results = originalResults
-            }, length => "bbbb".ToGuessArray()).Guess("rrrr");
-            
+            _game.Setup(newWidth: 5, newMaxAttempts: 12);
+
             //Assert
-            newResults.Length.Should().Be(3);
+            _context.MaxAttempts.Should().Be(12);
+            _context.GuessWidth.Should().Be(5);
+            _context.Results.Count.Should().Be(0);
         }
 
         [TestMethod]
-        public void ShouldUseOriginalActualFromContextWhenAvailable()
+        public void SetupShouldNotResetResultsIfGuessWidthHasNotChanged()
+        {
+            //Arrange
+            _game.Guess("rrrr");        //To start building the Results array in the context.
+
+            //Act
+            _game.Setup(newWidth: 4, newMaxAttempts: 12);
+            _game.Guess("bbbb");
+
+            //Assert
+            _context.Results.Count.Should().Be(2);
+        }
+
+        [TestMethod]
+        public void ConstructorShouldInitializeContext()
+        {
+            //Arrange
+            var context = new Context
+            {
+                GuessWidth = 4,
+                MaxAttempts = 10,
+            };
+
+            //Act
+            _game = new GameProcess(() => context, length => "bbbb".ToGuessArray());
+            _game.Guess("rrrr");
+
+            //Assert
+            context.MaxAttempts.Should().Be(10);
+            context.GuessWidth.Should().Be(4);
+            context.Actual.Should().BeEquivalentTo("bbbb".ToGuessArray());
+            context.Results.Count.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void ShouldResetActualWhenActualIsWrongLength()
         {
             //Arrange
             //Act
             var game = new GameProcess(() => new Context
             {
-                GuessWidth = 4,
+                GuessWidth = 5,
                 MaxAttempts = 10,
                 Actual = "yyyy".ToGuessArray()
-            }, length => "bbbb".ToGuessArray());
+            }, length => "rrrrr".ToGuessArray());
 
             //Assert
-            game.Actual.Should().BeEquivalentTo("yyyy".ToGuessArray());
+            game.Actual.Should().BeEquivalentTo("rrrrr".ToGuessArray());
         }
 
         [TestMethod]

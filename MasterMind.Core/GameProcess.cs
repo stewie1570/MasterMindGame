@@ -6,50 +6,63 @@ using System.Linq;
 
 namespace MasterMind.Core
 {
-    public class GameProcess
+    public class GameProcess : IGameProcess
     {
-        private Guess[] _actual;
-        private List<FullGuessResultRow> _results;
         private GuessResultLogic _resultLogic = new GuessResultLogic();
-        private int _maxAttempts;
+        private Context _context;
+        private Func<int, Guess[]> _actualProvider;
 
         public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
         {
-            var context = contextProvider();
-            _actual = context.Actual ?? actualProvider(context.GuessWidth);
-            _results = context.Results ?? new List<FullGuessResultRow>();
-            _maxAttempts = context.MaxAttempts;
+            _context = contextProvider();
+            _actualProvider = actualProvider;
+            Setup(_context.GuessWidth, _context.MaxAttempts);
         }
 
         public FullGuessResultRow[] Guess(string guessString)
         {
             if (!IsOver)
             {
-                var guess = guessString.ToGuessArray(expectedLength: _actual.Length);
+                var guess = guessString.ToGuessArray(expectedLength: _context.Actual.Length);
 
-                _results.Add(new FullGuessResultRow
+                _context.Results.Add(new FullGuessResultRow
                 {
-                    Result = _resultLogic.ResultFrom(guess, _actual),
+                    Result = _resultLogic.ResultFrom(guess, _context.Actual),
                     Guess = guess
                 });
             }
 
-            return _results.ToArray();
+            return _context.Results.ToArray();
         }
 
-        public Guess[] Actual { get { return _actual; } }
+        public void Setup(int newWidth, int newMaxAttempts)
+        {
+            _context.MaxAttempts = newMaxAttempts;
+            _context.GuessWidth = newWidth;
+            _context.Actual = IsResetRequired(newWidth) ? _actualProvider(newWidth) : _context.Actual;
+            _context.Results = IsResetRequired(newWidth) ? new List<FullGuessResultRow>() : _context.Results;
+        }
+
+        public Guess[] Actual { get { return _context.Actual; } }
 
         public bool IsOver
         {
-            get { return _results.Count >= _maxAttempts || IsAWin; }
+            get { return _context.Results.Count >= _context.MaxAttempts || IsAWin; }
         }
 
         public bool IsAWin
         {
-            get { return _results.Any(PerfectGuess()); }
+            get { return _context.Results.Any(PerfectGuess()); }
         }
 
         #region Helpers
+
+        private bool IsResetRequired(int newWidth)
+        {
+            return _context.Actual == null
+                || _context.Actual.Length != newWidth
+                || _context.Results == null;
+        }
 
         private static Func<FullGuessResultRow, bool> PerfectGuess()
         {
