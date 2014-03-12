@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <button data-bind="click: setupGame">Setup Game</button>
+                <button data-bind="click: setupGame">Start Game</button>
             </td>
         </tr>
     </table>
@@ -64,4 +64,4 @@
 <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">You Win</h2>
 <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
 
-<div data-bind="click: reset, visible: serverVm().IsOver" class="command">&lt;Reset&gt;</div>
+<div data-bind="click: reset, visible: isSetup()" class="command">&lt;Restart Game&gt;</div>
