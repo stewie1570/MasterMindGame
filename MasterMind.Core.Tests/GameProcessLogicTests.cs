@@ -22,36 +22,43 @@ namespace MasterMind.Core.Tests
                 GuessWidth = 4,
                 MaxAttempts = 10,
             };
-            _game = new GameProcess(() => _context, length => "bbbb".ToGuessArray());
+            _game = new GameProcess(() => _context,
+                length => string.Empty.PadLeft(length, 'b').ToGuessArray());
+        }
+
+        [TestMethod]
+        public void ConstructorShouldNotResetContext()
+        {
+            //Arrange
+            var context = new Context
+            {
+                Actual = "rrrr".ToGuessArray(),
+                Results = Builder<FullGuessResultRow>.CreateListOfSize(2).Build().ToList(),
+                GuessWidth = 4
+            };
+
+            //Act
+            new GameProcess(() => context, length => "".PadLeft(length, 'b').ToGuessArray());
+
+            //Assert
+            context.Results.Count.Should().Be(2);
+            context.Actual.Should().BeEquivalentTo("rrrr".ToGuessArray());
         }
 
         [TestMethod]
         public void SetupShouldResetGameContext()
         {
             //Arrange
-            _game.Guess("rrrr");        //To start building the Results array in the context.
+            _game.Guess("rrrr");
 
             //Act
             _game.Setup(newWidth: 5, newMaxAttempts: 12);
+            _game.Guess("rrrrr");
 
             //Assert
             _context.MaxAttempts.Should().Be(12);
             _context.GuessWidth.Should().Be(5);
-            _context.Results.Count.Should().Be(0);
-        }
-
-        [TestMethod]
-        public void SetupShouldNotResetResultsIfGuessWidthHasNotChanged()
-        {
-            //Arrange
-            _game.Guess("rrrr");        //To start building the Results array in the context.
-
-            //Act
-            _game.Setup(newWidth: 4, newMaxAttempts: 12);
-            _game.Guess("bbbb");
-
-            //Assert
-            _context.Results.Count.Should().Be(2);
+            _context.Results.Count.Should().Be(1);
         }
 
         [TestMethod]

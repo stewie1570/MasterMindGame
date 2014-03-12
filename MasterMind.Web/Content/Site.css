@@ -1,4 +1,44 @@
-﻿body {
+﻿.guess-peg {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid white;
+    float: left;
+    margin: 2px;
+}
+
+.result-peg {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    border: 1px solid white;
+    float: left;
+    margin-top: 9px;
+    margin-left: 4px;
+}
+
+.result-outer-container {
+    background-color: black;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.guess-outer-container {
+    background-color: darkgray;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.clear {
+    float: none;
+    clear: both;
+}
+
+.command{
+    cursor: pointer;
+}
+
+body {
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;

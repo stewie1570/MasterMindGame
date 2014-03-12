@@ -16,7 +16,8 @@ namespace MasterMind.Core
         {
             _context = contextProvider();
             _actualProvider = actualProvider;
-            Setup(_context.GuessWidth, _context.MaxAttempts);
+            _context.Results = IsActualInvalidInContext() ? new List<FullGuessResultRow>() : _context.Results;
+            _context.Actual = IsActualInvalidInContext() ? _actualProvider(_context.GuessWidth) : _context.Actual;
         }
 
         public FullGuessResultRow[] Guess(string guessString)
@@ -39,8 +40,8 @@ namespace MasterMind.Core
         {
             _context.MaxAttempts = newMaxAttempts;
             _context.GuessWidth = newWidth;
-            _context.Actual = IsResetRequired(newWidth) ? _actualProvider(newWidth) : _context.Actual;
-            _context.Results = IsResetRequired(newWidth) ? new List<FullGuessResultRow>() : _context.Results;
+            _context.Actual = _actualProvider(newWidth);
+            _context.Results = new List<FullGuessResultRow>();
         }
 
         public Guess[] Actual { get { return _context.Actual; } }
@@ -57,11 +58,9 @@ namespace MasterMind.Core
 
         #region Helpers
 
-        private bool IsResetRequired(int newWidth)
+        private bool IsActualInvalidInContext()
         {
-            return _context.Actual == null
-                || _context.Actual.Length != newWidth
-                || _context.Results == null;
+            return _context.Actual == null || _context.Actual.Length != _context.GuessWidth;
         }
 
         private static Func<FullGuessResultRow, bool> PerfectGuess()
