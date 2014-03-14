@@ -51,10 +51,7 @@ var GameViewModel = function (serverVm)
     this.setupGame = function ()
     {
         $.post("Home/Setup", { width: self.guessWidth(), maxAttempts: self.maxAttempts() })
-            .fail(function (xhr)
-            {
-                alert($.parseJSON(xhr.responseText).Message);
-            })
+            .fail(function (xhr) { alert($.parseJSON(xhr.responseText).Message); })
             .success(function () { self.isSetup(true); });
     }
 
