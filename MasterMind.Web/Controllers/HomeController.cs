@@ -1,20 +1,27 @@
 ﻿using MasterMind.Core;
 using MasterMind.Core.Models;
+using MasterMind.Web.Attributes;
+using MasterMind.Web.Exceptions;
 using MasterMind.Web.ViewModels.Extensions;
 using System;
 using System.Web.Mvc;
 
 namespace MasterMind.Web.Controllers
 {
+    [JsonHandleErrorAttribute]
     public class HomeController : Controller
     {
         private IGameProcess _gameProcess;
         private Func<Context> _contextProvider;
+        private IntegerRange _acceptableGuessWidthRange;
+        private IntegerRange _acceptableMaxAttemptsRange;
 
         public HomeController(IGameProcess gameProcess, Func<Context> contextProvider)
         {
             _gameProcess = gameProcess;
             _contextProvider = contextProvider;
+            _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
+            _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
         }
 
         public ActionResult Index()
@@ -31,7 +38,29 @@ namespace MasterMind.Web.Controllers
         [HttpPost]
         public void Setup(int width, int maxAttempts)
         {
+            Validate(width, maxAttempts);
+
             _gameProcess.Setup(newWidth: width, newMaxAttempts: maxAttempts);
         }
+
+        #region Helpers
+
+        private void Validate(int width, int maxAttempts)
+        {
+            ThrowIfNotWithInRange(width, _acceptableGuessWidthRange, "Guess width");
+            ThrowIfNotWithInRange(maxAttempts, _acceptableMaxAttemptsRange, "Max attempts");
+        }
+
+        private void ThrowIfNotWithInRange(int x, IntegerRange range, string rangeDescription)
+        {
+            if (x > range.Max || x < range.Min)
+                throw new InvalidRequestException(string.Format("{3} of {0} is not between {1} and {2}.",
+                    x,
+                    range.Min,
+                    range.Max,
+                    rangeDescription));
+        }
+
+        #endregion
     }
 }

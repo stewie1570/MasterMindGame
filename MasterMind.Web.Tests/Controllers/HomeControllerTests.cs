@@ -2,13 +2,14 @@
 using MasterMind.Core.Models;
 using MasterMind.Web.Controllers;
 using MasterMind.Web.ViewModels;
+using MasterMind.Web.Exceptions;
+using System;
 using System.Web.Mvc;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using NSubstitute;
 using FizzWare.NBuilder;
-using System;
 
 namespace MasterMind.Web.Tests.Controllers
 {
@@ -27,6 +28,22 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext = new Context();
             _contextProvider = () => _gameContext;
             _controller = new HomeController(_fakeGameProcess, _contextProvider);
+        }
+
+        [TestMethod]
+        public void ShouldFailSetupIfParamsAreNotWithInDefaultRange()
+        {
+            //Arrange
+            //Act
+            Action invalidWidth = () => _controller.Setup(width: 600, maxAttempts: 24);
+            Action invalidMaxAttempts = () => _controller.Setup(width: 6, maxAttempts: 2400);
+
+            //Assert
+            invalidWidth.ShouldThrow<InvalidRequestException>()
+                .WithMessage("Guess width of 600 is not between 2 and 10.");
+
+            invalidMaxAttempts.ShouldThrow<InvalidRequestException>()
+                .WithMessage("Max attempts of 2400 is not between 2 and 25.");
         }
 
         [TestMethod]
