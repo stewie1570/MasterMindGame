@@ -139,13 +139,16 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\JsonHandleErrorAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Exceptions\InvalidRequestException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Extensions\GuessResultVMExtensions.cs" />
     <Compile Include="ViewModels\GuessResultVM.cs" />
+    <Compile Include="ViewModels\InvalidRequestVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -236,7 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
