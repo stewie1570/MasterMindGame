@@ -46,7 +46,7 @@
         </div>
         <!-- /ko -->
 
-        <span data-bind="click: sendGuess, visible: currentGuess().length == guessWidth()" class="command">&lt;Send&gt;</span>
+        <button data-bind="click: sendGuess, visible: currentGuess().length == guessWidth()" class="command">Send</button>
     </div>
     
     <div class="clear"></div>
@@ -57,7 +57,7 @@
         </div>
         <!-- /ko -->
 
-        <span data-bind="click: pegAction" class="command">&lt;Backspace&gt;</span>
+        <button data-bind="click: pegAction" class="command">Backspace</button>
     </div>
 
     <div class="clear"></div>
@@ -66,4 +66,4 @@
 <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">You Win</h2>
 <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
 
-<div data-bind="click: reset, visible: isSetup()" class="command">&lt;Restart Game&gt;</div>
+<button data-bind="click: reset, visible: isSetup()" class="command">Restart Game</button>
