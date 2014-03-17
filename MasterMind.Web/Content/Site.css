@@ -1,5 +1,6 @@
 ﻿.game-container{
-    max-width: 500px;
+    display: inline-table;
+    white-space: nowrap;
 }
 
 .guess-peg {

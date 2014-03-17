@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Master Mind";
 }
 
 @Scripts.Render("~/bundles/mastermindprototype")
@@ -29,6 +29,7 @@
             <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
             </div>
             <!-- /ko -->
+
             <!-- ko foreach: Result -->
             <div data-bind="style: {backgroundColor: constants.resultColors[$data]}" class="result-peg">
             </div>
