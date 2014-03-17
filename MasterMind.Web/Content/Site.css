@@ -1,4 +1,8 @@
-﻿.guess-peg {
+﻿.game-container{
+    max-width: 500px;
+}
+
+.guess-peg {
     width: 20px;
     height: 20px;
     border-radius: 10px;
@@ -36,6 +40,10 @@
 .clear {
     float: none;
     clear: both;
+}
+
+.float-right{
+    float: right;
 }
 
 .command{
