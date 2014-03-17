@@ -38,7 +38,9 @@
 </div>
 
 <div class="guess-outer-container" data-bind="visible: isSetup() && !serverVm().IsOver">
-    <div>
+    <div class="guess-inner-container">
+        <span data-bind="visible: currentGuess().length == 0">[Click Pegs Below to Guess]</span>
+
         <!-- ko foreach: currentGuess -->
         <div data-bind="style: {backgroundColor: $data}" class="guess-peg">
         </div>

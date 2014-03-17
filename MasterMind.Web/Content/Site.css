@@ -29,6 +29,10 @@
     padding: 6px;
 }
 
+.guess-inner-container{
+    height: 26px;
+}
+
 .clear {
     float: none;
     clear: both;
