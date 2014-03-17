@@ -23,7 +23,7 @@
         </table>
     </div>
 
-    <div class="result-outer-container" data-bind="visible: isSetup() && !serverVm().IsOver">
+    <div class="result-outer-container" data-bind="visible: isSetup()">
         <div data-bind="foreach: serverVm().Results">
             <!-- ko foreach: Guess -->
             <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">

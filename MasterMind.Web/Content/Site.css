@@ -64,6 +64,10 @@ header, footer, nav, section {
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
+h2{
+    text-align: center
+}
+
 fieldset {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;
