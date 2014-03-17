@@ -46,6 +46,10 @@
     float: right;
 }
 
+.align-center{
+    text-align: center;
+}
+
 .command{
     cursor: pointer;
 }
