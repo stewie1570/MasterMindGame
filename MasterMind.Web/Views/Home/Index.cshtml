@@ -67,6 +67,8 @@
 
     <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">You Win</h2>
     <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
+    
+    <br />
 
     <button data-bind="click: reset, visible: isSetup()" class="command">Restart Game</button>
 </div>
