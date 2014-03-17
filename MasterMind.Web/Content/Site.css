@@ -60,6 +60,7 @@ body {
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
     background-color: #fff;
+    text-align: center;
 }
 
 header, footer, nav, section {
