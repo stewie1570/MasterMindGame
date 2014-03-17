@@ -17,7 +17,7 @@ namespace MasterMind.Web.Attributes
             };
 
             filterContext.ExceptionHandled = true;
-            filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
             filterContext.HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
         }
     }
