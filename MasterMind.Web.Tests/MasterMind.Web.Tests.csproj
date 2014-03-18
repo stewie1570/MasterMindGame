@@ -111,6 +111,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\boot.js" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\console.js" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\jasmine-html.js" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\jasmine.css" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\jasmine.js" />
+    <Content Include="Scripts\lib\jasmine-2.0.0\jasmine_favicon.png" />
+    <Content Include="Scripts\SpecRunner.html" />
+    <Content Include="Scripts\spec\MasterMind.Tests.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -125,6 +133,7 @@
       <Name>MasterMind.Web</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
