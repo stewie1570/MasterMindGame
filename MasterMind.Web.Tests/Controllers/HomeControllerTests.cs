@@ -18,16 +18,12 @@ namespace MasterMind.Web.Tests.Controllers
     {
         private HomeController _controller;
         private IGameProcess _fakeGameProcess;
-        private Context _gameContext;
-        private Func<Context> _contextProvider;
 
         [TestInitialize]
         public void Setup()
         {
             _fakeGameProcess = Substitute.For<IGameProcess>();
-            _gameContext = new Context();
-            _contextProvider = () => _gameContext;
-            _controller = new HomeController(_fakeGameProcess, _contextProvider);
+            _controller = new HomeController(_fakeGameProcess);
         }
 
         [TestMethod]

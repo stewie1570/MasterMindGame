@@ -3,7 +3,6 @@ using MasterMind.Core.Models;
 using MasterMind.Web.Attributes;
 using MasterMind.Web.Exceptions;
 using MasterMind.Web.ViewModels.Extensions;
-using System;
 using System.Web.Mvc;
 
 namespace MasterMind.Web.Controllers
@@ -12,14 +11,12 @@ namespace MasterMind.Web.Controllers
     public class HomeController : Controller
     {
         private IGameProcess _gameProcess;
-        private Func<Context> _contextProvider;
         private IntegerRange _acceptableGuessWidthRange;
         private IntegerRange _acceptableMaxAttemptsRange;
 
-        public HomeController(IGameProcess gameProcess, Func<Context> contextProvider)
+        public HomeController(IGameProcess gameProcess)
         {
             _gameProcess = gameProcess;
-            _contextProvider = contextProvider;
             _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
             _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
         }
