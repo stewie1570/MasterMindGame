@@ -1,6 +1,6 @@
 ﻿///<reference path="../../../MasterMind.Web/Scripts/pubsub.js" />
 ///<reference path="../../../MasterMind.Web/Scripts/MasterMind.js" />
-///<reference path="jasmine.js" />
+///<reference path="/lib/jasmine-2.0.0/jasmine.js" />
 
 var customJasmineMatchers = {
     toBeJSONStringEqual: function (util, customEqualityTesters)

@@ -8,10 +8,7 @@
     };
     
     var subscriptions = {
-        "mastermind:core:setup": function (setupData)
-        {
-            self.pubsub.publish("mastermind:comm:setup", setupData);
-        },
+        "mastermind:core:setup": function (setupData) { self.pubsub.publish("mastermind:comm:setup", setupData); },
 
         "mastermind:core:start": function ()
         {
@@ -31,10 +28,7 @@
             self.pubsub.publish("mastermind:comm:guess", guess);
         },
 
-        "mastermind:core:show:results": function (vm)
-        {
-            self.pubsub.publish("mastermind:ui:bind", vm);
-        }
+        "mastermind:core:show:results": function (vm) { self.pubsub.publish("mastermind:ui:bind", vm); }
     };
 
     for (var subscriptionName in subscriptions)
