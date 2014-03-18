@@ -56,13 +56,13 @@ describe("MasterMind", function ()
             {
                 //Arrange
                 var vm = null;
-                pubsub.subscribe("mastermind:ui:show", function (resultVM) { vm = resultVM; });
+                pubsub.subscribe("mastermind:ui:bind", function (resultVM) { vm = resultVM; });
 
                 //Act
                 pubsub.publish("mastermind:core:start");
 
                 //Assert
-                expect(vm).toBeJSONStringEqual({ Results: [], IsOver: false, IsAWin: false });
+                expect(vm).toBeJSONStringEqual({ Results: [], IsOver: false, IsAWin: false, IsSetup: true });
             });
         });
 
@@ -91,10 +91,26 @@ describe("MasterMind", function ()
                 pubsub.subscribe("mastermind:ui:bind", function (results) { vm = results; });
 
                 //Act
-                pubsub.publish("mastermind:core:show:results", { test: true });
+                pubsub.publish("mastermind:core:results", { test: true });
 
                 //Assert
                 expect(vm).toBeJSONStringEqual({ test: true });
+            });
+        });
+
+        describe("Start New Game", function ()
+        {
+            it("should show a view to setup a new game and clear the VM.", function ()
+            {
+                //Arrange
+                var vm = null;
+                pubsub.subscribe("mastermind:ui:bind", function (results) { vm = results; });
+
+                //Act
+                pubsub.publish("mastermind:core:newgame");
+
+                //Assert
+                expect(vm).toBeJSONStringEqual({ Results: [], IsOver: false, IsAWin: false, IsSetup: false });
             });
         });
     });

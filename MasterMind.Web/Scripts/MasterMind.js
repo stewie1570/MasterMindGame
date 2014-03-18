@@ -12,7 +12,12 @@
 
         "mastermind:core:start": function ()
         {
-            self.pubsub.publish("mastermind:ui:show", { Results: [], IsOver: false, IsAWin: false });
+            self.pubsub.publish("mastermind:ui:bind", { Results: [], IsOver: false, IsAWin: false, IsSetup: true });
+        },
+
+        "mastermind:core:newgame": function ()
+        {
+            self.pubsub.publish("mastermind:ui:bind", { Results: [], IsOver: false, IsAWin: false, IsSetup: false });
         },
 
         "mastermind:core:guess": function (guessNumberArray)
@@ -28,7 +33,7 @@
             self.pubsub.publish("mastermind:comm:guess", guess);
         },
 
-        "mastermind:core:show:results": function (vm) { self.pubsub.publish("mastermind:ui:bind", vm); }
+        "mastermind:core:results": function (vm) { self.pubsub.publish("mastermind:ui:bind", vm); }
     };
 
     for (var subscriptionName in subscriptions)
