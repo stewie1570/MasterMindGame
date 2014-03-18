@@ -22,7 +22,6 @@ var GameViewModel = function (serverVm)
         }
         else
             self.currentGuess.pop();
-        return true;
     };
 
     this.reset = function ()

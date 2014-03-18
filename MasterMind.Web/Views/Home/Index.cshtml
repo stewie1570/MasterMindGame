@@ -48,7 +48,7 @@
             </div>
             <!-- /ko -->
 
-            <button data-bind="click: sendGuess, visible: currentGuess().length == guessWidth()" class="command float-right"><b>Send</b></button>
+            <button data-bind="click: sendGuess, visible: currentGuess().length == guessWidth(), clickBubble: false" class="command float-right"><b>Send</b></button>
             <div class="clear"></div>
         </div>
 
