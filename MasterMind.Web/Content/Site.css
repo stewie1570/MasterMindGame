@@ -1,7 +1,12 @@
-﻿.guess-peg {
+﻿.game-container{
+    display: inline-table;
+    white-space: nowrap;
+}
+
+.guess-peg {
     width: 20px;
     height: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid white;
     float: left;
     margin: 2px;
@@ -29,9 +34,21 @@
     padding: 6px;
 }
 
+.guess-inner-container{
+    height: 26px;
+}
+
 .clear {
     float: none;
     clear: both;
+}
+
+.float-right{
+    float: right;
+}
+
+.align-center{
+    text-align: center;
 }
 
 .command{
@@ -43,6 +60,7 @@ body {
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
     background-color: #fff;
+    text-align: center;
 }
 
 header, footer, nav, section {
@@ -52,6 +70,10 @@ header, footer, nav, section {
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
+h2{
+    text-align: center
+}
+
 fieldset {
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;

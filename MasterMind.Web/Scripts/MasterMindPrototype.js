@@ -51,11 +51,21 @@ var GameViewModel = function (serverVm)
     this.setupGame = function ()
     {
         $.post("Home/Setup", { width: self.guessWidth(), maxAttempts: self.maxAttempts() })
-            .fail(function (xhr) { alert($.parseJSON(xhr.responseText).Message); })
-            .success(function () { self.isSetup(true); });
+            .success(function (data)
+            {
+                if (data["Message"] != undefined)
+                    alert(data.Message);
+                else
+                    self.isSetup(true);
+            });
     }
 
     this.helpers = {
+        isNullOrEmpty: function (str)
+        {
+            return str == null || str.length == 0;
+        },
+
         select: function (array, del)
         {
             var ret = [];
