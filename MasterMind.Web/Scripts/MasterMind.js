@@ -1,56 +1,92 @@
-﻿var MasterMindCore = function (pubsub)
+﻿var constants = {
+    guessColors: ["empty", "red", "blue", "green", "yellow", "purple"],
+    resultColors: ["red", "white", "empty"]
+};
+
+var GameViewModel = function (serverVm)
 {
     var self = this;
-    self.pubsub = pubsub;
-    self.constants = {
-        guessColors: ["empty", "red", "blue", "green", "yellow", "purple"],
-        resultColors: ["red", "white", "empty"]
-    };
-    
-    var subscriptions = {
-        "mastermind:core:setup": function (setupData) { self.pubsub.publish("mastermind:comm:setup", setupData); },
+    this.initialServerVM = serverVm;
+    this.serverVm = ko.observable(serverVm);
+    this.currentGuess = ko.observableArray([]);
+    this.guessWidth = ko.observable(null);
+    this.maxAttempts = ko.observable(null);
+    this.isSetup = ko.observable(false);
 
-        "mastermind:core:start": function ()
+    this.pegAction = function (peg)
+    {
+        if (constants.guessColors.indexOf(peg) >= 0)
         {
-            self.pubsub.publish("mastermind:ui:bind", { Results: [], IsOver: false, IsAWin: false, IsSetup: true });
-        },
-
-        "mastermind:core:newgame": function ()
-        {
-            self.pubsub.publish("mastermind:ui:bind", { Results: [], IsOver: false, IsAWin: false, IsSetup: false });
-        },
-
-        "mastermind:core:guess": function (guessNumberArray)
-        {
-            var guessCSV = self
-                        .helpers
-                        .arraySelect(guessNumberArray, function (guess)
-                        {
-                            return self.constants.guessColors[guess].charAt(0);
-                        }).toString();
-            var guess = self.helpers.replaceAll(guessCSV, ',', '');
-
-            self.pubsub.publish("mastermind:comm:guess", guess);
-        },
-
-        "mastermind:core:results": function (vm) { self.pubsub.publish("mastermind:ui:bind", vm); }
+            if (self.currentGuess().length < self.guessWidth())
+                self.currentGuess.push(peg);
+        }
+        else
+            self.currentGuess.pop();
     };
 
-    for (var subscriptionName in subscriptions)
-        self.pubsub.subscribe(subscriptionName, subscriptions[subscriptionName]);
+    this.reset = function ()
+    {
+        self.serverVm(self.initialServerVM);
+        self.currentGuess([]);
+        self.isSetup(false);
+    }
 
-    self.helpers = {
-        arraySelect: function (array, del)
+    this.sendGuess = function ()
+    {
+        var guessCSV = self
+            .helpers
+            .select(self.currentGuess(), function (guess)
+            {
+                return guess[0];
+            }).toString();
+        var guess = self.helpers.replaceAll(guessCSV, ',', '');
+
+        $.post("Home/Guess", { guess: guess })
+            .done(function (data)
+            {
+                self.serverVm(data); self.currentGuess([]);
+            });
+    }
+
+    this.setupGame = function ()
+    {
+        $.post("Home/Setup", { width: self.guessWidth(), maxAttempts: self.maxAttempts() })
+            .success(function (data)
+            {
+                if (data["Message"] != undefined)
+                    alert(data.Message);
+                else
+                    self.isSetup(true);
+            });
+    }
+
+    this.helpers = {
+        isNullOrEmpty: function (str)
         {
-            var results = [];
+            return str == null || str.length == 0;
+        },
+
+        select: function (array, del)
+        {
+            var ret = [];
             for (var i = 0; i < array.length; i++)
-                results.push(del(array[i]));
-            return results;
+            {
+                ret.push(del(array[i]));
+            }
+            return ret;
         },
-        
+
         replaceAll: function (str, find, replacement)
         {
             return str.split(find).join(replacement);
         }
     };
-}
+};
+
+
+$(document).ready(function ()
+{
+    var initial = { "Results": [], "IsOver": false, "IsAWin": false };
+
+    ko.applyBindings(new GameViewModel(initial));
+});

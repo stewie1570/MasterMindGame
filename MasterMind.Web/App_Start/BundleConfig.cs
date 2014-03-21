@@ -17,6 +17,9 @@ namespace MasterMind.Web
             bundles.Add(new ScriptBundle("~/bundles/mastermindprototype").Include(
                 "~/Scripts/MasterMindPrototype.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/mastermind").Include(
+                "~/Scripts/MasterMind.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
         }
     }
