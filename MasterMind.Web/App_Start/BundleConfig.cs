@@ -14,9 +14,6 @@ namespace MasterMind.Web
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/mastermindprototype").Include(
-                "~/Scripts/MasterMindPrototype.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/mastermind").Include(
                 "~/Scripts/MasterMind.js"));
 
