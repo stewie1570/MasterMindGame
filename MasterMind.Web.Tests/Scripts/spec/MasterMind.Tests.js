@@ -2,100 +2,85 @@
 ///<reference path="../../../MasterMind.Web/Scripts/MasterMind.js" />
 ///<reference path="/lib/jasmine-2.0.0/jasmine.js" />
 
-var customJasmineMatchers = {
-    toBeJSONStringEqual: function (util, customEqualityTesters)
-    {
-        return {
-            compare: function (actual, expected)
-            {
-                var actualString = JSON.stringify(actual);
-                var expectedString = JSON.stringify(expected);
-
-                return {
-                    pass: actualString == expectedString,
-                    message: actual + " does not equal expected JSON: " + expectedString
-                }
-            }
-        };
-    }
-};
-
 describe("MasterMind", function ()
 {
-    describe("Core", function ()
+    describe("Send Guess", function ()
     {
-        var pubsub = null;
-        var masterMindGame = null;
+        var vm = null;
 
         beforeEach(function ()
         {
-            jasmine.addMatchers(customJasmineMatchers);
-            pubsub = new Pubsub();
-            masterMindGame = new MasterMindCore(pubsub);
+            vm = new GameViewModel({});
         });
 
-        describe("Setup New Game", function ()
+        it("should send the guess", function ()
         {
-            it("should tell the server to setup the game with a width and max attempts.", function ()
+            //Arrange
+            window.$ = {};
+            var postUrl = "";
+            var postData = {};
+            $.post = function (url, data)
             {
-                //Arrange
-                var result = null;
-                pubsub.subscribe("mastermind:comm:setup", function (setupData) { result = setupData; });
+                postUrl = url; postData = data;
+                return { done: function () { } };
+            };
+            vm.currentGuess(["red", "green", "blue", "red"]);
 
-                //Act
-                pubsub.publish("mastermind:core:setup", { width: 4, attempts: 10 });
+            //Act
+            vm.sendGuess();
 
-                //Assert
-                expect(result).toBeJSONStringEqual({ width: 4, attempts: 10 });
-            });
+            //Assert
+            expect(postUrl).toBe("Home/Guess");
+            expect(postData).toEqual({ guess: "rgbr" });
+        });
+    });
+
+    describe("Peg Click", function ()
+    {
+        var vm = null;
+
+        beforeEach(function ()
+        {
+            vm = new GameViewModel({});
         });
 
-        describe("Start and Initialize Game", function ()
+        it("should remove the last peg when backspace 'peg' is clicked", function ()
         {
-            it("should tell the UI to show the game view with a clean view model.", function ()
-            {
-                //Arrange
-                var vm = null;
-                pubsub.subscribe("mastermind:ui:show", function (resultVM) { vm = resultVM; });
+            //Arrange
+            var currentGuessPopMethodWasCalled = false;
+            vm.currentGuess.pop = function () { currentGuessPopMethodWasCalled = true; };
 
-                //Act
-                pubsub.publish("mastermind:core:start");
+            //Act
+            vm.pegAction("peg that doesn't exist");
 
-                //Assert
-                expect(vm).toBeJSONStringEqual({ Results: [], IsOver: false, IsAWin: false });
-            });
+            //Assert
+            expect(currentGuessPopMethodWasCalled).toBeTruthy();
         });
 
-        describe("Send Guess", function ()
+        it("should add the peg that was clicked", function ()
         {
-            it("should send the guess in single char per peg string format to the server.", function ()
-            {
-                //Arrange
-                var guessRequestString = null;
-                pubsub.subscribe("mastermind:comm:guess", function (guess) { guessRequestString = guess; });
+            //Arrange
+            vm.guessWidth(4);
+            vm.currentGuess(["red", "green", "blue"]);
 
-                //Act
-                pubsub.publish("mastermind:core:guess", [1, 2, 3, 4, 5]);
+            //Act
+            vm.pegAction("red");
 
-                //Assert
-                expect(guessRequestString).toBe("rbgyp");
-            });
+            //Assert
+            expect(vm.currentGuess()).toEqual(["red", "green", "blue", "red"]);
         });
 
-        describe("Receive Guess", function ()
+        it("should not add the peg that was clicked when the guess length is met", function ()
         {
-            it("should receive the guess from the server and send it to the UI.", function ()
-            {
-                //Arrange
-                var vm = null;
-                pubsub.subscribe("mastermind:ui:bind", function (results) { vm = results; });
+            //Arrange
+            vm.guessWidth(3);
+            vm.currentGuess(["red", "green", "blue"]);
 
-                //Act
-                pubsub.publish("mastermind:core:show:results", { test: true });
+            //Act
+            vm.pegAction("red");
 
-                //Assert
-                expect(vm).toBeJSONStringEqual({ test: true });
-            });
+            //Assert
+            expect(vm.currentGuess()).toEqual(["red", "green", "blue"]);
         });
     });
 });
