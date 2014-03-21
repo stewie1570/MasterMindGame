@@ -33,15 +33,7 @@ var GameViewModel = function (serverVm)
 
     this.sendGuess = function ()
     {
-        var guessCSV = self
-            .helpers
-            .select(self.currentGuess(), function (guess)
-            {
-                return guess[0];
-            }).toString();
-        var guess = self.helpers.replaceAll(guessCSV, ',', '');
-
-        $.post("Home/Guess", { guess: guess })
+        $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
             .done(function (data)
             {
                 self.serverVm(data); self.currentGuess([]);
@@ -79,6 +71,14 @@ var GameViewModel = function (serverVm)
         replaceAll: function (str, find, replacement)
         {
             return str.split(find).join(replacement);
+        },
+
+        pegArrayToGuessString: function (array)
+        {
+            var guessCSV = self
+                .helpers
+                .select(array, function (guess) { return guess[0]; }).toString();
+            return self.helpers.replaceAll(guessCSV, ',', '');
         }
     };
 };
