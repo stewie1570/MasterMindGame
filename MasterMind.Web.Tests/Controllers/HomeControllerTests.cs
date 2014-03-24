@@ -31,15 +31,11 @@ namespace MasterMind.Web.Tests.Controllers
         {
             //Arrange
             //Act
-            Action invalidWidth = () => _controller.Setup(width: 600, maxAttempts: 24);
-            Action invalidMaxAttempts = () => _controller.Setup(width: 6, maxAttempts: 2400);
+            Action invalidWidth = () => _controller.Setup(width: 600);
 
             //Assert
             invalidWidth.ShouldThrow<InvalidRequestException>()
                 .WithMessage("Guess width of 600 is not between 2 and 10.");
-
-            invalidMaxAttempts.ShouldThrow<InvalidRequestException>()
-                .WithMessage("Max attempts of 2400 is not between 2 and 25.");
         }
 
         [TestMethod]
@@ -56,10 +52,10 @@ namespace MasterMind.Web.Tests.Controllers
         {
             //Arrange
             //Act
-            _controller.Setup(width: 6, maxAttempts: 24);
+            _controller.Setup(6);
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6, newMaxAttempts: 24);
+            _fakeGameProcess.Received(1).Setup(newWidth: 6);
         }
 
         [TestMethod]

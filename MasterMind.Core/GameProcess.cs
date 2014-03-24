@@ -36,9 +36,9 @@ namespace MasterMind.Core
             return _context.Results.ToArray();
         }
 
-        public void Setup(int newWidth, int newMaxAttempts)
+        public void Setup(int newWidth)
         {
-            _context.MaxAttempts = newMaxAttempts;
+            _context.MaxAttempts = 10 + ((newWidth - 4) * 3);
             _context.GuessWidth = newWidth;
             _context.Actual = _actualProvider(newWidth);
             _context.Results = new List<FullGuessResultRow>();

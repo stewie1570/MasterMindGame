@@ -10,7 +10,6 @@ var GameViewModel = function (serverVm)
     this.serverVm = ko.observable(serverVm);
     this.currentGuess = ko.observableArray([]);
     this.guessWidth = ko.observable(null);
-    this.maxAttempts = ko.observable(null);
     this.isSetup = ko.observable(false);
 
     this.pegAction = function (peg)
@@ -42,7 +41,7 @@ var GameViewModel = function (serverVm)
 
     this.setupGame = function ()
     {
-        $.post("Home/Setup", { width: self.guessWidth(), maxAttempts: self.maxAttempts() })
+        $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {
                 if (data["Message"] != undefined)

@@ -13,6 +13,7 @@ namespace MasterMind.Core.Tests
     {
         private GameProcess _game;
         private Context _context;
+        private Func<int, Guess[]> _actualProvider;
 
         [TestInitialize]
         public void Setup()
@@ -22,8 +23,10 @@ namespace MasterMind.Core.Tests
                 GuessWidth = 4,
                 MaxAttempts = 10,
             };
-            _game = new GameProcess(() => _context,
-                length => string.Empty.PadLeft(length, 'b').ToGuessArray());
+
+            _actualProvider = length => string.Empty.PadLeft(length, 'b').ToGuessArray();
+
+            _game = new GameProcess(() => _context, _actualProvider);
         }
 
         [TestMethod]
@@ -52,13 +55,31 @@ namespace MasterMind.Core.Tests
             _game.Guess("rrrr");
 
             //Act
-            _game.Setup(newWidth: 5, newMaxAttempts: 12);
+            _game.Setup(newWidth: 5);
             _game.Guess("rrrrr");
 
             //Assert
-            _context.MaxAttempts.Should().Be(12);
             _context.GuessWidth.Should().Be(5);
             _context.Results.Count.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void SetupShouldDecideMaxAttempts()
+        {
+            //Arrange
+            //Act
+            Func<int, Context> newGameContextSetupWithWidthOf = guessWidth =>
+            {
+                var context = new Context { GuessWidth = guessWidth };
+                new GameProcess(() => context, _actualProvider).Setup(guessWidth);                
+                return context;
+            };
+
+            //Assert
+            newGameContextSetupWithWidthOf(4).MaxAttempts.Should().Be(10);
+            newGameContextSetupWithWidthOf(5).MaxAttempts.Should().Be(13);
+            newGameContextSetupWithWidthOf(6).MaxAttempts.Should().Be(16);
+            newGameContextSetupWithWidthOf(10).MaxAttempts.Should().Be(28);
         }
 
         [TestMethod]

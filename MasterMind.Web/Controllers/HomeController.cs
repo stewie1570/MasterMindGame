@@ -33,19 +33,17 @@ namespace MasterMind.Web.Controllers
         }
 
         [HttpPost]
-        public void Setup(int width, int maxAttempts)
+        public void Setup(int width)
         {
-            Validate(width, maxAttempts);
-
-            _gameProcess.Setup(newWidth: width, newMaxAttempts: maxAttempts);
+            Validate(width);
+            _gameProcess.Setup(width);
         }
 
         #region Helpers
 
-        private void Validate(int width, int maxAttempts)
+        private void Validate(int width)
         {
             ThrowIfNotWithInRange(width, _acceptableGuessWidthRange, "Guess width");
-            ThrowIfNotWithInRange(maxAttempts, _acceptableMaxAttemptsRange, "Max attempts");
         }
 
         private void ThrowIfNotWithInRange(int x, IntegerRange range, string rangeDescription)
