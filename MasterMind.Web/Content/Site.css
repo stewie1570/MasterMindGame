@@ -12,6 +12,14 @@
     margin: 2px;
 }
 
+.guess-time{
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
 .result-peg {
     width: 6px;
     height: 6px;

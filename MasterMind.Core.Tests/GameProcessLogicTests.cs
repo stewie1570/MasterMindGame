@@ -14,6 +14,7 @@ namespace MasterMind.Core.Tests
         private GameProcess _game;
         private Context _context;
         private Func<int, Guess[]> _actualProvider;
+        private Func<DateTime> _timeProvider = () => DateTime.Now;
 
         [TestInitialize]
         public void Setup()
@@ -26,7 +27,7 @@ namespace MasterMind.Core.Tests
 
             _actualProvider = length => string.Empty.PadLeft(length, 'b').ToGuessArray();
 
-            _game = new GameProcess(() => _context, _actualProvider);
+            _game = new GameProcess(() => _context, _actualProvider, _timeProvider);
         }
 
         [TestMethod]
@@ -138,6 +139,42 @@ namespace MasterMind.Core.Tests
 
             //Assert
             results.Length.Should().Be(2);
+        }
+
+        [TestMethod]
+        public void GuessesShouldBeTimeStamped()
+        {
+            //Arrange
+            Func<DateTime> timeProvider = () => DateTime.Parse("1/1/2000 12:00:00 am");
+            _game = new GameProcess(() => _context, _actualProvider, timeProvider);
+
+            //Act
+            var results = _game.Guess("yyyy");
+
+            //Assert
+            results.First().TimeStamp.Should().Be(DateTime.Parse("1/1/2000 12:00:00 am"));
+        }
+
+        [TestMethod]
+        public void TimeLapseShouldBeCalculatedBetweenGuesses()
+        {
+            //Arrange
+            DateTime currentTime = DateTime.Parse("1/1/2000 12:00:00 am");
+            _game = new GameProcess(() => _context, _actualProvider, () => currentTime);
+
+            //Act
+            _game.Guess("yyyy");
+
+            currentTime = DateTime.Parse("1/1/2000 12:00:01 am");
+            _game.Guess("yyyy");
+
+            currentTime =  DateTime.Parse("1/1/2000 12:00:05 am");
+            var results = _game.Guess("yyyy");
+
+            //Assert
+            results[0].TimeLapse.Should().Be(TimeSpan.FromSeconds(0));
+            results[1].TimeLapse.Should().Be(TimeSpan.FromSeconds(1));
+            results[2].TimeLapse.Should().Be(TimeSpan.FromSeconds(4));
         }
 
         [TestMethod]

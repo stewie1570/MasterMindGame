@@ -11,10 +11,17 @@ namespace MasterMind.Core
         private GuessResultLogic _resultLogic = new GuessResultLogic();
         private Context _context;
         private Func<int, Guess[]> _actualProvider;
+        private Func<DateTime> _timeProvider;
 
         public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
+            : this(contextProvider, actualProvider, () => DateTime.Now)
+        {
+        }
+
+        public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider, Func<DateTime> timeProvider)
         {
             _context = contextProvider();
+            _timeProvider = timeProvider;
             _actualProvider = actualProvider;
             _context.Results = IsActualInvalidInContext() ? new List<FullGuessResultRow>() : _context.Results;
             _context.Actual = IsActualInvalidInContext() ? _actualProvider(_context.GuessWidth) : _context.Actual;
@@ -25,11 +32,14 @@ namespace MasterMind.Core
             if (!IsOver)
             {
                 var guess = guessString.ToGuessArray(expectedLength: _context.Actual.Length);
+                var currentTime = _timeProvider();
 
                 _context.Results.Add(new FullGuessResultRow
                 {
                     Result = _resultLogic.ResultFrom(guess, _context.Actual),
-                    Guess = guess
+                    Guess = guess,
+                    TimeStamp = currentTime,
+                    TimeLapse = _context.Results.Count > 0 ? currentTime - _context.Results.Last().TimeStamp : TimeSpan.FromTicks(0)
                 });
             }
 
