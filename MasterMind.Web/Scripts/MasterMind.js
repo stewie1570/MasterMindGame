@@ -11,6 +11,7 @@ var GameViewModel = function (serverVm)
     this.currentGuess = ko.observableArray([]);
     this.guessWidth = ko.observable(null);
     this.isSetup = ko.observable(false);
+    this.isCommunicating = ko.observable(false);
 
     this.pegAction = function (peg)
     {
@@ -32,16 +33,19 @@ var GameViewModel = function (serverVm)
 
     this.sendGuess = function ()
     {
+        self.isCommunicating(true);
         $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
             .done(self.bindHelpers.bindServerResults);
     }
 
     this.setupGame = function (width)
     {
+        self.isCommunicating(true);
         self.guessWidth(width);
         $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {
+                self.isCommunicating(false);
                 if (data["Message"] != undefined)
                     alert(data.Message);
                 else
@@ -55,6 +59,7 @@ var GameViewModel = function (serverVm)
     this.bindHelpers = {
         bindServerResults: function (data)
         {
+            self.isCommunicating(false);
             var filler = {
                 Result: self.helpers.padRight([], self.guessWidth(), 2),
                 Guess: self.helpers.padRight([], self.guessWidth(), 0)

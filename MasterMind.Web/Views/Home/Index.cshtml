@@ -14,7 +14,7 @@
                 <td>
                     <ul data-bind="foreach: [2,3,4,5,6,7,8,9,10]">
                         <li>
-                            <button data-bind="click: $parent.setupGame, text: 'Level ' + ($data - 1)">Start Game</button>
+                            <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 1)">Start Game</button>
                         </li>
                     </ul>
                 </td>
@@ -47,7 +47,7 @@
             </div>
             <!-- /ko -->
 
-            <button data-bind="click: sendGuess, visible: currentGuess().length == guessWidth()" class="command float-right"><b>Send</b></button>
+            <button data-bind="click: sendGuess, enable: !isCommunicating(), visible: currentGuess().length == guessWidth()" class="command float-right"><b>Send</b></button>
             <div class="clear"></div>
         </div>
 
