@@ -10,7 +10,6 @@ var GameViewModel = function (serverVm)
     this.serverVm = ko.observable(serverVm);
     this.currentGuess = ko.observableArray([]);
     this.guessWidth = ko.observable(null);
-    this.maxAttempts = ko.observable(null);
     this.isSetup = ko.observable(false);
 
     this.pegAction = function (peg)
@@ -33,34 +32,50 @@ var GameViewModel = function (serverVm)
 
     this.sendGuess = function ()
     {
-        var guessCSV = self
-            .helpers
-            .select(self.currentGuess(), function (guess)
-            {
-                return guess[0];
-            }).toString();
-        var guess = self.helpers.replaceAll(guessCSV, ',', '');
-
-        $.post("Home/Guess", { guess: guess })
-            .done(function (data)
-            {
-                self.serverVm(data); self.currentGuess([]);
-            });
+        $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
+            .done(self.bindHelpers.bindServerResults);
     }
 
     this.setupGame = function ()
     {
-        $.post("Home/Setup", { width: self.guessWidth(), maxAttempts: self.maxAttempts() })
+        $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {
                 if (data["Message"] != undefined)
                     alert(data.Message);
                 else
+                {
+                    self.bindHelpers.bindServerResults(data);
                     self.isSetup(true);
+                }
             });
     }
 
+    this.bindHelpers = {
+        bindServerResults: function (data)
+        {
+            var filler = {
+                Result: self.helpers.padRight([], self.guessWidth(), 2),
+                Guess: self.helpers.padRight([], self.guessWidth(), 0)
+            };
+            data.Results = self.helpers.padRight(data.Results, data.MaxAttempts, filler);
+            self.serverVm(data);
+            self.currentGuess([]);
+        }
+    };
+
     this.helpers = {
+        padRight: function (array, length, filler)
+        {
+            var currentLength = array == null ? 0 : array.length;
+            var newArray = [];
+            for (var i = 0; i < length; i++)
+            {
+                newArray[i] = i < currentLength ? array[i] : filler;
+            }
+            return newArray;
+        },
+
         isNullOrEmpty: function (str)
         {
             return str == null || str.length == 0;
@@ -79,6 +94,14 @@ var GameViewModel = function (serverVm)
         replaceAll: function (str, find, replacement)
         {
             return str.split(find).join(replacement);
+        },
+
+        pegArrayToGuessString: function (array)
+        {
+            var guessCSV = self
+                .helpers
+                .select(array, function (guess) { return guess[0]; }).toString();
+            return self.helpers.replaceAll(guessCSV, ',', '');
         }
     };
 };

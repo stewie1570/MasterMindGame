@@ -9,6 +9,6 @@ namespace MasterMind.Core
         FullGuessResultRow[] Guess(string guessString);
         bool IsAWin { get; }
         bool IsOver { get; }
-        void Setup(int newWidth, int newMaxAttempts);
+        void Setup(int newWidth);
     }
 }

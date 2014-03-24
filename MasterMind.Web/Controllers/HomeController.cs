@@ -2,7 +2,9 @@
 using MasterMind.Core.Models;
 using MasterMind.Web.Attributes;
 using MasterMind.Web.Exceptions;
+using MasterMind.Web.ViewModels;
 using MasterMind.Web.ViewModels.Extensions;
+using System;
 using System.Web.Mvc;
 
 namespace MasterMind.Web.Controllers
@@ -11,12 +13,14 @@ namespace MasterMind.Web.Controllers
     public class HomeController : Controller
     {
         private IGameProcess _gameProcess;
+        private Func<Context> _contextProvider;
         private IntegerRange _acceptableGuessWidthRange;
         private IntegerRange _acceptableMaxAttemptsRange;
 
-        public HomeController(IGameProcess gameProcess)
+        public HomeController(IGameProcess gameProcess, Func<Context> contextProvider)
         {
             _gameProcess = gameProcess;
+            _contextProvider = contextProvider;
             _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
             _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
         }
@@ -29,23 +33,23 @@ namespace MasterMind.Web.Controllers
         [HttpPost]
         public JsonResult Guess(string guess)
         {
-            return Json(_gameProcess.Guess(guess).AsGuessResultVM(_gameProcess));
+            return Json(_gameProcess.Guess(guess).AsGuessResultVM(_gameProcess, _contextProvider()));
         }
 
         [HttpPost]
-        public void Setup(int width, int maxAttempts)
+        public JsonResult Setup(int width)
         {
-            Validate(width, maxAttempts);
+            Validate(width);
+            _gameProcess.Setup(width);
 
-            _gameProcess.Setup(newWidth: width, newMaxAttempts: maxAttempts);
+            return Json(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
         }
 
         #region Helpers
 
-        private void Validate(int width, int maxAttempts)
+        private void Validate(int width)
         {
             ThrowIfNotWithInRange(width, _acceptableGuessWidthRange, "Guess width");
-            ThrowIfNotWithInRange(maxAttempts, _acceptableMaxAttemptsRange, "Max attempts");
         }
 
         private void ThrowIfNotWithInRange(int x, IntegerRange range, string rangeDescription)

@@ -18,12 +18,14 @@ namespace MasterMind.Web.Tests.Controllers
     {
         private HomeController _controller;
         private IGameProcess _fakeGameProcess;
+        private Context _gameContext;
 
         [TestInitialize]
         public void Setup()
         {
+            _gameContext = new Context();
             _fakeGameProcess = Substitute.For<IGameProcess>();
-            _controller = new HomeController(_fakeGameProcess);
+            _controller = new HomeController(_fakeGameProcess, () => _gameContext);
         }
 
         [TestMethod]
@@ -31,15 +33,11 @@ namespace MasterMind.Web.Tests.Controllers
         {
             //Arrange
             //Act
-            Action invalidWidth = () => _controller.Setup(width: 600, maxAttempts: 24);
-            Action invalidMaxAttempts = () => _controller.Setup(width: 6, maxAttempts: 2400);
+            Action invalidWidth = () => _controller.Setup(width: 600);
 
             //Assert
             invalidWidth.ShouldThrow<InvalidRequestException>()
                 .WithMessage("Guess width of 600 is not between 2 and 10.");
-
-            invalidMaxAttempts.ShouldThrow<InvalidRequestException>()
-                .WithMessage("Max attempts of 2400 is not between 2 and 25.");
         }
 
         [TestMethod]
@@ -56,16 +54,31 @@ namespace MasterMind.Web.Tests.Controllers
         {
             //Arrange
             //Act
-            _controller.Setup(width: 6, maxAttempts: 24);
+            _controller.Setup(6);
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6, newMaxAttempts: 24);
+            _fakeGameProcess.Received(1).Setup(newWidth: 6);
+        }
+
+        [TestMethod]
+        public void SetupShouldReturnAnEmptyResultVM()
+        {
+            //Arrange
+            _gameContext.MaxAttempts = 12;
+
+            //Act
+            var results = _controller.Setup(6).Data;
+
+            //Assert
+            results.Should().BeAssignableTo<GuessResultVM>();
+            (results as GuessResultVM).MaxAttempts.Should().Be(12);
         }
 
         [TestMethod]
         public void GuessShouldReturnGuessResultsToClient()
         {
             //Arrange
+            _gameContext.MaxAttempts = 12;
             var expectedResults = Builder<FullGuessResultRow>.CreateListOfSize(2).Build().ToArray();
             _fakeGameProcess.Guess(Arg.Any<string>()).Returns(expectedResults);
             _fakeGameProcess.IsAWin.Returns(true);
@@ -79,6 +92,7 @@ namespace MasterMind.Web.Tests.Controllers
             vm.Results.Should().BeEquivalentTo(expectedResults);
             vm.IsAWin.Should().BeTrue();
             vm.IsOver.Should().BeTrue();
+            vm.MaxAttempts.Should().Be(12);
         }
     }
 }
