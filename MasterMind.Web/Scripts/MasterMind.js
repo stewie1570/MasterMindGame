@@ -36,8 +36,9 @@ var GameViewModel = function (serverVm)
             .done(self.bindHelpers.bindServerResults);
     }
 
-    this.setupGame = function ()
+    this.setupGame = function (width)
     {
+        self.guessWidth(width);
         $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {

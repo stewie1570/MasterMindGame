@@ -8,12 +8,15 @@
     <div data-bind="visible: !isSetup()">
         <table>
             <tr>
-                <th>Guess Width</th>
-                <td><input type="number" data-bind="value: guessWidth" /></td>
+                <th>Level</th>
             </tr>
             <tr>
-                <td colspan="2" align="right">
-                    <button data-bind="click: setupGame">Start Game</button>
+                <td>
+                    <ul data-bind="foreach: [2,3,4,5,6,7,8,9,10]">
+                        <li>
+                            <button data-bind="click: $parent.setupGame, text: 'Level ' + ($data - 1)">Start Game</button>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         </table>
