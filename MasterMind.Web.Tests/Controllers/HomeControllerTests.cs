@@ -18,12 +18,14 @@ namespace MasterMind.Web.Tests.Controllers
     {
         private HomeController _controller;
         private IGameProcess _fakeGameProcess;
+        private Context _gameContext;
 
         [TestInitialize]
         public void Setup()
         {
+            _gameContext = new Context();
             _fakeGameProcess = Substitute.For<IGameProcess>();
-            _controller = new HomeController(_fakeGameProcess);
+            _controller = new HomeController(_fakeGameProcess, () => _gameContext);
         }
 
         [TestMethod]
@@ -59,9 +61,24 @@ namespace MasterMind.Web.Tests.Controllers
         }
 
         [TestMethod]
+        public void SetupShouldReturnAnEmptyResultVM()
+        {
+            //Arrange
+            _gameContext.MaxAttempts = 12;
+
+            //Act
+            var results = _controller.Setup(6).Data;
+
+            //Assert
+            results.Should().BeAssignableTo<GuessResultVM>();
+            (results as GuessResultVM).MaxAttempts.Should().Be(12);
+        }
+
+        [TestMethod]
         public void GuessShouldReturnGuessResultsToClient()
         {
             //Arrange
+            _gameContext.MaxAttempts = 12;
             var expectedResults = Builder<FullGuessResultRow>.CreateListOfSize(2).Build().ToArray();
             _fakeGameProcess.Guess(Arg.Any<string>()).Returns(expectedResults);
             _fakeGameProcess.IsAWin.Returns(true);
@@ -75,6 +92,7 @@ namespace MasterMind.Web.Tests.Controllers
             vm.Results.Should().BeEquivalentTo(expectedResults);
             vm.IsAWin.Should().BeTrue();
             vm.IsOver.Should().BeTrue();
+            vm.MaxAttempts.Should().Be(12);
         }
     }
 }
