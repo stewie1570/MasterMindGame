@@ -1,5 +1,7 @@
 ﻿using MasterMind.Core;
 using MasterMind.Core.Models;
+using System;
+using System.Linq;
 
 namespace MasterMind.Web.ViewModels.Extensions
 {
@@ -12,8 +14,23 @@ namespace MasterMind.Web.ViewModels.Extensions
                 Results = results,
                 IsOver = gameProcess.IsOver,
                 IsAWin = gameProcess.IsAWin,
-                MaxAttempts = gameContext.MaxAttempts
+                MaxAttempts = gameContext.MaxAttempts,
+                Actual = gameProcess.IsOver ? gameContext.Actual : null,
+                TotalTimeLapse = gameProcess.IsOver ? TotalTimeSpanFrom(gameContext) : TimeSpan.FromTicks(0)
             };
         }
+
+        #region Helpers
+
+        private static TimeSpan TotalTimeSpanFrom(Context gameContext)
+        {
+            return (gameContext.Results == null)
+                ? TimeSpan.FromTicks(0)
+                : (gameContext.Results.Count >= 2)
+                    ? gameContext.Results.Last().TimeStamp - gameContext.Results.First().TimeStamp
+                    : TimeSpan.FromTicks(0);
+        }
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MasterMind.Core.Models;
+using System;
 
 namespace MasterMind.Web.ViewModels
 {
@@ -8,5 +9,7 @@ namespace MasterMind.Web.ViewModels
         public bool IsOver { get; set; }
         public bool IsAWin { get; set; }
         public int MaxAttempts { get; set; }
+        public Guess[] Actual { get; set; }
+        public TimeSpan TotalTimeLapse { get; set; }
     }
 }

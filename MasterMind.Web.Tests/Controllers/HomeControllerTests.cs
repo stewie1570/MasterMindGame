@@ -1,11 +1,13 @@
 ﻿using MasterMind.Core;
 using MasterMind.Core.Models;
+using MasterMind.Core.Models.Extensions;
 using MasterMind.Web.Controllers;
 using MasterMind.Web.ViewModels;
 using MasterMind.Web.Exceptions;
 using System;
-using System.Web.Mvc;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using NSubstitute;
@@ -72,6 +74,42 @@ namespace MasterMind.Web.Tests.Controllers
             //Assert
             results.Should().BeAssignableTo<GuessResultVM>();
             (results as GuessResultVM).MaxAttempts.Should().Be(12);
+        }
+
+        [TestMethod]
+        public void ShouldShowActualAndTotalTimeWhenGameIsOver()
+        {
+            //Arrange
+            _fakeGameProcess.IsOver.Returns(true);
+            _gameContext.Actual = "rrrr".ToGuessArray();
+            _gameContext.Results = new List<FullGuessResultRow>();
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:00 am") });
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:05 am") });
+
+            //Act
+            var results = _controller.Guess("bbbb").Data as GuessResultVM;
+
+            //Assert
+            results.Actual.Should().BeEquivalentTo("rrrr".ToGuessArray());
+            results.TotalTimeLapse.Should().Be(TimeSpan.FromMinutes(5));
+        }
+
+        [TestMethod]
+        public void ShouldNotShowActualOrTotalTimeWhenGameIsNotOver()
+        {
+            //Arrange
+            _fakeGameProcess.IsOver.Returns(false);
+            _gameContext.Actual = "rrrr".ToGuessArray();
+            _gameContext.Results = new List<FullGuessResultRow>();
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:00 am") });
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:05 am") });
+
+            //Act
+            var results = _controller.Guess("bbbb").Data as GuessResultVM;
+
+            //Assert
+            results.Actual.Should().BeNull();
+            results.TotalTimeLapse.Should().Be(TimeSpan.FromMinutes(0));
         }
 
         [TestMethod]

@@ -28,7 +28,6 @@
             <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
             </div>
             <!-- /ko -->
-
             <!-- ko foreach: Result -->
             <div data-bind="style: {backgroundColor: constants.resultColors[$data]}" class="result-peg">
             </div>
@@ -63,11 +62,22 @@
 
             <button data-bind="click: pegAction" class="command float-right">Backspace</button>
         </div>
-
         <div class="clear"></div>
     </div>
 
-    <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">You Win</h2>
+    <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
+        <!-- ko foreach: serverVm().Actual -->
+        <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+        </div>
+        <!-- /ko -->
+        <div class="clear"></div>
+    </div>
+
+    <br />
+
+    <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
+        You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.Seconds + ' seconds' : ''"></span>
+    </h2>
     <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
 
     <br />
