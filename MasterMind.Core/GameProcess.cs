@@ -23,8 +23,10 @@ namespace MasterMind.Core
             _context = contextProvider();
             _timeProvider = timeProvider;
             _actualProvider = actualProvider;
-            _context.Results = IsActualInvalidInContext() ? new List<FullGuessResultRow>() : _context.Results;
-            _context.Actual = IsActualInvalidInContext() ? _actualProvider(_context.GuessWidth) : _context.Actual;
+
+            bool isActualInvalidInContext = IsActualInvalidInContext();
+            _context.Results = isActualInvalidInContext ? new List<FullGuessResultRow>() : _context.Results;
+            _context.Actual = isActualInvalidInContext ? _actualProvider(_context.GuessWidth) : _context.Actual;
         }
 
         public FullGuessResultRow[] Guess(string guessString)
@@ -39,7 +41,7 @@ namespace MasterMind.Core
                     Result = _resultLogic.ResultFrom(guess, _context.Actual),
                     Guess = guess,
                     TimeStamp = currentTime,
-                    TimeLapse = _context.Results.Count > 0 ? currentTime - _context.Results.Last().TimeStamp : TimeSpan.FromTicks(0)
+                    TimeLapse = TimeLapseFrom(currentTime)
                 });
             }
 
@@ -67,6 +69,11 @@ namespace MasterMind.Core
         }
 
         #region Helpers
+
+        private TimeSpan TimeLapseFrom(DateTime currentTime)
+        {
+            return _context.Results.Count > 0 ? currentTime - _context.Results.Last().TimeStamp : TimeSpan.FromTicks(0);
+        }
 
         private bool IsActualInvalidInContext()
         {
