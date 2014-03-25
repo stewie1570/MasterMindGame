@@ -75,10 +75,10 @@
 
     <br />
 
-    <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
+    <h3 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
         You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds' : ''"></span>
-    </h2>
-    <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
+    </h3>
+    <h3 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h3>
 
     <br />
 
