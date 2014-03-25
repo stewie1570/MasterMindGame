@@ -76,7 +76,7 @@
     <br />
 
     <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
-        You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.Seconds + ' seconds' : ''"></span>
+        You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds' : ''"></span>
     </h2>
     <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
 
