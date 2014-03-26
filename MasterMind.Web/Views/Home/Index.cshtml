@@ -24,6 +24,8 @@
 
     <div class="result-outer-container" data-bind="visible: isSetup()">
         <div data-bind="foreach: serverVm().Results">
+            <div data-bind="text: ($index() + 1)" class="line-number"></div>
+
             <!-- ko foreach: Guess -->
             <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
             </div>
@@ -66,11 +68,13 @@
     </div>
 
     <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
-        <!-- ko foreach: serverVm().Actual -->
-        <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+        <div class="actual-container">
+            <!-- ko foreach: serverVm().Actual -->
+            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+            </div>
+            <!-- /ko -->
+            <div class="clear"></div>
         </div>
-        <!-- /ko -->
-        <div class="clear"></div>
     </div>
 
     <br />
