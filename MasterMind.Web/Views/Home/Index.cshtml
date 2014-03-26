@@ -35,7 +35,7 @@
             </div>
             <!-- /ko -->
 
-            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.TimeLapse.Seconds + ' sec'" class="guess-time"></div>
+            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.TimeLapse.TotalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
 
             <div class="clear"></div>
         </div>
