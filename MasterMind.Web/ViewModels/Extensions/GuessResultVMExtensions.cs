@@ -27,11 +27,11 @@ namespace MasterMind.Web.ViewModels.Extensions
 
         #region Helpers
 
-        private static int CalculateScoreFrom(int colorCount, TimeSpan totalTimeLaps, int actualWidth)
+        private static int CalculateScoreFrom(int colorCount, TimeSpan totalTimeLapse, int actualWidth)
         {
-            if (totalTimeLaps == TimeSpan.FromTicks(0))
+            if (totalTimeLapse == TimeSpan.FromTicks(0))
                 return 1000;
-            return (int)((1 / (0.001 * totalTimeLaps.TotalSeconds)) * (double)colorCount * ((double)actualWidth / 2));
+            return (int)((1 / (0.001 * totalTimeLapse.TotalSeconds)) * (double)colorCount * ((double)actualWidth / 2));
         }
 
         private static TimeSpan TotalTimeSpanFrom(Context gameContext)
