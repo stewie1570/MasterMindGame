@@ -46,6 +46,13 @@
     margin-left: 4px;
 }
 
+.result-points
+{
+    font-weight: bold;
+    color: green;
+    font-size: 30px;
+}
+
 .result-table-div
 {
     text-align: center;
