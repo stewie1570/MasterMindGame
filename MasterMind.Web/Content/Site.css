@@ -1,9 +1,11 @@
-﻿.game-container{
+﻿.game-container
+{
     display: inline-table;
     white-space: nowrap;
 }
 
-.line-number{
+.line-number
+{
     float: left;
     color: lightblue;
     margin-top: 4px;
@@ -12,7 +14,8 @@
     text-align: right;
 }
 
-.guess-peg {
+.guess-peg
+{
     width: 20px;
     height: 20px;
     border-radius: 5px;
@@ -21,7 +24,8 @@
     margin: 2px;
 }
 
-.guess-time{
+.guess-time
+{
     color: white;
     font-weight: bold;
     float: right;
@@ -31,7 +35,8 @@
     text-align: right;
 }
 
-.result-peg {
+.result-peg
+{
     width: 6px;
     height: 6px;
     border-radius: 3px;
@@ -41,46 +46,65 @@
     margin-left: 4px;
 }
 
-.actual-container{
+.result-table-div
+{
+    text-align: center;
+}
+
+.result-table
+{
+    width: 100%;
+}
+
+.actual-container
+{
     display: table;
     margin-left: 22px;
 }
 
-.result-outer-container {
+.result-outer-container
+{
     background-color: black;
     border-radius: 5px;
     padding: 6px;
 }
 
-.guess-outer-container {
+.guess-outer-container
+{
     background-color: darkgray;
     border-radius: 5px;
     padding: 6px;
 }
 
-.guess-inner-container{
+.guess-inner-container
+{
     padding-left: 22px;
     height: 26px;
 }
 
-.clear {
+.clear
+{
     float: none;
     clear: both;
 }
 
-.float-right{
+.float-right
+{
     float: right;
 }
 
-.align-center{
+.align-center
+{
     text-align: center;
 }
 
-.command{
+.command
+{
     cursor: pointer;
 }
 
-body {
+body
+{
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
@@ -88,61 +112,84 @@ body {
     text-align: center;
 }
 
-header, footer, nav, section {
+header, footer, nav, section
+{
     display: block;
 }
 
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
-h2{
-    text-align: center
+
+th
+{
+    text-align: left;
 }
 
-fieldset {
+td
+{
+    text-align: right;
+}
+
+h2
+{
+    text-align: center;
+}
+
+fieldset
+{
     border: 1px solid #ddd;
     padding: 0 1.4em 1.4em 1.4em;
     margin: 0 0 1.5em 0;
 }
 
-legend {
+legend
+{
     font-size: 1.2em;
     font-weight: bold;
 }
 
-textarea {
+textarea
+{
     min-height: 75px;
 }
 
-.editor-label {
+.editor-label
+{
     margin: 1em 0 0 0;
 }
 
-.editor-field {
+.editor-field
+{
     margin: 0.5em 0 0 0;
 }
 
 
 /* Styles for validation helpers
 -----------------------------------------------------------*/
-.field-validation-error {
+.field-validation-error
+{
     color: #f00;
 }
 
-.field-validation-valid {
+.field-validation-valid
+{
     display: none;
 }
 
-.input-validation-error {
+.input-validation-error
+{
     border: 1px solid #f00;
     background-color: #fee;
 }
 
-.validation-summary-errors {
+.validation-summary-errors
+{
     font-weight: bold;
     color: #f00;
 }
 
-.validation-summary-valid {
+.validation-summary-valid
+{
     display: none;
 }
