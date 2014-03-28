@@ -167,7 +167,7 @@ namespace MasterMind.Web.Tests.Controllers
         }
 
         [TestMethod]
-        public void ZeroTimeSpanShouldNotCrashScoringAndShouldReturn1000points()
+        public void ZeroTimeSpanShouldNotCrashScoring()
         {
             //Arrange
             _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
@@ -178,7 +178,7 @@ namespace MasterMind.Web.Tests.Controllers
             var results = _controller.Guess("rbry").Data as GuessResultVM;
 
             //Assert
-            results.Score.Should().Be(1000);
+            results.Score.Should().Be(_fakeGameProcess.Actual.Length * 100);
         }
     }
 }

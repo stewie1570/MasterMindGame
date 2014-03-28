@@ -30,7 +30,7 @@ namespace MasterMind.Web.ViewModels.Extensions
         private static int CalculateScoreFrom(int colorCount, TimeSpan totalTimeLapse, int actualWidth)
         {
             if (totalTimeLapse == TimeSpan.FromTicks(0))
-                return 1000;
+                return actualWidth * 100;
             return (int)((1 / (0.001 * totalTimeLapse.TotalSeconds)) * (double)colorCount * ((double)actualWidth / 2));
         }
 
