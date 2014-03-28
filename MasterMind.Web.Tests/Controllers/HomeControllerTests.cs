@@ -165,5 +165,20 @@ namespace MasterMind.Web.Tests.Controllers
             //Assert
             results.Score.Should().Be(120);
         }
+
+        [TestMethod]
+        public void ZeroTimeSpanShouldNotCrashScoringAndShouldReturn1000points()
+        {
+            //Arrange
+            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
+            _fakeGameProcess.IsOver.Returns(true);
+            _gameContext.Results = new List<FullGuessResultRow>();
+
+            //Act
+            var results = _controller.Guess("rbry").Data as GuessResultVM;
+
+            //Assert
+            results.Score.Should().Be(1000);
+        }
     }
 }
