@@ -163,7 +163,7 @@ namespace MasterMind.Web.Tests.Controllers
             var results = _controller.Guess("rbry").Data as GuessResultVM;
 
             //Assert
-            results.Score.Should().Be(120);
+            results.Score.Should().Be(96);
         }
 
         [TestMethod]

@@ -31,7 +31,13 @@ namespace MasterMind.Web.ViewModels.Extensions
         {
             if (totalTimeLapse == TimeSpan.FromTicks(0))
                 return actualWidth * 100;
-            return (int)((1 / (0.001 * totalTimeLapse.TotalSeconds)) * (double)colorCount * ((double)actualWidth / 2));
+
+            return (int)
+                (
+                    (1 / (0.001 * totalTimeLapse.TotalSeconds))
+                    * (double)colorCount
+                    * 0.4 * (double)actualWidth
+                );
         }
 
         private static TimeSpan TotalTimeSpanFrom(Context gameContext)
