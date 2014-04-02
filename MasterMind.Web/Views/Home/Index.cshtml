@@ -70,7 +70,7 @@
     <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
         <div class="actual-container">
             <!-- ko foreach: serverVm().Actual -->
-            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="peg-guess">
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
             </div>
             <!-- /ko -->
             <div class="clear"></div>
