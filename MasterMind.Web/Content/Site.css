@@ -12,13 +12,55 @@
     text-align: right;
 }
 
-.guess-peg {
+.peg-guess {
     width: 20px;
     height: 20px;
     border-radius: 5px;
-    border: 1px solid white;
     float: left;
     margin: 2px;
+}
+
+.peg-result {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    float: left;
+    margin-top: 9px;
+    margin-left: 4px;
+}
+
+.peg-color-empty {
+    border: 1px solid #f0f0f0;
+}
+
+.peg-color-red{
+    background-color: red;
+    padding: 1px;
+}
+
+.peg-color-blue{
+    background-color: blue;
+    padding: 1px;
+}
+
+.peg-color-green{
+    background-color: green;
+    padding: 1px;
+}
+
+.peg-color-yellow{
+    background-color: yellow;
+    padding: 1px;
+}
+
+.peg-color-purple{
+    background-color: purple;
+    padding: 1px;
+}
+
+.peg-color-white{
+    background-color: white;
+    padding: 1px;
 }
 
 .guess-time{
@@ -29,16 +71,6 @@
     margin-top: 2px;
     width: 50px;
     text-align: right;
-}
-
-.result-peg {
-    width: 6px;
-    height: 6px;
-    border-radius: 3px;
-    border: 1px solid white;
-    float: left;
-    margin-top: 9px;
-    margin-left: 4px;
 }
 
 .actual-container{

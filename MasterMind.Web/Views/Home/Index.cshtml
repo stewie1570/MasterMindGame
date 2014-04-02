@@ -27,11 +27,11 @@
             <div data-bind="text: ($index() + 1)" class="line-number"></div>
 
             <!-- ko foreach: Guess -->
-            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
             </div>
             <!-- /ko -->
             <!-- ko foreach: Result -->
-            <div data-bind="style: {backgroundColor: constants.resultColors[$data]}" class="result-peg">
+            <div data-bind="attr: {class: 'peg-result peg-color-' + constants.resultColors[$data]}">
             </div>
             <!-- /ko -->
 
@@ -46,7 +46,7 @@
             <span data-bind="visible: currentGuess().length == 0">[Click Pegs Below to Guess]</span>
 
             <!-- ko foreach: currentGuess -->
-            <div data-bind="style: {backgroundColor: $data}" class="guess-peg">
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + $data}">
             </div>
             <!-- /ko -->
 
@@ -58,7 +58,7 @@
 
         <div>
             <!-- ko foreach: constants.guessColors -->
-            <div data-bind="style: {backgroundColor: $data}, click: $parent.pegAction" class="guess-peg command">
+            <div data-bind="attr: {class: 'peg-guess command peg-color-' + $data}, click: $parent.pegAction">
             </div>
             <!-- /ko -->
 
@@ -70,7 +70,7 @@
     <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
         <div class="actual-container">
             <!-- ko foreach: serverVm().Actual -->
-            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="peg-guess">
             </div>
             <!-- /ko -->
             <div class="clear"></div>
