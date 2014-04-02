@@ -11,5 +11,7 @@ namespace MasterMind.Web.ViewModels
         public int MaxAttempts { get; set; }
         public Guess[] Actual { get; set; }
         public TimeSpan TotalTimeLapse { get; set; }
+        public int? ColorCount { get; set; }
+        public int? Score { get; set; }
     }
 }

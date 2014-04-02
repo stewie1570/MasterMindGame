@@ -1,9 +1,9 @@
-﻿.game-container{
+﻿.game-container {
     display: inline-table;
     white-space: nowrap;
 }
 
-.line-number{
+.line-number {
     float: left;
     color: lightblue;
     margin-top: 4px;
@@ -33,37 +33,37 @@
     border: 1px solid #f0f0f0;
 }
 
-.peg-color-red{
+.peg-color-red {
     background-color: red;
     padding: 1px;
 }
 
-.peg-color-blue{
+.peg-color-blue {
     background-color: blue;
     padding: 1px;
 }
 
-.peg-color-green{
+.peg-color-green {
     background-color: green;
     padding: 1px;
 }
 
-.peg-color-yellow{
+.peg-color-yellow {
     background-color: yellow;
     padding: 1px;
 }
 
-.peg-color-purple{
+.peg-color-purple {
     background-color: purple;
     padding: 1px;
 }
 
-.peg-color-white{
+.peg-color-white {
     background-color: white;
     padding: 1px;
 }
 
-.guess-time{
+.guess-time {
     color: white;
     font-weight: bold;
     float: right;
@@ -73,7 +73,31 @@
     text-align: right;
 }
 
-.actual-container{
+.result-peg {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    border: 1px solid white;
+    float: left;
+    margin-top: 9px;
+    margin-left: 4px;
+}
+
+.result-points {
+    font-weight: bold;
+    color: green;
+    font-size: 30px;
+}
+
+.result-table-div {
+    text-align: center;
+}
+
+.result-table {
+    width: 100%;
+}
+
+.actual-container {
     display: table;
     margin-left: 22px;
 }
@@ -90,7 +114,7 @@
     padding: 6px;
 }
 
-.guess-inner-container{
+.guess-inner-container {
     padding-left: 22px;
     height: 26px;
 }
@@ -100,15 +124,15 @@
     clear: both;
 }
 
-.float-right{
+.float-right {
     float: right;
 }
 
-.align-center{
+.align-center {
     text-align: center;
 }
 
-.command{
+.command {
     cursor: pointer;
 }
 
@@ -127,8 +151,17 @@ header, footer, nav, section {
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
-h2{
-    text-align: center
+
+th {
+    text-align: left;
+}
+
+td {
+    text-align: right;
+}
+
+h2 {
+    text-align: center;
 }
 
 fieldset {

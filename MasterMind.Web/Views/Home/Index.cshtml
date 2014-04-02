@@ -79,9 +79,32 @@
 
     <br />
 
-    <h3 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
-        You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds' : ''"></span>
+    <h3 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">You Win!!!
     </h3>
+
+    <div data-bind="visible: serverVm().IsOver && serverVm().IsAWin" class="result-table-div">
+        <table class="result-table">
+            <tr>
+                <th>Total Seconds</th>
+                <td>
+                    <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) : ''"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Different Colors</th>
+                <td>
+                    <span data-bind="text: serverVm().ColorCount != undefined ? serverVm().ColorCount : ''"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Total Points</th>
+                <td class="result-points">
+                    <span data-bind="text: serverVm().Score != undefined ? serverVm().Score : ''"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <h3 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h3>
 
     <br />
