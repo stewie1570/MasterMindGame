@@ -1,10 +1,9 @@
 ﻿using MasterMind.Core.Models;
-using System;
 using System.Linq;
 
 namespace MasterMind.Core
 {
-    public class GuessResultLogic
+    public class GuessResultLogic : IGuessResultLogic
     {
         public GuessResult[] ResultFrom(Guess[] guess, Guess[] actual)
         {

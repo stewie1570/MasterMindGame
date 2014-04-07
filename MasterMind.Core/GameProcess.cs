@@ -8,21 +8,28 @@ namespace MasterMind.Core
 {
     public class GameProcess : IGameProcess
     {
-        private GuessResultLogic _resultLogic = new GuessResultLogic();
+        private IGuessResultLogic _resultLogic;
         private Context _context;
         private Func<int, Guess[]> _actualProvider;
         private Func<DateTime> _timeProvider;
 
         public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
-            : this(contextProvider, actualProvider, () => DateTime.Now)
-        {
-        }
+            : this(contextProvider, actualProvider, () => DateTime.Now) { }
 
-        public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider, Func<DateTime> timeProvider)
+        public GameProcess(Func<Context> contextProvider,
+           Func<int, Guess[]> actualProvider,
+           Func<DateTime> timeProvider)
+            : this(contextProvider, actualProvider, timeProvider, new GuessResultLogic()) { }
+
+        public GameProcess(Func<Context> contextProvider,
+            Func<int, Guess[]> actualProvider,
+            Func<DateTime> timeProvider,
+            IGuessResultLogic resultLogic)
         {
             _context = contextProvider();
             _timeProvider = timeProvider;
             _actualProvider = actualProvider;
+            _resultLogic = resultLogic;
 
             bool isActualInvalidInContext = IsActualInvalidInContext();
             _context.Results = isActualInvalidInContext ? new List<FullGuessResultRow>() : _context.Results;
