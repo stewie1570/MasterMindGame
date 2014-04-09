@@ -14,15 +14,13 @@ namespace MasterMind.Web.Controllers
     {
         private IGameProcess _gameProcess;
         private Func<Context> _contextProvider;
-        private IntegerRange _acceptableGuessWidthRange;
-        private IntegerRange _acceptableMaxAttemptsRange;
+        private IntegerRange _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
+        private IntegerRange _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
 
         public HomeController(IGameProcess gameProcess, Func<Context> contextProvider)
         {
             _gameProcess = gameProcess;
             _contextProvider = contextProvider;
-            _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
-            _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
         }
 
         public ActionResult Index()
