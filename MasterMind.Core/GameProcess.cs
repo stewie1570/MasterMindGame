@@ -14,7 +14,7 @@ namespace MasterMind.Core
         private Func<DateTime> _timeProvider;
 
         public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
-            : this(contextProvider, actualProvider, () => DateTime.Now) { }
+            : this(contextProvider, actualProvider, () => DateTime.UtcNow) { }
 
         public GameProcess(Func<Context> contextProvider,
            Func<int, Guess[]> actualProvider,
