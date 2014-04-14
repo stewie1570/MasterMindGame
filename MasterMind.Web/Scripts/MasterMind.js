@@ -3,7 +3,7 @@
     resultColors: ["red", "white", "empty"]
 };
 
-var GameViewModel = function (serverVm)
+var GameViewModel = function (serverVm, pubsub)
 {
     var self = this;
     this.initialServerVM = serverVm;
@@ -35,7 +35,7 @@ var GameViewModel = function (serverVm)
     {
         self.isCommunicating(true);
         $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
-            .done(self.bindHelpers.bindServerResults);
+            .done(self.binders.bindServerResults);
     }
 
     this.setupGame = function (width)
@@ -50,13 +50,13 @@ var GameViewModel = function (serverVm)
                     alert(data.Message);
                 else
                 {
-                    self.bindHelpers.bindServerResults(data);
+                    self.binders.bindServerResults(data);
                     self.isSetup(true);
                 }
             });
     }
 
-    this.bindHelpers = {
+    this.binders = {
         bindServerResults: function (data)
         {
             self.isCommunicating(false);
@@ -67,6 +67,9 @@ var GameViewModel = function (serverVm)
             data.Results = self.helpers.padRight(data.Results, data.MaxAttempts, filler);
             self.serverVm(data);
             self.currentGuess([]);
+
+            if (data.IsAWin && pubsub)
+                pubsub.publish("thinkquick:win", data);
         }
     };
 

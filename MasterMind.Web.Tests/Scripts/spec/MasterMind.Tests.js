@@ -33,6 +33,50 @@ describe("MasterMind", function ()
             expect(postUrl).toBe("Home/Guess");
             expect(postData).toEqual({ guess: "rgbr" });
         });
+
+        describe("Solved", function ()
+        {
+            it("should publish a win event with details of the win", function ()
+            {
+                //Arrange
+                var pubsub = new Pubsub();
+                var receivedObject = null;
+                pubsub.subscribe("thinkquick:win", function (data) { receivedObject = data; });
+                vm = new GameViewModel({}, pubsub);
+                var expectedWinContextObject = {
+                    IsOver: true,
+                    IsAWin: true,
+                    Score: 10,
+                    ColorCount: 4,
+                    TotalTimeLapse: 23.4
+                };
+                
+                //Act
+                vm.binders.bindServerResults(expectedWinContextObject);
+
+                //Arrange
+                expect(receivedObject).toBe(expectedWinContextObject);
+            });
+        });
+
+        describe("Lost", function ()
+        {
+            it("should publish a win event with details of the win", function ()
+            {
+                //Arrange
+                var pubsub = new Pubsub();
+                var callbackCalled = false;
+                pubsub.subscribe("thinkquick:win", function (data) { callbackCalled = true; });
+                vm = new GameViewModel({}, pubsub);
+                var expectedWinContextObject = {};
+
+                //Act
+                vm.binders.bindServerResults(expectedWinContextObject);
+
+                //Arrange
+                expect(callbackCalled).toBeFalsy();
+            });
+        });
     });
 
     describe("Helpers", function ()
