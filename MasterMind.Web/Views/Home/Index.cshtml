@@ -24,16 +24,18 @@
 
     <div class="result-outer-container" data-bind="visible: isSetup()">
         <div data-bind="foreach: serverVm().Results">
+            <div data-bind="text: ($index() + 1)" class="line-number"></div>
+
             <!-- ko foreach: Guess -->
-            <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
             </div>
             <!-- /ko -->
             <!-- ko foreach: Result -->
-            <div data-bind="style: {backgroundColor: constants.resultColors[$data]}" class="result-peg">
+            <div data-bind="attr: {class: 'peg-result peg-color-' + constants.resultColors[$data]}">
             </div>
             <!-- /ko -->
 
-            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.TimeLapse.Seconds + ' sec'" class="guess-time"></div>
+            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.TimeLapse.TotalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
 
             <div class="clear"></div>
         </div>
@@ -44,7 +46,7 @@
             <span data-bind="visible: currentGuess().length == 0">[Click Pegs Below to Guess]</span>
 
             <!-- ko foreach: currentGuess -->
-            <div data-bind="style: {backgroundColor: $data}" class="guess-peg">
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + $data}">
             </div>
             <!-- /ko -->
 
@@ -56,7 +58,7 @@
 
         <div>
             <!-- ko foreach: constants.guessColors -->
-            <div data-bind="style: {backgroundColor: $data}, click: $parent.pegAction" class="guess-peg command">
+            <div data-bind="attr: {class: 'peg-guess command peg-color-' + $data}, click: $parent.pegAction">
             </div>
             <!-- /ko -->
 
@@ -66,19 +68,45 @@
     </div>
 
     <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
-        <!-- ko foreach: serverVm().Actual -->
-        <div data-bind="style: {backgroundColor: constants.guessColors[$data]}" class="guess-peg">
+        <div class="actual-container">
+            <!-- ko foreach: serverVm().Actual -->
+            <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
+            </div>
+            <!-- /ko -->
+            <div class="clear"></div>
         </div>
-        <!-- /ko -->
-        <div class="clear"></div>
     </div>
 
     <br />
 
-    <h2 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
-        You Win!!! - <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds' : ''"></span>
-    </h2>
-    <h2 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h2>
+    <h3 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
+        Solved!!!
+    </h3>
+
+    <div data-bind="visible: serverVm().IsOver && serverVm().IsAWin" class="result-table-div">
+        <table class="result-table">
+            <tr>
+                <th>Total Seconds</th>
+                <td>
+                    <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) : ''"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Distinct Colors</th>
+                <td>
+                    <span data-bind="text: serverVm().ColorCount != undefined ? serverVm().ColorCount : ''"></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Total Points</th>
+                <td class="result-points">
+                    <span data-bind="text: serverVm().Score != undefined ? serverVm().Score : ''"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <h3 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h3>
 
     <br />
 

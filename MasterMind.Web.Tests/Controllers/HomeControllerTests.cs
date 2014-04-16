@@ -95,7 +95,7 @@ namespace MasterMind.Web.Tests.Controllers
         }
 
         [TestMethod]
-        public void ShouldNotShowActualOrTotalTimeWhenGameIsNotOver()
+        public void CertainFieldsShouldNotBePresentWhenGameIsNotOver()
         {
             //Arrange
             _fakeGameProcess.IsOver.Returns(false);
@@ -110,6 +110,8 @@ namespace MasterMind.Web.Tests.Controllers
             //Assert
             results.Actual.Should().BeNull();
             results.TotalTimeLapse.Should().Be(TimeSpan.FromMinutes(0));
+            results.ColorCount.Should().Be(null);
+            results.Score.Should().Be(null);
         }
 
         [TestMethod]
@@ -131,6 +133,52 @@ namespace MasterMind.Web.Tests.Controllers
             vm.IsAWin.Should().BeTrue();
             vm.IsOver.Should().BeTrue();
             vm.MaxAttempts.Should().Be(12);
+        }
+
+        [TestMethod]
+        public void FinalResultShouldIncludeColorCount()
+        {
+            //Arrange
+            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
+            _fakeGameProcess.IsOver.Returns(true);
+
+            //Act
+            var results = _controller.Guess("rbry").Data as GuessResultVM;
+
+            //Assert
+            results.ColorCount.Should().Be(3);
+        }
+
+        [TestMethod]
+        public void FinalResultShouldIncludeScore()
+        {
+            //Arrange
+            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
+            _fakeGameProcess.IsOver.Returns(true);
+            _gameContext.Results = new List<FullGuessResultRow>();
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 1:00:00 pm") });
+            _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 1:00:50 pm") });
+
+            //Act
+            var results = _controller.Guess("rbry").Data as GuessResultVM;
+
+            //Assert
+            results.Score.Should().Be(96);
+        }
+
+        [TestMethod]
+        public void ZeroTimeSpanShouldNotCrashScoring()
+        {
+            //Arrange
+            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
+            _fakeGameProcess.IsOver.Returns(true);
+            _gameContext.Results = new List<FullGuessResultRow>();
+
+            //Act
+            var results = _controller.Guess("rbry").Data as GuessResultVM;
+
+            //Assert
+            results.Score.Should().Be(_fakeGameProcess.Actual.Length * 100);
         }
     }
 }

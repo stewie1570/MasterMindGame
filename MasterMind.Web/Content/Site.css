@@ -1,23 +1,76 @@
-﻿.game-container{
+﻿.game-container {
     display: inline-table;
     white-space: nowrap;
 }
 
-.guess-peg {
+.line-number {
+    float: left;
+    color: lightblue;
+    margin-top: 4px;
+    margin-right: 2px;
+    width: 20px;
+    text-align: right;
+}
+
+.peg-guess {
     width: 20px;
     height: 20px;
     border-radius: 5px;
-    border: 1px solid white;
     float: left;
     margin: 2px;
 }
 
-.guess-time{
+.peg-result {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    float: left;
+    margin-top: 9px;
+    margin-left: 4px;
+}
+
+.peg-color-empty {
+    border: 1px solid #f0f0f0;
+}
+
+.peg-color-red {
+    background-color: red;
+    padding: 1px;
+}
+
+.peg-color-blue {
+    background-color: blue;
+    padding: 1px;
+}
+
+.peg-color-green {
+    background-color: green;
+    padding: 1px;
+}
+
+.peg-color-yellow {
+    background-color: yellow;
+    padding: 1px;
+}
+
+.peg-color-purple {
+    background-color: purple;
+    padding: 1px;
+}
+
+.peg-color-white {
+    background-color: white;
+    padding: 1px;
+}
+
+.guess-time {
     color: white;
     font-weight: bold;
     float: right;
     margin-left: 5px;
     margin-top: 2px;
+    width: 50px;
+    text-align: right;
 }
 
 .result-peg {
@@ -28,6 +81,25 @@
     float: left;
     margin-top: 9px;
     margin-left: 4px;
+}
+
+.result-points {
+    font-weight: bold;
+    color: green;
+    font-size: 30px;
+}
+
+.result-table-div {
+    text-align: center;
+}
+
+.result-table {
+    width: 100%;
+}
+
+.actual-container {
+    display: table;
+    margin-left: 22px;
 }
 
 .result-outer-container {
@@ -42,7 +114,8 @@
     padding: 6px;
 }
 
-.guess-inner-container{
+.guess-inner-container {
+    padding-left: 22px;
     height: 26px;
 }
 
@@ -51,15 +124,15 @@
     clear: both;
 }
 
-.float-right{
+.float-right {
     float: right;
 }
 
-.align-center{
+.align-center {
     text-align: center;
 }
 
-.command{
+.command {
     cursor: pointer;
 }
 
@@ -78,8 +151,17 @@ header, footer, nav, section {
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
-h2{
-    text-align: center
+
+th {
+    text-align: left;
+}
+
+td {
+    text-align: right;
+}
+
+h2 {
+    text-align: center;
 }
 
 fieldset {
