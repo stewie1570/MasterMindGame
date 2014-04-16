@@ -4,6 +4,28 @@
 
 describe("MasterMind", function ()
 {
+    describe("Setup", function ()
+    {
+        var vm = null;
+
+        beforeEach(function ()
+        {
+            vm = new GameViewModel({});
+        });
+
+        it("should calculate the level number from the width", function ()
+        {
+            //Arrange
+            $.post = function () { return { success: function () { } }; };
+
+            //Act
+            vm.setupGame(4)
+
+            //Assert
+            expect(vm.level()).toBe(3);
+        });
+    });
+
     describe("Send Guess", function ()
     {
         var vm = null;
@@ -92,15 +114,26 @@ describe("MasterMind", function ()
                     IsAWin: true,
                     Score: 10,
                     ColorCount: 4,
-                    TotalTimeLapse: 23.4
+                    TotalTimeLapse: 23.4,
+                    Level: 4
                 };
-                vm.serverVm = function () { return expectedWinContextObject; };
+                vm.level(4);
+                vm.serverVm = function ()
+                {
+                    return {
+                        IsOver: true,
+                        IsAWin: true,
+                        Score: 10,
+                        ColorCount: 4,
+                        TotalTimeLapse: 23.4
+                    };
+                };
 
                 //Act
                 vm.shareScore();
 
                 //Arrange
-                expect(receivedObject).toBe(expectedWinContextObject);
+                expect(receivedObject).toEqual(expectedWinContextObject);
             });
         });
     });

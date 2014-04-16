@@ -14,6 +14,7 @@ var GameViewModel = function (serverVm, pubsub)
     this.guessWidth = ko.observable(null);
     this.isSetup = ko.observable(false);
     this.isCommunicating = ko.observable(false);
+    this.level = ko.observable(0);
 
     this.pegAction = function (peg)
     {
@@ -44,6 +45,7 @@ var GameViewModel = function (serverVm, pubsub)
     {
         self.isCommunicating(true);
         self.guessWidth(width);
+        self.level(width - 1);
         $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {
@@ -60,7 +62,9 @@ var GameViewModel = function (serverVm, pubsub)
 
     this.shareScore = function ()
     {
-        pubsub.publish("thinkquick:sharescore", self.serverVm());
+        var vm = self.serverVm();
+        vm.Level = self.level();
+        pubsub.publish("thinkquick:sharescore", vm);
     }
 
     this.binders = {

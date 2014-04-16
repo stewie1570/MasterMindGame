@@ -8,7 +8,7 @@
             name: 'ThinkQuick',
             caption: 'Puzzle Solved',
             description: (
-                "Game Solved in " + data.TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds.\n' +
+                "Level " + data.Level + " solved in " + data.TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds.\n' +
                 data.ColorCount + " distinct colors.\n" +
                 data.Score + " POINTS"
             ),
