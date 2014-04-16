@@ -111,6 +111,15 @@
     <br />
 
     <div class="align-center">
-        <button data-bind="click: reset, visible: isSetup()" class="command">New Game</button>
+        <button
+            data-bind="click: reset, visible: isSetup()"
+            class="command">
+            New Game
+        </button>
+        <button
+            data-bind="click: postScore, visible: serverVm().IsOver && serverVm().IsAWin"
+            class="command">
+            Share My Score
+        </button>
     </div>
 </div>
