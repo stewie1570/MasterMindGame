@@ -5,21 +5,15 @@
 @Scripts.Render("~/bundles/mastermind")
 
 <div class="game-container">
-    <div data-bind="visible: !isSetup()">
-        <table>
-            <tr>
-                <th>Level</th>
-            </tr>
-            <tr>
-                <td>
-                    <ul data-bind="foreach: [2,3,4,5,6,7,8,9,10]">
-                        <li>
-                            <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 1)">Start Game</button>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </table>
+    <div data-bind="visible: !isSetup()" class="game-levels-container">
+        <!-- ko foreach: [2,3,4,5,6,7,8,9,10] -->
+            <button
+                data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 1)"
+                class="game-level-button">
+                Start Game
+            </button>
+            <br />
+        <!-- /ko -->
     </div>
 
     <div class="result-outer-container" data-bind="visible: isSetup()">

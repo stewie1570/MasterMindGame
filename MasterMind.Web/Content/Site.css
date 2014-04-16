@@ -1,4 +1,14 @@
-﻿.game-container {
+﻿.game-levels-container {
+    text-align: center;
+}
+
+.game-level-button{
+    width: 200px;
+    height: 30px;
+    margin: 2px;
+}
+
+.game-container {
     display: inline-table;
     white-space: nowrap;
 }
