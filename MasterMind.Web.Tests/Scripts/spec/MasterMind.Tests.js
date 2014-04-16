@@ -77,6 +77,32 @@ describe("MasterMind", function ()
                 expect(callbackCalled).toBeFalsy();
             });
         });
+
+        describe("Share Score", function ()
+        {
+            it("should publish a share score event with details of the win", function ()
+            {
+                //Arrange
+                var pubsub = new Pubsub();
+                var receivedObject = null;
+                pubsub.subscribe("thinkquick:sharescore", function (data) { receivedObject = data; });
+                vm = new GameViewModel({}, pubsub);
+                var expectedWinContextObject = {
+                    IsOver: true,
+                    IsAWin: true,
+                    Score: 10,
+                    ColorCount: 4,
+                    TotalTimeLapse: 23.4
+                };
+                vm.serverVm = function () { return expectedWinContextObject; };
+
+                //Act
+                vm.shareScore();
+
+                //Arrange
+                expect(receivedObject).toBe(expectedWinContextObject);
+            });
+        });
     });
 
     describe("Helpers", function ()
