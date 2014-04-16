@@ -1,6 +1,22 @@
 ﻿Facebook = function (pubsub)
 {
+    var self = this;
+
     pubsub.subscribe("thinkquick:sharescore", function (data)
+    {
+        FB.getLoginStatus(function (response)
+        {
+            if (response.status === 'connected')
+                self.postToFacebook(data);
+            else
+                FB.login(function (response)
+                {
+                    if (response.authResponse) self.postToFacebook(data);
+                });
+        });
+    });
+
+    this.postToFacebook = function (data)
     {
         FB.ui(
         {
@@ -14,7 +30,7 @@
             ),
             link: document.location.href
         }, function (response) { });
-    });
+    }
 }
 
 window.fbAsyncInit = function ()
