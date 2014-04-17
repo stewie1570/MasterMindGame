@@ -1,6 +1,4 @@
-﻿var pubsub = new Pubsub();
-
-var constants = {
+﻿var constants = {
     guessColors: ["empty", "red", "blue", "green", "yellow", "purple"],
     resultColors: ["red", "white", "empty"]
 };

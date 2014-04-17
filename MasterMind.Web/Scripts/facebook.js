@@ -21,7 +21,7 @@
         FB.ui(
         {
             method: 'feed',
-            name: 'ThinkQuick',
+            name: 'Think Quick',
             caption: 'Puzzle Solved',
             description: (
                 "Level " + data.Level + " solved in " + data.TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds.\n' +
