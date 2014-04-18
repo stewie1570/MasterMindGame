@@ -4,15 +4,22 @@
 
     pubsub.subscribe("thinkquick:sharescore", function (data)
     {
+        //FB.getLoginStatus(function (response)
+        //{
+        //    if (response.status === 'connected')
+        //        self.postToFacebook(data);
+        //    else
+        //        FB.login(function (response)
+        //        {
+        //            if (response.authResponse) self.postToFacebook(data);
+        //        });
+        //});
         FB.getLoginStatus(function (response)
         {
-            if (response.status === 'connected')
-                self.postToFacebook(data);
-            else
-                FB.login(function (response)
-                {
-                    if (response.authResponse) self.postToFacebook(data);
-                });
+            FB.login(function (response)
+            {
+                if (response.authResponse) self.postToFacebook(data);
+            });
         });
     });
 
