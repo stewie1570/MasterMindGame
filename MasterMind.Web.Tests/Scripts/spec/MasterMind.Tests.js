@@ -7,45 +7,64 @@ describe("MasterMind", function ()
     describe("Setup", function ()
     {
         var vm = null;
+        var pubsub = null;
 
         beforeEach(function ()
         {
-            vm = new GameViewModel({});
+            pubsub = new Pubsub();
+            vm = new GameViewModel({}, pubsub);
+            $.post = function () { return { success: function () { } }; };
         });
 
         it("should calculate the level number from the width", function ()
         {
             //Arrange
-            $.post = function () { return { success: function () { } }; };
-
             //Act
             vm.setupGame(4)
 
             //Assert
             expect(vm.level()).toBe(3);
         });
+
+        it("should publish a setup event to the pubsub", function ()
+        {
+            //Arrange
+            var recieved = null;
+            pubsub.subscribe("thinkquick:setup", function (data) { recieved = data; });
+
+            //Act
+            vm.setupGame(4)
+
+            //Assert
+            expect(recieved).toEqual({ level: 4 });
+        });
     });
 
     describe("Send Guess", function ()
     {
         var vm = null;
+        var postUrl = "";
+        var postData = {};
+        var pubsub = null;
 
         beforeEach(function ()
         {
-            vm = new GameViewModel({});
+            pubsub = new Pubsub();
+            postUrl = "";
+            postData = {};
+            window.$ = {};
+            window.$.post = function (url, data)
+            {
+                postUrl = url;
+                postData = data;
+                return { done: function () { } };
+            };
+            vm = new GameViewModel({}, pubsub);
         });
 
         it("should send the guess", function ()
         {
             //Arrange
-            window.$ = {};
-            var postUrl = "";
-            var postData = {};
-            $.post = function (url, data)
-            {
-                postUrl = url; postData = data;
-                return { done: function () { } };
-            };
             vm.currentGuess(["red", "green", "blue", "red"]);
 
             //Act
@@ -54,6 +73,19 @@ describe("MasterMind", function ()
             //Assert
             expect(postUrl).toBe("Home/Guess");
             expect(postData).toEqual({ guess: "rgbr" });
+        });
+
+        it("should publish send guess event", function ()
+        {
+            //Arrange
+            var received = false;
+            pubsub.subscribe("thinkquick:sendguess", function () { received = true; });
+
+            //Act
+            vm.sendGuess();
+
+            //Assert
+            expect(received).toBeTruthy();
         });
 
         describe("Solved", function ()
@@ -83,20 +115,34 @@ describe("MasterMind", function ()
 
         describe("Lost", function ()
         {
-            it("should publish a win event with details of the win", function ()
+            it("should not have published a win event", function ()
             {
                 //Arrange
                 var pubsub = new Pubsub();
                 var callbackCalled = false;
                 pubsub.subscribe("thinkquick:win", function (data) { callbackCalled = true; });
                 vm = new GameViewModel({}, pubsub);
-                var expectedWinContextObject = {};
 
                 //Act
-                vm.binders.bindServerResults(expectedWinContextObject);
+                vm.binders.bindServerResults({});
 
                 //Arrange
                 expect(callbackCalled).toBeFalsy();
+            });
+
+            it("should have published a lost event", function ()
+            {
+                //Arrange
+                var pubsub = new Pubsub();
+                var received = false;
+                pubsub.subscribe("thinkquick:lost", function (data) { received = true; });
+                vm = new GameViewModel({}, pubsub);
+
+                //Act
+                vm.binders.bindServerResults({});
+
+                //Arrange
+                expect(received).toBeTruthy();
             });
         });
 
