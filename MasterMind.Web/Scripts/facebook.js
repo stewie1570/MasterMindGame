@@ -29,7 +29,11 @@
                 data.Score + " POINTS"
             ),
             link: document.location.href
-        }, function (response) { });
+        }, function (response)
+        {
+            if (response && response.post_id)
+                pubsub.publish("thinkquick:sharescore:published", data);
+        });
     }
 }
 

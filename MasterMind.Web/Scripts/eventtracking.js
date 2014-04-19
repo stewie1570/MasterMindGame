@@ -7,6 +7,7 @@
     pubsub.subscribe("thinkquick:win", function (data) { self.track("Win", data.width); });
     pubsub.subscribe("thinkquick:lost", function (data) { self.track("Lost", data.width); });
     pubsub.subscribe("thinkquick:sharescore", function (data) { self.track("Share", data.width); });
+    pubsub.subscribe("thinkquick:sharescore:published", function (data) { self.track("Facebook Publish", data.width); });
 
     this.track = function (action, width)
     {
