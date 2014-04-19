@@ -101,7 +101,7 @@ describe("MasterMind", function ()
                 vm.guessWidth = function () { return 4; };
                 
                 //Act
-                vm.binders.bindServerResults({ IsAWin: true });
+                vm.binders.bindServerResults({ IsAWin: true, IsOver: true });
 
                 //Arrange
                 expect(received).toEqual({ width: 4 });
@@ -119,7 +119,7 @@ describe("MasterMind", function ()
                 vm = new GameViewModel({}, pubsub);
 
                 //Act
-                vm.binders.bindServerResults({});
+                vm.binders.bindServerResults({ IsOver: true });
 
                 //Arrange
                 expect(callbackCalled).toBeFalsy();
@@ -135,10 +135,26 @@ describe("MasterMind", function ()
                 vm.guessWidth = function () { return 4; };
 
                 //Act
-                vm.binders.bindServerResults({});
+                vm.binders.bindServerResults({ IsOver: true });
 
                 //Arrange
                 expect(received).toEqual({ width: 4 });
+            });
+
+            it("should not have published a lost event when the game isn't over yet", function ()
+            {
+                //Arrange
+                var pubsub = new Pubsub();
+                var received = false;
+                pubsub.subscribe("thinkquick:lost", function (data) { received = data; });
+                vm = new GameViewModel({}, pubsub);
+                vm.guessWidth = function () { return 4; };
+
+                //Act
+                vm.binders.bindServerResults({ IsOver: false });
+
+                //Arrange
+                expect(received).toBeFalsy();
             });
         });
 

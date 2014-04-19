@@ -80,7 +80,8 @@ var GameViewModel = function (serverVm, pubsub)
             self.serverVm(data);
             self.currentGuess([]);
 
-            pubsub.publish(data.IsAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
+            if (data.IsOver)
+                pubsub.publish(data.IsAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
         }
     };
 
