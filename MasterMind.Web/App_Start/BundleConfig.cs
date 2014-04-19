@@ -17,6 +17,7 @@ namespace MasterMind.Web
             bundles.Add(new ScriptBundle("~/bundles/mastermind").Include(
                 "~/Scripts/pubsub.js",
                 "~/Scripts/facebook.js",
+                "~/Scripts/eventtracking.js",
                 "~/Scripts/MasterMind.js",
                 "~/Scripts/bootstrapper.js"));
 

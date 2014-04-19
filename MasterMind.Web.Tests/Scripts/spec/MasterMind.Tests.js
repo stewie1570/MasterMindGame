@@ -26,7 +26,7 @@ describe("MasterMind", function ()
             expect(vm.level()).toBe(3);
         });
 
-        it("should publish a setup event to the pubsub", function ()
+        it("should publish a setup event to the pubsub with width", function ()
         {
             //Arrange
             var recieved = null;
@@ -36,7 +36,7 @@ describe("MasterMind", function ()
             vm.setupGame(4)
 
             //Assert
-            expect(recieved).toEqual({ level: 4 });
+            expect(recieved).toEqual({ width: 4 });
         });
     });
 
@@ -75,17 +75,18 @@ describe("MasterMind", function ()
             expect(postData).toEqual({ guess: "rgbr" });
         });
 
-        it("should publish send guess event", function ()
+        it("should publish send guess event with width", function ()
         {
             //Arrange
-            var received = false;
-            pubsub.subscribe("thinkquick:sendguess", function () { received = true; });
+            var received = null;
+            vm.guessWidth = function () { return 4; };
+            pubsub.subscribe("thinkquick:sendguess", function (data) { received = data; });
 
             //Act
             vm.sendGuess();
 
             //Assert
-            expect(received).toBeTruthy();
+            expect(received).toEqual({ width: 4 });
         });
 
         describe("Solved", function ()
@@ -94,22 +95,16 @@ describe("MasterMind", function ()
             {
                 //Arrange
                 var pubsub = new Pubsub();
-                var receivedObject = null;
-                pubsub.subscribe("thinkquick:win", function (data) { receivedObject = data; });
+                var received = null;
+                pubsub.subscribe("thinkquick:win", function (data) { received = data; });
                 vm = new GameViewModel({}, pubsub);
-                var expectedWinContextObject = {
-                    IsOver: true,
-                    IsAWin: true,
-                    Score: 10,
-                    ColorCount: 4,
-                    TotalTimeLapse: 23.4
-                };
+                vm.guessWidth = function () { return 4; };
                 
                 //Act
-                vm.binders.bindServerResults(expectedWinContextObject);
+                vm.binders.bindServerResults({ IsAWin: true });
 
                 //Arrange
-                expect(receivedObject).toBe(expectedWinContextObject);
+                expect(received).toEqual({ width: 4 });
             });
         });
 
@@ -134,15 +129,16 @@ describe("MasterMind", function ()
             {
                 //Arrange
                 var pubsub = new Pubsub();
-                var received = false;
-                pubsub.subscribe("thinkquick:lost", function (data) { received = true; });
+                var received = null;
+                pubsub.subscribe("thinkquick:lost", function (data) { received = data; });
                 vm = new GameViewModel({}, pubsub);
+                vm.guessWidth = function () { return 4; };
 
                 //Act
                 vm.binders.bindServerResults({});
 
                 //Arrange
-                expect(received).toBeTruthy();
+                expect(received).toEqual({ width: 4 });
             });
         });
 
@@ -161,9 +157,11 @@ describe("MasterMind", function ()
                     Score: 10,
                     ColorCount: 4,
                     TotalTimeLapse: 23.4,
-                    Level: 4
+                    Level: 4,
+                    width: 5
                 };
                 vm.level(4);
+                vm.guessWidth(5);
                 vm.serverVm = function ()
                 {
                     return {

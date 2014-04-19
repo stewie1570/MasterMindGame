@@ -37,7 +37,7 @@ var GameViewModel = function (serverVm, pubsub)
         self.isCommunicating(true);
         $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
             .done(self.binders.bindServerResults);
-        pubsub.publish("thinkquick:sendguess");
+        pubsub.publish("thinkquick:sendguess", { width: self.guessWidth() });
     }
 
     this.setupGame = function (width)
@@ -57,13 +57,14 @@ var GameViewModel = function (serverVm, pubsub)
                     self.isSetup(true);
                 }
             });
-        pubsub.publish("thinkquick:setup", { level: width });
+        pubsub.publish("thinkquick:setup", { width: width });
     }
 
     this.shareScore = function ()
     {
         var vm = self.serverVm();
         vm.Level = self.level();
+        vm.width = self.guessWidth();
         pubsub.publish("thinkquick:sharescore", vm);
     }
 
@@ -79,7 +80,7 @@ var GameViewModel = function (serverVm, pubsub)
             self.serverVm(data);
             self.currentGuess([]);
 
-            pubsub.publish(data.IsAWin ? "thinkquick:win" : "thinkquick:lost", data);
+            pubsub.publish(data.IsAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
         }
     };
 
