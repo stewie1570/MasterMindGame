@@ -36,7 +36,8 @@ var GameViewModel = function (serverVm, pubsub)
     {
         self.isCommunicating(true);
         $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
-            .done(self.binders.bindServerResults);
+            .success(self.binders.bindServerResults)
+            .fail(function () { self.isCommunicating(false); });
         pubsub.publish("thinkquick:sendguess", { width: self.guessWidth() });
     }
 
@@ -56,7 +57,8 @@ var GameViewModel = function (serverVm, pubsub)
                     self.binders.bindServerResults(data);
                     self.isSetup(true);
                 }
-            });
+            })
+            .fail(function () { self.isCommunicating(false); });
         pubsub.publish("thinkquick:setup", { width: width });
     }
 

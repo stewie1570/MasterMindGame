@@ -13,7 +13,7 @@ describe("MasterMind", function ()
         {
             pubsub = new Pubsub();
             vm = new GameViewModel({}, pubsub);
-            $.post = function () { return { success: function () { } }; };
+            $.post = function () { return { success: function () { return { fail: function () { } } } }; };
         });
 
         it("should calculate the level number from the width", function ()
@@ -57,7 +57,7 @@ describe("MasterMind", function ()
             {
                 postUrl = url;
                 postData = data;
-                return { done: function () { } };
+                return { success: function () { return { fail: function () { } } } };
             };
             vm = new GameViewModel({}, pubsub);
         });
