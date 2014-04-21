@@ -11,6 +11,6 @@
 
     this.track = function (action, width)
     {
-        ga('send', 'event', 'Think Quick Game', action, "Game Width: " + width);
+        ga('send', 'event', 'Think Quick Game', action, "Game Width: " + width, 1);
     };
 };
