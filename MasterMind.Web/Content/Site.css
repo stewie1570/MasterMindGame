@@ -1,5 +1,14 @@
-﻿.game-levels-container {
+﻿.game-description{
+    min-width: 200px;
+    white-space: normal;
+    text-align: left;
+}
+
+.game-levels-container {
     text-align: center;
+    background-color: lightgray;
+    padding: 6px;
+    border-radius: 6px;
 }
 
 .game-level-button{

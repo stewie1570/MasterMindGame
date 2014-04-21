@@ -6,10 +6,29 @@
 
 <div class="game-container">
     <div data-bind="visible: !isSetup()" class="game-levels-container">
+        <div class="game-description">
+            In this game you try to guess the correct sequence of colors.
+            You're "clues" (described below) are given to the right of your guess.
+            <ul>
+                <li>A red peg means you have correct color peg in the correct position</li>
+                <li>A white peg means you have a correct color peg in the wrong position</li>
+                <li>An empty space in the hint sequence means you're using a color that's not in the mystery sequence</li>
+            </ul>
+
+            <p />
+
+            Here is an example game play.
+
+            <br />
+            <center>
+                <img src="Content/images/miniscreenshot.png" />
+            </center>
+        </div>
+
+
         <!-- ko foreach: [4,5,6] -->
-            <button
-                data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
-                class="game-level-button">
+            <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
+                    class="game-level-button">
                 Start Game
             </button>
             <br />
@@ -105,14 +124,12 @@
     <br />
 
     <div class="align-center">
-        <button
-            data-bind="click: reset, visible: isSetup()"
-            class="command">
+        <button data-bind="click: reset, visible: isSetup()"
+                class="command">
             New Game
         </button>
-        <button
-            data-bind="click: shareScore, visible: serverVm().IsOver && serverVm().IsAWin && false"
-            class="command">
+        <button data-bind="click: shareScore, visible: serverVm().IsOver && serverVm().IsAWin && false"
+                class="command">
             Share My Score
         </button>
     </div>
