@@ -45,7 +45,7 @@ var GameViewModel = function (serverVm, pubsub)
     {
         self.isCommunicating(true);
         self.guessWidth(width);
-        self.level(width - 1);
+        self.level(width - 3);
         $.post("Home/Setup", { width: self.guessWidth() })
             .success(function (data)
             {

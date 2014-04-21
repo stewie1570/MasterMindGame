@@ -6,9 +6,9 @@
 
 <div class="game-container">
     <div data-bind="visible: !isSetup()" class="game-levels-container">
-        <!-- ko foreach: [2,3,4,5,6,7,8,9,10] -->
+        <!-- ko foreach: [4,5,6] -->
             <button
-                data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 1)"
+                data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
                 class="game-level-button">
                 Start Game
             </button>

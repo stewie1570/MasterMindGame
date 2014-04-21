@@ -23,7 +23,7 @@ describe("MasterMind", function ()
             vm.setupGame(4)
 
             //Assert
-            expect(vm.level()).toBe(3);
+            expect(vm.level()).toBe(1);
         });
 
         it("should publish a setup event to the pubsub with width", function ()
