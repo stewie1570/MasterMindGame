@@ -6,7 +6,7 @@
 
 .game-levels-container {
     text-align: center;
-    background-color: lightgray;
+    background-color: #f0f0f0;
     padding: 6px;
     border-radius: 6px;
 }
@@ -157,7 +157,7 @@
 
 body {
     font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-family: Arial;
     color: #232323;
     background-color: #fff;
     text-align: center;
