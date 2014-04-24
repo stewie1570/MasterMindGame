@@ -37,7 +37,7 @@ var GameViewModel = function (serverVm, pubsub)
         self.isCommunicating(true);
         $.post("Home/Guess", { guess: self.helpers.pegArrayToGuessString(self.currentGuess()) })
             .success(self.binders.bindServerResults)
-            .fail(function () { self.isCommunicating(false); });
+            .fail(self.binders.communicationFail);
         pubsub.publish("thinkquick:sendguess", { width: self.guessWidth() });
     }
 
@@ -47,18 +47,8 @@ var GameViewModel = function (serverVm, pubsub)
         self.guessWidth(width);
         self.level(width - 3);
         $.post("Home/Setup", { width: self.guessWidth() })
-            .success(function (data)
-            {
-                self.isCommunicating(false);
-                if (data["Message"] != undefined)
-                    alert(data.Message);
-                else
-                {
-                    self.binders.bindServerResults(data);
-                    self.isSetup(true);
-                }
-            })
-            .fail(function () { self.isCommunicating(false); });
+            .success(self.binders.setupSuccess)
+            .fail(self.binders.communicationFail);
         pubsub.publish("thinkquick:setup", { width: width });
     }
 
@@ -71,6 +61,20 @@ var GameViewModel = function (serverVm, pubsub)
     }
 
     this.binders = {
+        setupSuccess: function (data)
+        {
+            self.isCommunicating(false);
+            if (data["Message"] != undefined)
+                alert(data.Message);
+            else
+            {
+                self.binders.bindServerResults(data);
+                self.isSetup(true);
+            }
+        },
+
+        communicationFail: function () { self.isCommunicating(false); },
+
         bindServerResults: function (data)
         {
             self.isCommunicating(false);

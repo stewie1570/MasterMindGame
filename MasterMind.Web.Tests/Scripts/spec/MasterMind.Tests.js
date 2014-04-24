@@ -8,12 +8,50 @@ describe("MasterMind", function ()
     {
         var vm = null;
         var pubsub = null;
+        var setupSuccessCallback = null;
+        var setupFailCallback = null;
 
         beforeEach(function ()
         {
             pubsub = new Pubsub();
             vm = new GameViewModel({}, pubsub);
-            $.post = function () { return { success: function () { return { fail: function () { } } } }; };
+            setupSuccessCallback = null;
+            setupFailCallback = null;
+            $.post = function ()
+            {
+                return {
+                    success: function (successCallback)
+                    {
+                        setupSuccessCallback = successCallback;
+                        return {
+                            fail: function (failCallback)
+                            {
+                                setupFailCallback = failCallback;
+                            }
+                        };
+                    }
+                };
+            };
+        });
+
+        it("should wire up the success callback", function ()
+        {
+            //Arrange
+            //Act
+            vm.setupGame(4);
+
+            //Assert
+            expect(setupSuccessCallback).toBe(vm.binders.setupSuccess);
+        });
+
+        it("should wire up the fail callback", function ()
+        {
+            //Arrange
+            //Act
+            vm.setupGame(4);
+
+            //Assert
+            expect(setupFailCallback).toBe(vm.binders.communicationFail);
         });
 
         it("should calculate the level number from the width", function ()
@@ -46,6 +84,8 @@ describe("MasterMind", function ()
         var postUrl = "";
         var postData = {};
         var pubsub = null;
+        var guessSuccessCallback = null;
+        var guessFailCallback = null;
 
         beforeEach(function ()
         {
@@ -53,13 +93,46 @@ describe("MasterMind", function ()
             postUrl = "";
             postData = {};
             window.$ = {};
+            guessSuccessCallback = null;
+            guessFailCallback = null;
             window.$.post = function (url, data)
             {
                 postUrl = url;
                 postData = data;
-                return { success: function () { return { fail: function () { } } } };
+                return {
+                    success: function (successCallback)
+                    {
+                        guessSuccessCallback = successCallback;
+                        return {
+                            fail: function (failCallback)
+                            {
+                                guessFailCallback = failCallback;
+                            }
+                        }
+                    }
+                };
             };
             vm = new GameViewModel({}, pubsub);
+        });
+
+        it("should wire-up the success callback", function ()
+        {
+            //Arrange
+            //Act
+            vm.sendGuess();
+
+            //Assert
+            expect(guessSuccessCallback).toBe(vm.binders.bindServerResults);
+        });
+
+        it("should wire-up the fail callback", function ()
+        {
+            //Arrange
+            //Act
+            vm.sendGuess();
+
+            //Assert
+            expect(guessFailCallback).toBe(vm.binders.communicationFail);
         });
 
         it("should send the guess", function ()
