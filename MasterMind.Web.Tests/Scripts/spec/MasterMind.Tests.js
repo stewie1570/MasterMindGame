@@ -44,6 +44,46 @@ describe("MasterMind", function ()
             expect(setupSuccessCallback).toBe(vm.binders.setupSuccess);
         });
 
+        describe("Success Callback", function ()
+        {
+            var defaultData = { Message: "something" };
+
+            it("should set isCommunicating to false and alert any failure message", function ()
+            {
+                //Arrange
+                var communicationSetToFalse = false;
+                var theMessage = "";
+                vm.isCommunicating = function (val)
+                {
+                    communicationSetToFalse = !val;
+                };
+                alert = function (msg) { theMessage = msg; };
+
+                //Act
+                vm.binders.setupSuccess(defaultData);
+
+                //Assert
+                expect(communicationSetToFalse).toBeTruthy();
+                expect(theMessage).toEqual("something");
+            });
+
+            it("should bind server results and set isSetup to true", function ()
+            {
+                //Arrange
+                var bindData = null;
+                var isSetup = false;
+                vm.binders.bindServerResults = function (data) { bindData = data; };
+                vm.isSetup = function (val) { isSetup = val; };
+
+                //Act
+                vm.binders.setupSuccess({});
+
+                //Assert
+                expect(isSetup).toBeTruthy();
+                expect(bindData).toEqual({});
+            });
+        });
+
         it("should wire up the fail callback", function ()
         {
             //Arrange
