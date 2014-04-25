@@ -4,6 +4,76 @@
 
 describe("MasterMind", function ()
 {
+    describe("Communication Failure Callback", function ()
+    {
+        it("should set isCommunicating to false", function ()
+        {
+            //Arrange
+            var vm = new GameViewModel({});
+            var isCommunicating = true;
+            vm.isCommunicating = function (val) { isCommunicating = val; };
+
+            //Act
+            vm.binders.communicationFail();
+
+            //Assert
+            expect(isCommunicating).toBeFalsy();
+        });
+    });
+
+    describe("Binding Server Results", function ()
+    {
+        //Arrange
+        var pubsub = null;
+        var vm = null;
+        var isCommunicating = true;
+
+        beforeEach(function ()
+        {
+            pubsub = new Pubsub();
+            vm = new GameViewModel({}, pubsub);
+            isCommunicating = true;
+        });
+
+        it("should set isCommunicating to false", function ()
+        {
+            //Arrange
+            vm.isCommunicating = function (val) { isCommunicating = val; };
+
+            //Act
+            vm.binders.bindServerResults({});
+
+            //Assert
+            expect(isCommunicating).toBeFalsy();
+        });
+
+        it("should set serverVm", function ()
+        {
+            //Arrange
+            var data = null;
+            vm.serverVm = function (val) { data = val; };
+
+            //Act
+            vm.binders.bindServerResults({});
+
+            //Assert
+            expect(data).not.toBeNull();
+        });
+
+        it("should set current guess to empty array (clear the current guess)", function ()
+        {
+            //Arrange
+            var currentGuess = null;
+            vm.currentGuess = function (val) { currentGuess = val; };
+
+            //Act
+            vm.binders.bindServerResults({});
+
+            //Assert
+            expect(currentGuess).toEqual([]);
+        });
+    });
+
     describe("Setup", function ()
     {
         var vm = null;
