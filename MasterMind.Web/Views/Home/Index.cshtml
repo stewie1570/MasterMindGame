@@ -14,25 +14,28 @@
                 <li>A white peg means you're using a color that exists in the mystery sequence but in the wrong place</li>
                 <li>An empty space means you're using a color that's not in the mystery sequence</li>
             </ul>
-
+            You can select whether you want your results calculated per color or per peg. (see below)
             <p />
-
-            <center><b>Example Game Play</b></center>
-
-            <br />
             <center>
-                <img src="Content/images/miniscreenshot.png" />
+                <table class="examples_table">
+                    <tr>
+                        <th>Per Color Results</th>
+                        <th>Per Peg Results</th>
+                    </tr>
+                    <tr>
+                        <td><img src="Content/images/miniscreenshot_percolor.png" /></td>
+                        <td><img src="Content/images/miniscreenshot.png" /></td>
+                    </tr>
+                </table>
             </center>
         </div>
 
         <br />
         <center><b>Play</b></center>
-        
-        <br />
         Calculate guess results:
-        <select data-bind="selectedOptions: resultLogic">
-            <option value="perpeg">per peg</option>
-            <option value="percolor">per color</option>
+        <select data-bind="value: resultLogic">
+            <option value="perpeg">Per Peg</option>
+            <option value="percolor">Per Color</option>
         </select>
         <br />
 
