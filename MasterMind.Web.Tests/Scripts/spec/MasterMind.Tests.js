@@ -4,6 +4,7 @@
 
 describe("MasterMind", function ()
 {
+
     describe("Communication Failure Callback", function ()
     {
         it("should set isCommunicating to false", function ()
@@ -80,6 +81,7 @@ describe("MasterMind", function ()
         var pubsub = null;
         var setupSuccessCallback = null;
         var setupFailCallback = null;
+        var postData = null;
 
         beforeEach(function ()
         {
@@ -87,8 +89,10 @@ describe("MasterMind", function ()
             vm = new GameViewModel({}, pubsub);
             setupSuccessCallback = null;
             setupFailCallback = null;
-            $.post = function ()
+
+            $.post = function (url, data)
             {
+                postData = data;
                 return {
                     success: function (successCallback)
                     {
@@ -102,6 +106,18 @@ describe("MasterMind", function ()
                     }
                 };
             };
+        });
+
+        it("should post the correct data to the server", function ()
+        {
+            //Arrange
+            vm.resultLogic("perpeg");
+
+            //Act
+            vm.setupGame(4);
+
+            //Assert
+            expect(postData).toEqual({ width: 4, resultLogic: "perpeg" });
         });
 
         it("should wire up the success callback", function ()

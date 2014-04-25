@@ -19,17 +19,17 @@ namespace MasterMind.Core
         public GameProcess(Func<Context> contextProvider,
            Func<int, GuessColor[]> actualProvider,
            Func<DateTime> timeProvider)
-            : this(contextProvider, actualProvider, timeProvider, new PerPegGuessResultLogic()) { }
+            : this(contextProvider, actualProvider, timeProvider, new GuessResultLogicProvider(contextProvider)) { }
 
         public GameProcess(Func<Context> contextProvider,
             Func<int, GuessColor[]> actualProvider,
             Func<DateTime> timeProvider,
-            IGuessResultLogic resultLogic)
+            IGuessResultLogicProvider resultLogicProvider)
         {
             _context = contextProvider();
             _timeProvider = timeProvider;
             _actualProvider = actualProvider;
-            _resultLogic = resultLogic;
+            _resultLogic = resultLogicProvider.Create();
 
             bool isActualInvalidInContext = IsActualInvalidInContext();
             _context.Results = isActualInvalidInContext ? new List<FullGuessResultRow>() : _context.Results;
@@ -55,12 +55,13 @@ namespace MasterMind.Core
             return _context.Results.ToArray();
         }
 
-        public void Setup(int newWidth)
+        public void Setup(int newWidth, GuessResultLogicType logicType = GuessResultLogicType.PerColor)
         {
             _context.MaxAttempts = 10 + ((newWidth - 4) * 3);
             _context.GuessWidth = newWidth;
             _context.Actual = _actualProvider(newWidth);
             _context.Results = new List<FullGuessResultRow>();
+            _context.ResultLogicType = logicType;
         }
 
         public GuessColor[] Actual { get { return _context.Actual; } }

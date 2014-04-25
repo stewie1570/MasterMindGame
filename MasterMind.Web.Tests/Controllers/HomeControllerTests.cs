@@ -52,6 +52,28 @@ namespace MasterMind.Web.Tests.Controllers
         }
 
         [TestMethod]
+        public void SetupShouldDefaultResultLogicToPerColor()
+        {
+            //Arrange
+            //Act
+            _controller.Setup(6);
+
+            //Assert
+            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerColor);
+        }
+
+        [TestMethod]
+        public void SetupShouldUsePerPegWhenStringContainsPeg()
+        {
+            //Arrange
+            //Act
+            _controller.Setup(6, "143peg233245");
+
+            //Assert
+            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerPeg);
+        }
+
+        [TestMethod]
         public void SetupShouldSetUpGameContextViaGameProcessObject()
         {
             //Arrange
@@ -59,7 +81,7 @@ namespace MasterMind.Web.Tests.Controllers
             _controller.Setup(6);
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6);
+            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: Arg.Any<GuessResultLogicType>());
         }
 
         [TestMethod]

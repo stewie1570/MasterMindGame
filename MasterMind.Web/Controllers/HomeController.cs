@@ -35,10 +35,14 @@ namespace MasterMind.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Setup(int width)
+        public JsonResult Setup(int width, string resultLogic = "percolor")
         {
             Validate(width);
-            _gameProcess.Setup(width);
+            _gameProcess.Setup(
+                newWidth: width,
+                logicType: resultLogic.ToLower().Contains("peg")
+                    ? GuessResultLogicType.PerPeg
+                    : GuessResultLogicType.PerColor);
 
             return Json(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
         }

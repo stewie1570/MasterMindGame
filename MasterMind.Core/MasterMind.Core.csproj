@@ -42,6 +42,9 @@
     <Compile Include="CreateGuessLogic.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="GameProcess.cs" />
+    <Compile Include="GuessResultLogicProvider.cs" />
+    <Compile Include="IGuessResultLogicProvider.cs" />
+    <Compile Include="Models\GuessResultLogicType.cs" />
     <Compile Include="PerColorResultLogic.cs" />
     <Compile Include="PerPegGuessResultLogic.cs" />
     <Compile Include="IGameProcess.cs" />

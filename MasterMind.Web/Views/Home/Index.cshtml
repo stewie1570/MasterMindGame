@@ -27,6 +27,14 @@
 
         <br />
         <center><b>Play</b></center>
+        
+        <br />
+        Calculate guess results:
+        <select data-bind="selectedOptions: resultLogic">
+            <option value="perpeg">per peg</option>
+            <option value="percolor">per color</option>
+        </select>
+        <br />
 
         <!-- ko foreach: [4,5,6] -->
             <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"

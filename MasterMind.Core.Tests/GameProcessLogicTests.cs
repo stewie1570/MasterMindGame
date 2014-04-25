@@ -65,6 +65,17 @@ namespace MasterMind.Core.Tests
         }
 
         [TestMethod]
+        public void SetupShouldSetResultLogicTypeInContext()
+        {
+            //Arrange
+            //Act
+            _game.Setup(newWidth: 5, logicType: GuessResultLogicType.PerPeg);
+
+            //Assert
+            _context.ResultLogicType.Should().Be(GuessResultLogicType.PerPeg);
+        }
+
+        [TestMethod]
         public void SetupShouldDecideMaxAttempts()
         {
             //Arrange

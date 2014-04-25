@@ -13,6 +13,7 @@ var GameViewModel = function (serverVm, pubsub)
     this.isSetup = ko.observable(false);
     this.isCommunicating = ko.observable(false);
     this.level = ko.observable(0);
+    this.resultLogic = ko.observable("perpeg");
 
     this.pegAction = function (peg)
     {
@@ -46,7 +47,7 @@ var GameViewModel = function (serverVm, pubsub)
         self.isCommunicating(true);
         self.guessWidth(width);
         self.level(width - 3);
-        $.post("Home/Setup", { width: self.guessWidth() })
+        $.post("Home/Setup", { width: self.guessWidth(), resultLogic: self.resultLogic() })
             .success(self.binders.setupSuccess)
             .fail(self.binders.communicationFail);
         pubsub.publish("thinkquick:setup", { width: width });

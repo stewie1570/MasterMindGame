@@ -64,6 +64,7 @@
     <Compile Include="CreateRandomGuessLogicTests.cs" />
     <Compile Include="GameProcessLogicTests.cs" />
     <Compile Include="PerColorResultLogicTests.cs" />
+    <Compile Include="GuessResultLogicProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
