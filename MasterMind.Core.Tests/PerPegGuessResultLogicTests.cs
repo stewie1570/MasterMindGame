@@ -8,14 +8,14 @@ using FluentAssertions;
 namespace MasterMind.Core.Tests
 {
     [TestClass]
-    public class GuessResultLogicTests
+    public class PerPegGuessResultLogicTests
     {
-        private GuessResultLogic _logic;
+        private PerPegGuessResultLogic _logic;
 
         [TestInitialize]
         public void Setup()
         {
-             _logic = new GuessResultLogic();
+             _logic = new PerPegGuessResultLogic();
         }
 
         [TestMethod]

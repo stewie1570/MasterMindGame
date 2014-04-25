@@ -1,7 +1,7 @@
 ﻿
 namespace MasterMind.Core.Models
 {
-    public enum Guess
+    public enum GuessColor
     {
         Empty,
         Red,

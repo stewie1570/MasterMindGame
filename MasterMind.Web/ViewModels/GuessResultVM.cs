@@ -9,7 +9,7 @@ namespace MasterMind.Web.ViewModels
         public bool IsOver { get; set; }
         public bool IsAWin { get; set; }
         public int MaxAttempts { get; set; }
-        public Guess[] Actual { get; set; }
+        public GuessColor[] Actual { get; set; }
         public TimeSpan TotalTimeLapse { get; set; }
         public int? ColorCount { get; set; }
         public int? Score { get; set; }

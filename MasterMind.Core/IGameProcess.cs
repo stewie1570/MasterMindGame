@@ -5,7 +5,7 @@ namespace MasterMind.Core
 {
     public interface IGameProcess
     {
-        Guess[] Actual { get; }
+        GuessColor[] Actual { get; }
         FullGuessResultRow[] Guess(string guessString);
         bool IsAWin { get; }
         bool IsOver { get; }

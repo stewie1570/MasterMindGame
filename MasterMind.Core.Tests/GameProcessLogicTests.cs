@@ -13,7 +13,7 @@ namespace MasterMind.Core.Tests
     {
         private GameProcess _game;
         private Context _context;
-        private Func<int, Guess[]> _actualProvider;
+        private Func<int, GuessColor[]> _actualProvider;
         private Func<DateTime> _timeProvider = () => DateTime.Now;
 
         [TestInitialize]

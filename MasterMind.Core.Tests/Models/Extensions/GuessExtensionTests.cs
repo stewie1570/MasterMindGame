@@ -13,7 +13,7 @@ namespace MasterMind.Core.Tests.Models.Extensions
         public void ToStringShouldConvertGuessListToString()
         {
             //Arrange
-            var guess = new Guess[] { Guess.Blue, Guess.Empty, Guess.Green, Guess.Red };
+            var guess = new GuessColor[] { GuessColor.Blue, GuessColor.Empty, GuessColor.Green, GuessColor.Red };
 
             //Act
             //Assert
@@ -24,7 +24,7 @@ namespace MasterMind.Core.Tests.Models.Extensions
         public void ToGuessArrayShouldConvertStringToGuessArray()
         {
             //Arrange
-            var guess = new Guess[] { Guess.Blue, Guess.Empty, Guess.Green, Guess.Red };
+            var guess = new GuessColor[] { GuessColor.Blue, GuessColor.Empty, GuessColor.Green, GuessColor.Red };
 
             //Act
             //Assert
@@ -35,7 +35,7 @@ namespace MasterMind.Core.Tests.Models.Extensions
         public void ToGuessArrayShouldBeCaseInsensitive()
         {
             //Arrange
-            var guess = new Guess[] { Guess.Blue, Guess.Empty, Guess.Green, Guess.Red };
+            var guess = new GuessColor[] { GuessColor.Blue, GuessColor.Empty, GuessColor.Green, GuessColor.Red };
 
             //Act
             //Assert
@@ -46,7 +46,7 @@ namespace MasterMind.Core.Tests.Models.Extensions
         public void NotExistentColorsShouldThrowInvalidGuessException()
         {
             //Arrange
-            var guess = new Guess[] { Guess.Blue, Guess.Empty, Guess.Green, Guess.Red };
+            var guess = new GuessColor[] { GuessColor.Blue, GuessColor.Empty, GuessColor.Green, GuessColor.Red };
 
             //Act
             Action action = () => "bmno".ToGuessArray();
@@ -60,7 +60,7 @@ namespace MasterMind.Core.Tests.Models.Extensions
         public void WrongLengthGuessShouldThrowInvalidGuessException()
         {
             //Arrange
-            var guess = new Guess[] { Guess.Blue, Guess.Empty, Guess.Green, Guess.Red };
+            var guess = new GuessColor[] { GuessColor.Blue, GuessColor.Empty, GuessColor.Green, GuessColor.Red };
 
             //Act
             Action action = () => "bBbBbb".ToGuessArray(expectedLength: 4);

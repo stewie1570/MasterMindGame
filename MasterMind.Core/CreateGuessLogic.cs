@@ -6,9 +6,9 @@ namespace MasterMind.Core
 {
     public static class CreateGuessLogic
     {
-        public static Guess[] Create(int count)
+        public static GuessColor[] Create(int count)
         {
-            var possibleGuesses = Enum.GetValues(typeof(Guess)).Cast<Guess>().ToList();
+            var possibleGuesses = Enum.GetValues(typeof(GuessColor)).Cast<GuessColor>().ToList();
             Random random = new Random();
 
             return Enumerable

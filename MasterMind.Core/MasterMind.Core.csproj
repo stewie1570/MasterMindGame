@@ -40,18 +40,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateGuessLogic.cs" />
+    <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="GameProcess.cs" />
-    <Compile Include="GuessResultLogic.cs" />
+    <Compile Include="PerColorResultLogic.cs" />
+    <Compile Include="PerPegGuessResultLogic.cs" />
     <Compile Include="IGameProcess.cs" />
     <Compile Include="IGuessResultLogic.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Extensions\GuessExtensions.cs" />
     <Compile Include="Models\FullGuessResultRow.cs" />
-    <Compile Include="Models\Guess.cs" />
+    <Compile Include="Models\GuessColor.cs" />
     <Compile Include="Models\GuessResult.cs" />
     <Compile Include="Models\IntegerRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

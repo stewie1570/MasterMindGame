@@ -23,7 +23,7 @@ namespace MasterMind.ConsoleApp
                 {
                     try
                     {
-                        string possibleColors = string.Join(", ", Enum.GetNames(typeof(Guess)));
+                        string possibleColors = string.Join(", ", Enum.GetNames(typeof(GuessColor)));
                         Console.WriteLine("Possible Colors: " + possibleColors);
                         var results = game.Guess(Input("Guess one letter per color"));
                         Console.Clear();
@@ -86,28 +86,28 @@ namespace MasterMind.ConsoleApp
             Console.WriteLine();
         }
 
-        private static void OutputGuess(List<Guess> guesses)
+        private static void OutputGuess(List<GuessColor> guesses)
         {
             guesses.ForEach(guess =>
             {
                 switch (guess)
                 {
-                    case Guess.Blue:
+                    case GuessColor.Blue:
                         OutputInColor(() => Console.Write("b"), ConsoleColor.Blue);
                         break;
-                    case Guess.Empty:
+                    case GuessColor.Empty:
                         OutputInColor(() => Console.Write("e"), ConsoleColor.DarkGray);
                         break;
-                    case Guess.Green:
+                    case GuessColor.Green:
                         OutputInColor(() => Console.Write("g"), ConsoleColor.Green);
                         break;
-                    case Guess.Purple:
+                    case GuessColor.Purple:
                         OutputInColor(() => Console.Write("p"), ConsoleColor.Magenta);
                         break;
-                    case Guess.Red:
+                    case GuessColor.Red:
                         OutputInColor(() => Console.Write("r"), ConsoleColor.Red);
                         break;
-                    case Guess.Yellow:
+                    case GuessColor.Yellow:
                         OutputInColor(() => Console.Write("y"), ConsoleColor.Yellow);
                         break;
                 }

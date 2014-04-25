@@ -6,22 +6,22 @@ namespace MasterMind.Core.Models.Extensions
 {
     public static class GuessExtensions
     {
-        private static Dictionary<Guess, char> _map = new Dictionary<Guess, char>
+        private static Dictionary<GuessColor, char> _map = new Dictionary<GuessColor, char>
         {
-            {Guess.Blue, 'b'},
-            {Guess.Empty, 'e'},
-            {Guess.Green, 'g'},
-            {Guess.Purple, 'p'},
-            {Guess.Red, 'r'},
-            {Guess.Yellow, 'y'}
+            {GuessColor.Blue, 'b'},
+            {GuessColor.Empty, 'e'},
+            {GuessColor.Green, 'g'},
+            {GuessColor.Purple, 'p'},
+            {GuessColor.Red, 'r'},
+            {GuessColor.Yellow, 'y'}
         };
 
-        public static string ToGuessString(this IEnumerable<Guess> guessList)
+        public static string ToGuessString(this IEnumerable<GuessColor> guessList)
         {
             return new String(guessList.Select(g => _map[g]).ToArray());
         }
 
-        public static Guess[] ToGuessArray(this string guess, int? expectedLength = null)
+        public static GuessColor[] ToGuessArray(this string guess, int? expectedLength = null)
         {
             ValidateGuess(guess, expectedLength);
 

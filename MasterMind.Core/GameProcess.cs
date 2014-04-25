@@ -10,19 +10,19 @@ namespace MasterMind.Core
     {
         private IGuessResultLogic _resultLogic;
         private Context _context;
-        private Func<int, Guess[]> _actualProvider;
+        private Func<int, GuessColor[]> _actualProvider;
         private Func<DateTime> _timeProvider;
 
-        public GameProcess(Func<Context> contextProvider, Func<int, Guess[]> actualProvider)
+        public GameProcess(Func<Context> contextProvider, Func<int, GuessColor[]> actualProvider)
             : this(contextProvider, actualProvider, () => DateTime.UtcNow) { }
 
         public GameProcess(Func<Context> contextProvider,
-           Func<int, Guess[]> actualProvider,
+           Func<int, GuessColor[]> actualProvider,
            Func<DateTime> timeProvider)
-            : this(contextProvider, actualProvider, timeProvider, new GuessResultLogic()) { }
+            : this(contextProvider, actualProvider, timeProvider, new PerPegGuessResultLogic()) { }
 
         public GameProcess(Func<Context> contextProvider,
-            Func<int, Guess[]> actualProvider,
+            Func<int, GuessColor[]> actualProvider,
             Func<DateTime> timeProvider,
             IGuessResultLogic resultLogic)
         {
@@ -63,7 +63,7 @@ namespace MasterMind.Core
             _context.Results = new List<FullGuessResultRow>();
         }
 
-        public Guess[] Actual { get { return _context.Actual; } }
+        public GuessColor[] Actual { get { return _context.Actual; } }
 
         public bool IsOver
         {
