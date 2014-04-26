@@ -19,8 +19,8 @@
             <center>
                 <table class="examples_table">
                     <tr>
-                        <th>Per Color Results</th>
-                        <th>Per Peg Results</th>
+                        <th>Results By Color</th>
+                        <th>Results By Peg</th>
                     </tr>
                     <tr>
                         <td><img src="Content/images/miniscreenshot_percolor.png" /></td>
@@ -31,13 +31,15 @@
         </div>
 
         <br />
-        <center><b>Play</b></center>
+        
         Calculate guess results:
         <select data-bind="value: resultLogic">
-            <option value="perpeg">Per Peg</option>
-            <option value="percolor">Per Color</option>
+            <option value="perpeg">By Peg</option>
+            <option value="percolor">By Color</option>
         </select>
-        <br />
+        <p />
+
+        <center><b>Play</b></center>
 
         <!-- ko foreach: [4,5,6] -->
             <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
