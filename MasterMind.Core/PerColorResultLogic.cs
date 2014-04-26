@@ -20,17 +20,27 @@ namespace MasterMind.Core
                 var reds = RedsFor(guess, actual, color).ToList();
 
                 results.AddRange(reds);
-                results.AddRange(NumOfWhitesFrom(countOfColorInActual, countOfColorInGuess, reds)
-                    .GuessResults(GuessResult.White));
+                results.AddRange(WhitesFor(countOfColorInActual, countOfColorInGuess, reds));
             });
 
             if (results.Count < actual.Length)
-                results.AddRange((actual.Length - results.Count).GuessResults(GuessResult.Empty));
+                results.AddRange(EmptiesFor(actual, results));
 
             return results.OrderBy(r => r).ToArray();
         }
 
         #region Helpers
+
+        private IEnumerable<GuessResult> EmptiesFor(GuessColor[] actual, List<GuessResult> results)
+        {
+            return (actual.Length - results.Count).GuessResults(GuessResult.Empty);
+        }
+
+        private IEnumerable<GuessResult> WhitesFor(int countOfColorInActual, int countOfColorInGuess, List<GuessResult> reds)
+        {
+            return NumOfWhitesFrom(countOfColorInActual, countOfColorInGuess, reds)
+                .GuessResults(GuessResult.White);
+        }
 
         private int NumOfWhitesFrom(int countOfColorInActual, int countOfColorInGuess, List<GuessResult> reds)
         {
