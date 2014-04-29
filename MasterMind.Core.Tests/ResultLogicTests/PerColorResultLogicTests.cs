@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 using System.Collections.Generic;
 
-namespace MasterMind.Core.Tests
+namespace MasterMind.Core.ResultLogic.Tests
 {
     [TestClass]
     public class PerColorResultLogicTests

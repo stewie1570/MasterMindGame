@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentAssertions;
 
-namespace MasterMind.Core.Tests
+namespace MasterMind.Core.ResultLogic.Tests
 {
     [TestClass]
     public class PerPegGuessResultLogicTests

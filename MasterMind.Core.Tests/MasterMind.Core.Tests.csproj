@@ -58,13 +58,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PerPegGuessResultLogicTests.cs" />
+    <Compile Include="ResultLogicTests\PerPegGuessResultLogicTests.cs" />
     <Compile Include="Models\Extensions\GuessExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CreateRandomGuessLogicTests.cs" />
+    <Compile Include="ResultLogicTests\CreateRandomGuessLogicTests.cs" />
     <Compile Include="GameProcessLogicTests.cs" />
-    <Compile Include="PerColorResultLogicTests.cs" />
-    <Compile Include="GuessResultLogicProviderTests.cs" />
+    <Compile Include="ResultLogicTests\PerColorResultLogicTests.cs" />
+    <Compile Include="ResultLogicTests\GuessResultLogicProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
