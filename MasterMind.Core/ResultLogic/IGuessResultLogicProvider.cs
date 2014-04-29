@@ -1,4 +1,4 @@
-﻿namespace MasterMind.Core
+﻿namespace MasterMind.Core.ResultLogic
 {
     public interface IGuessResultLogicProvider
     {

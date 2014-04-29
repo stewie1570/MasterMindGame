@@ -1,6 +1,6 @@
 ﻿using MasterMind.Core.Models;
 
-namespace MasterMind.Core
+namespace MasterMind.Core.ResultLogic
 {
     public interface IGuessResultLogic
     {

@@ -1,7 +1,7 @@
 ﻿using MasterMind.Core.Models;
 using System;
 
-namespace MasterMind.Core
+namespace MasterMind.Core.ResultLogic
 {
     public class GuessResultLogicProvider : IGuessResultLogicProvider
     {

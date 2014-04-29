@@ -39,16 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateGuessLogic.cs" />
+    <Compile Include="CreateRandomActualLogic.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="GameProcess.cs" />
-    <Compile Include="GuessResultLogicProvider.cs" />
-    <Compile Include="IGuessResultLogicProvider.cs" />
+    <Compile Include="ResultLogic\GuessResultLogicProvider.cs" />
+    <Compile Include="ResultLogic\IGuessResultLogicProvider.cs" />
     <Compile Include="Models\GuessResultLogicType.cs" />
-    <Compile Include="PerColorResultLogic.cs" />
-    <Compile Include="PerPegGuessResultLogic.cs" />
+    <Compile Include="ResultLogic\PerColorResultLogic.cs" />
+    <Compile Include="ResultLogic\PerPegGuessResultLogic.cs" />
     <Compile Include="IGameProcess.cs" />
-    <Compile Include="IGuessResultLogic.cs" />
+    <Compile Include="ResultLogic\IGuessResultLogic.cs" />
     <Compile Include="Models\Context.cs" />
     <Compile Include="Models\Extensions\GuessExtensions.cs" />
     <Compile Include="Models\FullGuessResultRow.cs" />

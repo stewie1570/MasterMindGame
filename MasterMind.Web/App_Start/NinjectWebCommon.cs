@@ -60,7 +60,7 @@ namespace MasterMind.Web.App_Start
             kernel.Bind<Func<Context>>()
                 .ToMethod(c => () => SessionSingleton("CurrentGameContext", () => new Context()));
 
-            kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => CreateGuessLogic.Create(width));
+            kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => CreateRandomActualLogic.Create(width));
         }
 
 

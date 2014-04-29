@@ -1,5 +1,6 @@
 ﻿using MasterMind.Core.Models;
 using MasterMind.Core.Models.Extensions;
+using MasterMind.Core.ResultLogic;
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

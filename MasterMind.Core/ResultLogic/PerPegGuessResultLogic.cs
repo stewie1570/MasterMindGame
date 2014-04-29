@@ -1,7 +1,7 @@
 ﻿using MasterMind.Core.Models;
 using System.Linq;
 
-namespace MasterMind.Core
+namespace MasterMind.Core.ResultLogic
 {
     public class PerPegGuessResultLogic : IGuessResultLogic
     {

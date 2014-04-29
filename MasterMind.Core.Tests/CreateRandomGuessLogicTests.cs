@@ -14,7 +14,7 @@ namespace MasterMind.Core.Tests
             //Arrange
             //Act
             //Assert
-            CreateGuessLogic.Create(4).Length.Should().Be(4);
+            CreateRandomActualLogic.Create(4).Length.Should().Be(4);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace MasterMind.Core.Tests
         {
             //Arrange
             //Act
-            var guess = CreateGuessLogic.Create(4);
+            var guess = CreateRandomActualLogic.Create(4);
             
             //Assert
             var first = guess.First();

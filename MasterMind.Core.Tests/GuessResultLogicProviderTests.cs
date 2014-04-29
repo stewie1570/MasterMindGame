@@ -1,6 +1,7 @@
-﻿using System;
+﻿using MasterMind.Core.Models;
+using MasterMind.Core.ResultLogic;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MasterMind.Core.Models;
 using FluentAssertions;
 
 namespace MasterMind.Core.Tests
