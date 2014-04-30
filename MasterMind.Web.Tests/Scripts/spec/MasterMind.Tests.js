@@ -52,13 +52,14 @@ describe("MasterMind", function ()
         {
             //Arrange
             var data = null;
+            vm.guessWidth(4);
             vm.serverVm = function (val) { data = val; };
 
             //Act
-            vm.binders.bindServerResults({});
+            vm.binders.bindServerResults({ maxAttempts: 1 });
 
             //Assert
-            expect(data).not.toBeNull();
+            expect(data.results).toEqual([{ result: [2, 2, 2, 2], guess: [0, 0, 0, 0] }]);
         });
 
         it("should set current guess to empty array (clear the current guess)", function ()
@@ -72,6 +73,19 @@ describe("MasterMind", function ()
 
             //Assert
             expect(currentGuess).toEqual([]);
+        });
+
+        it("should run the json data through the JSONCasing lib to make sure the casing from the server is correct", function ()
+        {
+            //Arrange
+            var receivedBindingData = null;
+            vm.serverVm = function (data) { receivedBindingData = data; };
+
+            //Act
+            vm.binders.bindServerResults({ Test: 1 });
+
+            //Assert
+            expect(receivedBindingData).toEqual({ test: 1, results: [] });
         });
     });
 
@@ -300,7 +314,7 @@ describe("MasterMind", function ()
                 vm.guessWidth = function () { return 4; };
                 
                 //Act
-                vm.binders.bindServerResults({ IsAWin: true, IsOver: true });
+                vm.binders.bindServerResults({ isAWin: true, isOver: true });
 
                 //Arrange
                 expect(received).toEqual({ width: 4 });
@@ -318,7 +332,7 @@ describe("MasterMind", function ()
                 vm = new GameViewModel({}, pubsub);
 
                 //Act
-                vm.binders.bindServerResults({ IsOver: true });
+                vm.binders.bindServerResults({ isOver: true });
 
                 //Arrange
                 expect(callbackCalled).toBeFalsy();
@@ -334,7 +348,7 @@ describe("MasterMind", function ()
                 vm.guessWidth = function () { return 4; };
 
                 //Act
-                vm.binders.bindServerResults({ IsOver: true });
+                vm.binders.bindServerResults({ isOver: true });
 
                 //Arrange
                 expect(received).toEqual({ width: 4 });
@@ -350,7 +364,7 @@ describe("MasterMind", function ()
                 vm.guessWidth = function () { return 4; };
 
                 //Act
-                vm.binders.bindServerResults({ IsOver: false });
+                vm.binders.bindServerResults({ isOver: false });
 
                 //Arrange
                 expect(received).toBeFalsy();

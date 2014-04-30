@@ -18,6 +18,7 @@ namespace MasterMind.Web
                 "~/Scripts/pubsub.js",
                 "~/Scripts/facebook.js",
                 "~/Scripts/eventtracking.js",
+                "~/Scripts/jsoncasing.js",
                 "~/Scripts/MasterMind.js",
                 "~/Scripts/bootstrapper.js"));
 

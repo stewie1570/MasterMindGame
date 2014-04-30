@@ -78,17 +78,18 @@ var GameViewModel = function (serverVm, pubsub)
 
         bindServerResults: function (data)
         {
+            data = JSONCasing.toCamel(data);
             self.isCommunicating(false);
             var filler = {
-                Result: self.helpers.padRight([], self.guessWidth(), 2),
-                Guess: self.helpers.padRight([], self.guessWidth(), 0)
+                result: self.helpers.padRight([], self.guessWidth(), 2),
+                guess: self.helpers.padRight([], self.guessWidth(), 0)
             };
-            data.Results = self.helpers.padRight(data.Results, data.MaxAttempts, filler);
+            data.results = self.helpers.padRight(data.results, data.maxAttempts, filler);
             self.serverVm(data);
             self.currentGuess([]);
 
-            if (data.IsOver)
-                pubsub.publish(data.IsAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
+            if (data.isOver)
+                pubsub.publish(data.isAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
         }
     };
 

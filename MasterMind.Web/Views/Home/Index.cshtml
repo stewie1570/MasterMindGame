@@ -51,25 +51,25 @@
     </div>
 
     <div class="result-outer-container" data-bind="visible: isSetup()">
-        <div data-bind="foreach: serverVm().Results">
+        <div data-bind="foreach: serverVm().results">
             <div data-bind="text: ($index() + 1)" class="line-number"></div>
 
-            <!-- ko foreach: Guess -->
+            <!-- ko foreach: guess -->
             <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
             </div>
             <!-- /ko -->
-            <!-- ko foreach: Result -->
+            <!-- ko foreach: result -->
             <div data-bind="attr: {class: 'peg-result peg-color-' + constants.resultColors[$data]}">
             </div>
             <!-- /ko -->
 
-            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.TimeLapse.TotalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
+            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
 
             <div class="clear"></div>
         </div>
     </div>
 
-    <div class="guess-outer-container" data-bind="visible: isSetup() && !serverVm().IsOver">
+    <div class="guess-outer-container" data-bind="visible: isSetup() && !serverVm().isOver">
         <div class="guess-inner-container">
             <span data-bind="visible: currentGuess().length == 0">[Click Pegs Below to Guess]</span>
 
@@ -95,9 +95,9 @@
         <div class="clear"></div>
     </div>
 
-    <div data-bind="visible: serverVm().IsOver" class="result-outer-container">
+    <div data-bind="visible: serverVm().isOver" class="result-outer-container">
         <div class="actual-container">
-            <!-- ko foreach: serverVm().Actual -->
+            <!-- ko foreach: serverVm().actual -->
             <div data-bind="attr: {class: 'peg-guess peg-color-' + constants.guessColors[$data]}">
             </div>
             <!-- /ko -->
@@ -107,34 +107,34 @@
 
     <br />
 
-    <h3 data-bind="visible: serverVm().IsOver && serverVm().IsAWin">
+    <h3 data-bind="visible: serverVm().isOver && serverVm().isAWin">
         Solved!!!
     </h3>
 
-    <div data-bind="visible: serverVm().IsOver && serverVm().IsAWin" class="result-table-div">
+    <div data-bind="visible: serverVm().isOver && serverVm().isAWin" class="result-table-div">
         <table class="result-table">
             <tr>
                 <th>Total Seconds</th>
                 <td>
-                    <span data-bind="text: serverVm().TotalTimeLapse != undefined ? serverVm().TotalTimeLapse.TotalSeconds.toFixed(1) : ''"></span>
+                    <span data-bind="text: serverVm().totalTimeLapse != undefined ? serverVm().totalTimeLapse.totalSeconds.toFixed(1) : ''"></span>
                 </td>
             </tr>
             <tr>
                 <th>Distinct Colors</th>
                 <td>
-                    <span data-bind="text: serverVm().ColorCount != undefined ? serverVm().ColorCount : ''"></span>
+                    <span data-bind="text: serverVm().colorCount != undefined ? serverVm().colorCount : ''"></span>
                 </td>
             </tr>
             <tr>
                 <th>Total Points</th>
                 <td class="result-points">
-                    <span data-bind="text: serverVm().Score != undefined ? serverVm().Score : ''"></span>
+                    <span data-bind="text: serverVm().score != undefined ? serverVm().score : ''"></span>
                 </td>
             </tr>
         </table>
     </div>
 
-    <h3 data-bind="visible: serverVm().IsOver && !serverVm().IsAWin">You Lost</h3>
+    <h3 data-bind="visible: serverVm().isOver && !serverVm().isAWin">You Lost</h3>
 
     <br />
 
@@ -143,7 +143,7 @@
                 class="command">
             New Game
         </button>
-        <button data-bind="click: shareScore, visible: serverVm().IsOver && serverVm().IsAWin"
+        <button data-bind="click: shareScore, visible: serverVm().isOver && serverVm().isAWin"
                 class="command">
             Share My Score
         </button>
