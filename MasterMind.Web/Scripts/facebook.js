@@ -24,9 +24,9 @@
             name: 'Think Quick',
             caption: 'Puzzle Solved',
             description: (
-                "Level " + data.Level + " solved in " + data.TotalTimeLapse.TotalSeconds.toFixed(1) + ' seconds.\n' +
-                data.ColorCount + " distinct colors.\n" +
-                data.Score + " POINTS"
+                "Level " + data.level + " solved in " + data.totalTimeLapse.totalSeconds.toFixed(1) + ' seconds.\n' +
+                data.colorCount + " distinct colors.\n" +
+                data.score + " POINTS"
             ),
             link: document.location.href
         }, function (response)
