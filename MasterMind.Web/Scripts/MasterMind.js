@@ -56,7 +56,7 @@ var GameViewModel = function (serverVm, pubsub)
     this.shareScore = function ()
     {
         var vm = self.serverVm();
-        vm.Level = self.level();
+        vm.level = self.level();
         vm.width = self.guessWidth();
         pubsub.publish("thinkquick:sharescore", vm);
     }

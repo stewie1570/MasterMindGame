@@ -381,12 +381,12 @@ describe("MasterMind", function ()
                 pubsub.subscribe("thinkquick:sharescore", function (data) { receivedObject = data; });
                 vm = new GameViewModel({}, pubsub);
                 var expectedWinContextObject = {
-                    IsOver: true,
-                    IsAWin: true,
-                    Score: 10,
-                    ColorCount: 4,
-                    TotalTimeLapse: 23.4,
-                    Level: 4,
+                    isOver: true,
+                    isAWin: true,
+                    score: 10,
+                    colorCount: 4,
+                    totalTimeLapse: 23.4,
+                    level: 4,
                     width: 5
                 };
                 vm.level(4);
@@ -394,11 +394,11 @@ describe("MasterMind", function ()
                 vm.serverVm = function ()
                 {
                     return {
-                        IsOver: true,
-                        IsAWin: true,
-                        Score: 10,
-                        ColorCount: 4,
-                        TotalTimeLapse: 23.4
+                        isOver: true,
+                        isAWin: true,
+                        score: 10,
+                        colorCount: 4,
+                        totalTimeLapse: 23.4
                     };
                 };
 
