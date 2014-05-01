@@ -33,13 +33,12 @@ namespace MasterMind.Core.ResultLogic
 
         private IEnumerable<GuessResult> EmptiesFor(GuessColor[] actual, List<GuessResult> results)
         {
-            return (actual.Length - results.Count).GuessResults(GuessResult.Empty);
+            return (actual.Length - results.Count).CopiesOf(GuessResult.Empty);
         }
 
         private IEnumerable<GuessResult> WhitesFor(int countOfColorInActual, int countOfColorInGuess, List<GuessResult> reds)
         {
-            return NumOfWhitesFrom(countOfColorInActual, countOfColorInGuess, reds)
-                .GuessResults(GuessResult.White);
+            return NumOfWhitesFrom(countOfColorInActual, countOfColorInGuess, reds).CopiesOf(GuessResult.White);
         }
 
         private int NumOfWhitesFrom(int countOfColorInActual, int countOfColorInGuess, List<GuessResult> reds)
