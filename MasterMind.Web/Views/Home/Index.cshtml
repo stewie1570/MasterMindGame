@@ -23,8 +23,8 @@
                         <th>Results By Peg</th>
                     </tr>
                     <tr>
-                        <td><img src="Content/images/miniscreenshot_percolor.png" /></td>
-                        <td><img src="Content/images/miniscreenshot.png" /></td>
+                        <td><img src='@Url.Content("~/Content/images/miniscreenshot_percolor.png")' /></td>
+                        <td><img src='@Url.Content("~/Content/images/miniscreenshot.png")' /></td>
                     </tr>
                 </table>
             </center>
@@ -63,7 +63,7 @@
             </div>
             <!-- /ko -->
 
-            <div data-bind="text: $data['TimeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
+            <div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
 
             <div class="clear"></div>
         </div>
