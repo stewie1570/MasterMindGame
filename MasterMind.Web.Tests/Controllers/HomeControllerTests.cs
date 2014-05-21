@@ -91,7 +91,7 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.MaxAttempts = 12;
 
             //Act
-            var results = _controller.Setup(6).Data;
+            var results = (_controller.Setup(6) as JsonResult).Data;
 
             //Assert
             results.Should().BeAssignableTo<GuessResultVM>();
@@ -109,7 +109,7 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:05 am") });
 
             //Act
-            var results = _controller.Guess("bbbb").Data as GuessResultVM;
+            var results = (_controller.Guess("bbbb") as JsonResult).Data as GuessResultVM;
 
             //Assert
             results.Actual.Should().BeEquivalentTo("rrrr".ToGuessArray());
@@ -127,7 +127,7 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:05 am") });
 
             //Act
-            var results = _controller.Guess("bbbb").Data as GuessResultVM;
+            var results = (_controller.Guess("bbbb") as JsonResult).Data as GuessResultVM;
 
             //Assert
             results.Actual.Should().BeNull();
@@ -147,7 +147,7 @@ namespace MasterMind.Web.Tests.Controllers
             _fakeGameProcess.IsOver.Returns(true);
 
             //Act
-            var vm = _controller.Guess(string.Empty).Data as GuessResultVM;
+            var vm = (_controller.Guess(string.Empty) as JsonResult).Data as GuessResultVM;
 
             //Assert
             vm.Should().BeAssignableTo<GuessResultVM>();
@@ -165,7 +165,7 @@ namespace MasterMind.Web.Tests.Controllers
             _fakeGameProcess.IsOver.Returns(true);
 
             //Act
-            var results = _controller.Guess("rbry").Data as GuessResultVM;
+            var results = (_controller.Guess("rbry") as JsonResult).Data as GuessResultVM;
 
             //Assert
             results.ColorCount.Should().Be(3);
@@ -182,7 +182,7 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 1:00:50 pm") });
 
             //Act
-            var results = _controller.Guess("rbry").Data as GuessResultVM;
+            var results = (_controller.Guess("rbry") as JsonResult).Data as GuessResultVM;
 
             //Assert
             results.Score.Should().Be(96);
@@ -197,7 +197,7 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.Results = new List<FullGuessResultRow>();
 
             //Act
-            var results = _controller.Guess("rbry").Data as GuessResultVM;
+            var results = (_controller.Guess("rbry") as JsonResult).Data as GuessResultVM;
 
             //Assert
             results.Score.Should().Be(_fakeGameProcess.Actual.Length * 100);

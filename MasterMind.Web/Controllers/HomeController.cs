@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace MasterMind.Web.Controllers
 {
     [JsonHandleErrorAttribute]
-    public class HomeController : Controller
+    public class HomeController : AutoResultControllerBase
     {
         private IGameProcess _gameProcess;
         private Func<Context> _contextProvider;
@@ -25,17 +25,17 @@ namespace MasterMind.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return Result();
         }
 
         [HttpPost]
-        public JsonResult Guess(string guess)
+        public ActionResult Guess(string guess)
         {
-            return Json(_gameProcess.Guess(guess).AsGuessResultVM(_gameProcess, _contextProvider()));
+            return Result(_gameProcess.Guess(guess).AsGuessResultVM(_gameProcess, _contextProvider()));
         }
 
         [HttpPost]
-        public JsonResult Setup(int width, string resultLogic = "percolor")
+        public ActionResult Setup(int width, string resultLogic = "percolor")
         {
             Validate(width);
             _gameProcess.Setup(
@@ -44,7 +44,7 @@ namespace MasterMind.Web.Controllers
                     ? GuessResultLogicType.PerPeg
                     : GuessResultLogicType.PerColor);
 
-            return Json(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
+            return Result(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
         }
 
         #region Helpers
