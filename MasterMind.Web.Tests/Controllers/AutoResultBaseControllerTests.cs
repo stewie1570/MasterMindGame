@@ -43,7 +43,6 @@ namespace MasterMind.Web.Tests.Controllers
             var result = controller.Index() as JsonResult;
 
             //Assert
-            result.Should().BeAssignableTo<JsonResult>();
             ((result.Data as dynamic).something as string).Should().Be("it worked...");
         }
 
@@ -57,7 +56,6 @@ namespace MasterMind.Web.Tests.Controllers
             var result = controller.Index() as ViewResult;
 
             //Assert
-            result.Should().BeAssignableTo<ViewResult>();
             ((result.Model as dynamic).something as string).Should().Be("it worked...");
         }
 
