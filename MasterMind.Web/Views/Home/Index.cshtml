@@ -16,7 +16,15 @@
             </ul>
             You can select whether you want your results calculated per color or per peg. (see below)
             <p />
+
             <center>
+
+                Calculate guess results:
+                <select data-bind="value: resultLogic">
+                    <option value="perpeg">By Peg</option>
+                    <option value="percolor">By Color</option>
+                </select>
+
                 <table class="examples_table">
                     <tr>
                         <th>Results By Color</th>
@@ -30,13 +38,6 @@
             </center>
         </div>
 
-        <br />
-        
-        Calculate guess results:
-        <select data-bind="value: resultLogic">
-            <option value="perpeg">By Peg</option>
-            <option value="percolor">By Color</option>
-        </select>
         <p />
 
         <center><b>Play</b></center>
