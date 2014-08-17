@@ -1,3 +1,4 @@
+![Build](http://thinkquickbuild.cloudapp.net:8080/app/rest/builds/buildType:ThinkQuick_Build/statusIcon)
 MasterMindGame
 ==============
 
