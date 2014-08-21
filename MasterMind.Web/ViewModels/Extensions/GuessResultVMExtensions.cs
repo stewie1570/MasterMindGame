@@ -9,7 +9,7 @@ namespace MasterMind.Web.ViewModels.Extensions
     {
         public static GuessResultVM AsGuessResultVM(this FullGuessResultRow[] results, IGameProcess gameProcess, Context gameContext)
         {
-            int colorCount = gameProcess.Actual.Distinct().Count();
+            int distinctColorCount = gameProcess.Actual.Distinct().Count();
             var totalTimeLaps = TotalTimeSpanFrom(gameContext);
 
             return new GuessResultVM
@@ -20,14 +20,16 @@ namespace MasterMind.Web.ViewModels.Extensions
                 MaxAttempts = gameContext.MaxAttempts,
                 Actual = gameProcess.IsOver ? gameContext.Actual : null,
                 TotalTimeLapse = gameProcess.IsOver ? totalTimeLaps : TimeSpan.FromTicks(0),
-                ColorCount = gameProcess.IsOver ? gameProcess.Actual.Distinct().Count() : (int?)null,
-                Score = gameProcess.IsOver ? CalculateScoreFrom(colorCount, totalTimeLaps, gameProcess.Actual.Length) : (int?)null
+                ColorCount = gameProcess.IsOver ? distinctColorCount : (int?)null,
+                Score = gameProcess.IsOver
+                    ? ScoreFrom(distinctColorCount, totalTimeLaps, gameProcess.Actual.Length)
+                    : (int?)null
             };
         }
 
         #region Helpers
 
-        private static int CalculateScoreFrom(int colorCount, TimeSpan totalTimeLapse, int actualWidth)
+        private static int ScoreFrom(int colorCount, TimeSpan totalTimeLapse, int actualWidth)
         {
             if (totalTimeLapse == TimeSpan.FromTicks(0))
                 return actualWidth * 100;
