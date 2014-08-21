@@ -7,7 +7,7 @@
 <div class="game-container">
     <div data-bind="visible: !isSetup()" class="game-levels-container">
         <div class="game-description">
-            Try to guess and deduce the correct sequence of colors.
+            In this game you figure out the randomly selected mystery sequence of colors.
             Your "clues" (described below) are shown to the right of your guess.
             <ul>
                 <li>A red peg means you have the correct color peg in the correct position</li>
@@ -43,11 +43,11 @@
         <center><b>Play</b></center>
 
         <!-- ko foreach: [4,5,6] -->
-            <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
-                    class="game-level-button command white-text">
-                Start Game
-            </button>
-            <br />
+        <button data-bind="click: $parent.setupGame, enable: !$parent.isCommunicating(), text: 'Level ' + ($data - 3)"
+                class="game-level-button command white-text">
+            Start Game
+        </button>
+        <br />
         <!-- /ko -->
     </div>
 
