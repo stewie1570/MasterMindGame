@@ -8,9 +8,20 @@ namespace MasterMind.Core.ResultLogic
         public GuessResult[] ResultFrom(GuessColor[] guess, GuessColor[] actual)
         {
             return guess
-                .Zip(actual, (g, a) => g == a ? GuessResult.Red : actual.Contains(g) ? GuessResult.White : GuessResult.Empty)
+                .Zip(actual, (guessPeg, actualPeg) => GuessResultFrom(actual, guessPeg, actualPeg))
                 .OrderBy(r => r)
                 .ToArray();
         }
+
+        #region Helpers
+
+        private static GuessResult GuessResultFrom(GuessColor[] actual, GuessColor guessPeg, GuessColor actualPeg)
+        {
+            return guessPeg == actualPeg
+                ? GuessResult.Red
+                : actual.Contains(guessPeg) ? GuessResult.White : GuessResult.Empty;
+        }
+
+        #endregion
     }
 }

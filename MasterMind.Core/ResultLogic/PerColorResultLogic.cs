@@ -13,15 +13,7 @@ namespace MasterMind.Core.ResultLogic
             var colorsInActual = actual.Distinct().ToList();
             var results = new List<GuessResult>();
 
-            colorsInActual.ForEach(color =>
-            {
-                int countOfColorInActual = actual.Count(ac => ac == color);
-                int countOfColorInGuess = guess.Count(gc => gc == color);
-                var reds = RedsFor(guess, actual, color).ToList();
-
-                results.AddRange(reds);
-                results.AddRange(WhitesFor(countOfColorInActual, countOfColorInGuess, reds));
-            });
+            colorsInActual.ForEach(color => results.AddRange(RedsAndWhitesFor(guess, actual, color)));
 
             if (results.Count < actual.Length)
                 results.AddRange(EmptiesFor(actual, results));
@@ -30,6 +22,17 @@ namespace MasterMind.Core.ResultLogic
         }
 
         #region Helpers
+
+        private List<GuessResult> RedsAndWhitesFor(GuessColor[] guess, GuessColor[] actual, GuessColor color)
+        {
+            int countOfColorInActual = actual.Count(ac => ac == color);
+            int countOfColorInGuess = guess.Count(gc => gc == color);
+            var reds = RedsFor(guess, actual, color).ToList();
+
+            return WhitesFor(countOfColorInActual, countOfColorInGuess, reds)
+                .Concat(reds)
+                .ToList();
+        }
 
         private IEnumerable<GuessResult> EmptiesFor(GuessColor[] actual, List<GuessResult> results)
         {
@@ -49,8 +52,13 @@ namespace MasterMind.Core.ResultLogic
         private IEnumerable<GuessResult> RedsFor(GuessColor[] guess, GuessColor[] actual, GuessColor color)
         {
             return guess
-                .Zip(actual, (g, a) => g == a && a == color ? GuessResult.Red : GuessResult.Empty)
+                .Zip(actual, (guessPeg, actualPeg) => GuessResultFrom(color, guessPeg, actualPeg))
                 .Where(r => r == GuessResult.Red);
+        }
+
+        private static GuessResult GuessResultFrom(GuessColor color, GuessColor guessPeg, GuessColor actualPeg)
+        {
+            return guessPeg == actualPeg && actualPeg == color ? GuessResult.Red : GuessResult.Empty;
         }
 
         #endregion
