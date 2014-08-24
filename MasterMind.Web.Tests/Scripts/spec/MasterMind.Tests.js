@@ -41,11 +41,11 @@
             //Act
             vm.binders.bindServerResults({
                 results: [
-                    { timeLapse: { seconds: 20 } },
-                    { timeLapse: { seconds: 10 } },
-                    { timeLapse: { seconds: 30 } },
-                    { timeLapse: { seconds: 50 } },
-                    { timeLapse: { seconds: 40 } }
+                    { timeLapse: { totalMilliseconds: 20 } },
+                    { timeLapse: { totalMilliseconds: 10 } },
+                    { timeLapse: { totalMilliseconds: 30 } },
+                    { timeLapse: { totalMilliseconds: 50 } },
+                    { timeLapse: { totalMilliseconds: 40 } }
                 ],
                 maxAttempts: 5
             });
@@ -67,7 +67,7 @@
             //Act
             vm.binders.bindServerResults({
                 results: [
-                    { timeLapse: { seconds: 0 } }
+                    { timeLapse: { totalMilliseconds: 0 } }
                 ],
                 maxAttempts: 5
             });

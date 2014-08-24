@@ -101,11 +101,12 @@ var GameViewModel = function (serverVm, pubsub)
             {
                 var maxTimeLapse = data.results.select(function (result)
                 {
-                    return result.timeLapse.seconds;
+                    return result.timeLapse.totalMilliseconds;
                 }).max();
                 data.results = data.results.select(function (result)
                 {
-                    result.timeLapsePercent = maxTimeLapse == 0 ? 0 : (result.timeLapse.seconds / maxTimeLapse) * 100;
+                    result.timeLapsePercent = maxTimeLapse == 0
+                        ? 0 : (result.timeLapse.totalMilliseconds / maxTimeLapse) * 100;
                     return result;
                 });
             }
