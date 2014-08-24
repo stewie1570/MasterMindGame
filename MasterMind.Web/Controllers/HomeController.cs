@@ -44,12 +44,7 @@ namespace MasterMind.Web.Controllers
                     ? GuessResultLogicType.PerPeg
                     : GuessResultLogicType.PerColor);
 
-            return Result(new GuessResultVM
-            {
-                Actual = new GuessColor[0],
-                MaxAttempts = _contextProvider().MaxAttempts,
-                Results = new FullGuessResultRow[0]
-            });
+            return Result(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
         }
 
         #region Helpers

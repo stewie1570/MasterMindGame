@@ -93,6 +93,23 @@
     text-align: right;
 }
 
+.guess-time-percent-container{
+    float: right;
+    height: 20px;
+    width: 0px;
+    overflow: visible;
+}
+
+.guess-time-percent-inner-container {
+    width: 50px;
+}
+
+.guess-time-percent{
+    background-color: #404040;
+    height: 20px;
+    margin-left: -50px;
+}
+
 .result-peg {
     width: 6px;
     height: 6px;

@@ -80,11 +80,12 @@ var GameViewModel = function (serverVm, pubsub)
         {
             data = JSONCasing.toCamel(data);
             self.isCommunicating(false);
-            var filler = {
+            self.helpers.addTimeLapsePercentagesTo(data);
+            data.results = (data.results || []).padRight(data.maxAttempts, {
                 result: [].padRight(self.guessWidth(), constants.resultColors.indexOf("empty")),
-                guess: [].padRight(self.guessWidth(), constants.guessColors.indexOf("empty"))
-            };
-            data.results = (data.results || []).padRight(data.maxAttempts, filler);
+                guess: [].padRight(self.guessWidth(), constants.guessColors.indexOf("empty")),
+                timeLapsePercent: 0
+            });
             self.serverVm(data);
             self.currentGuess([]);
 
@@ -94,6 +95,22 @@ var GameViewModel = function (serverVm, pubsub)
     };
 
     this.helpers = {
+        addTimeLapsePercentagesTo: function (data)
+        {
+            if (data.results)
+            {
+                var maxTimeLapse = data.results.select(function (result)
+                {
+                    return result.timeLapse.seconds;
+                }).max();
+                data.results = data.results.select(function (result)
+                {
+                    result.timeLapsePercent = maxTimeLapse == 0 ? 0 : (result.timeLapse.seconds / maxTimeLapse) * 100;
+                    return result;
+                });
+            }
+        },
+
         pegArrayToGuessString: function (pegArray)
         {
             return pegArray
@@ -107,6 +124,13 @@ var GameViewModel = function (serverVm, pubsub)
 String.prototype.replaceAll = function (find, replacement)
 {
     return this.split(find).join(replacement);
+}
+
+Array.prototype.max = function ()
+{
+    var ret = this[0];
+    this.forEach(function (i) { ret = ret > i ? ret : i; });
+    return ret;
 }
 
 Array.prototype.select = function (del)

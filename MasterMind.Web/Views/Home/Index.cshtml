@@ -64,7 +64,14 @@
             </div>
             <!-- /ko -->
 
-            <div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time"></div>
+            <div class="guess-time-percent-container">
+                <div class="guess-time-percent-inner-container">
+                    <div class="guess-time-percent" data-bind="attr:{style: 'width: ' + $data.timeLapsePercent + '%'}"></div>
+                </div>
+            </div>
+
+            <div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time">
+            </div>
 
             <div class="clear"></div>
         </div>

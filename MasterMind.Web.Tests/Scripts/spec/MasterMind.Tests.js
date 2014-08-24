@@ -1,8 +1,4 @@
-﻿///<reference path="../../../MasterMind.Web/Scripts/pubsub.js" />
-///<reference path="../../../MasterMind.Web/Scripts/MasterMind.js" />
-///<reference path="/lib/jasmine-2.0.0/jasmine.js" />
-
-describe("MasterMind", function ()
+﻿describe("MasterMind", function ()
 {
 
     describe("Communication Failure Callback", function ()
@@ -36,6 +32,54 @@ describe("MasterMind", function ()
             isCommunicating = true;
         });
 
+        it("should add a relative time lapse percentage to each result", function ()
+        {
+            //Arrange
+            var data = null;
+            vm.serverVm = function (arg) { data = arg; };
+
+            //Act
+            vm.binders.bindServerResults({
+                results: [
+                    { timeLapse: { seconds: 20 } },
+                    { timeLapse: { seconds: 10 } },
+                    { timeLapse: { seconds: 30 } },
+                    { timeLapse: { seconds: 50 } },
+                    { timeLapse: { seconds: 40 } }
+                ],
+                maxAttempts: 5
+            });
+
+            //Assert
+            var expectedPercentages = [40, 20, 60, 100, 80];
+            for (var i = 0; i < expectedPercentages.length; i++)
+            {
+                expect(data.results[i].timeLapsePercent).toEqual(expectedPercentages[i]);
+            }
+        });
+
+        it("should not divide by zero when max time lapse is zero at beginning of game", function ()
+        {
+            //Arrange
+            var data = null;
+            vm.serverVm = function (arg) { data = arg; };
+
+            //Act
+            vm.binders.bindServerResults({
+                results: [
+                    { timeLapse: { seconds: 0 } }
+                ],
+                maxAttempts: 5
+            });
+
+            //Assert
+            var expectedPercentages = [0];
+            for (var i = 0; i < expectedPercentages.length; i++)
+            {
+                expect(data.results[i].timeLapsePercent).toEqual(expectedPercentages[i]);
+            }
+        });
+
         it("should set isCommunicating to false", function ()
         {
             //Arrange
@@ -59,7 +103,9 @@ describe("MasterMind", function ()
             vm.binders.bindServerResults({ maxAttempts: 1 });
 
             //Assert
-            expect(data.results).toEqual([{ result: [2, 2, 2, 2], guess: [0, 0, 0, 0] }]);
+            expect(data.results).toEqual([
+                { result: [2, 2, 2, 2], guess: [0, 0, 0, 0], timeLapsePercent: 0 }
+            ]);
         });
 
         it("should set current guess to empty array (clear the current guess)", function ()

@@ -5,6 +5,12 @@ namespace MasterMind.Web.ViewModels
 {
     public class GuessResultVM
     {
+        public GuessResultVM()
+        {
+            Actual = new GuessColor[0];
+            Results = new FullGuessResultRow[0];
+        }
+
         public FullGuessResultRow[] Results { get; set; }
         public bool IsOver { get; set; }
         public bool IsAWin { get; set; }
