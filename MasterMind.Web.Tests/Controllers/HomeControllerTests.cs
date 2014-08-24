@@ -91,11 +91,15 @@ namespace MasterMind.Web.Tests.Controllers
             _gameContext.MaxAttempts = 12;
 
             //Act
-            var results = (_controller.Setup(6) as JsonResult).Data;
+            GuessResultVM results = (_controller.Setup(6) as JsonResult).Data as GuessResultVM;
 
             //Assert
-            results.Should().BeAssignableTo<GuessResultVM>();
-            (results as GuessResultVM).MaxAttempts.Should().Be(12);
+            results.ShouldBeEquivalentTo(new GuessResultVM
+            {
+                Actual = new GuessColor[0],
+                MaxAttempts = 12,
+                Results = new FullGuessResultRow[0]
+            });
         }
 
         [TestMethod]

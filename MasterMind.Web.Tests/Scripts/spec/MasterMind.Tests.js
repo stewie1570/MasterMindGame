@@ -411,32 +411,6 @@ describe("MasterMind", function ()
         });
     });
 
-    describe("Helpers", function ()
-    {
-        var vm = null;
-
-        beforeEach(function ()
-        {
-            vm = new GameViewModel({});
-        });
-
-        it("padRight should expand an array to provided length using provided filler", function ()
-        {
-            //Arrange
-            //Act
-            //Assert
-            expect(vm.helpers.padRight([1, 2, 3], 5, 0)).toEqual([1, 2, 3, 0, 0]);
-        });
-
-        it("padRight should be able to receive null as an empty array", function ()
-        {
-            //Arrange
-            //Act
-            //Assert
-            expect(vm.helpers.padRight(null, 5, 0)).toEqual([0, 0, 0, 0, 0]);
-        });
-    });
-
     describe("Peg Click", function ()
     {
         var vm = null;

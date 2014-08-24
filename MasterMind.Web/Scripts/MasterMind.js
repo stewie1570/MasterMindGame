@@ -81,10 +81,10 @@ var GameViewModel = function (serverVm, pubsub)
             data = JSONCasing.toCamel(data);
             self.isCommunicating(false);
             var filler = {
-                result: self.helpers.padRight([], self.guessWidth(), 2),
-                guess: self.helpers.padRight([], self.guessWidth(), 0)
+                result: [].padRight(self.guessWidth(), constants.resultColors.indexOf("empty")),
+                guess: [].padRight(self.guessWidth(), constants.guessColors.indexOf("empty"))
             };
-            data.results = self.helpers.padRight(data.results, data.maxAttempts, filler);
+            data.results = (data.results || []).padRight(data.maxAttempts, filler);
             self.serverVm(data);
             self.currentGuess([]);
 
@@ -94,43 +94,35 @@ var GameViewModel = function (serverVm, pubsub)
     };
 
     this.helpers = {
-        padRight: function (array, length, filler)
+        pegArrayToGuessString: function (pegArray)
         {
-            var currentLength = array == null ? 0 : array.length;
-            var newArray = [];
-            for (var i = 0; i < length; i++)
-            {
-                newArray[i] = i < currentLength ? array[i] : filler;
-            }
-            return newArray;
-        },
-
-        isNullOrEmpty: function (str)
-        {
-            return str == null || str.length == 0;
-        },
-
-        select: function (array, del)
-        {
-            var ret = [];
-            for (var i = 0; i < array.length; i++)
-            {
-                ret.push(del(array[i]));
-            }
-            return ret;
-        },
-
-        replaceAll: function (str, find, replacement)
-        {
-            return str.split(find).join(replacement);
-        },
-
-        pegArrayToGuessString: function (array)
-        {
-            var guessCSV = self
-                .helpers
-                .select(array, function (guess) { return guess[0]; }).toString();
-            return self.helpers.replaceAll(guessCSV, ',', '');
+            return pegArray
+                .select(function (guess) { return guess[0]; })
+                .toString()
+                .replaceAll(',', '');
         }
     };
 };
+
+String.prototype.replaceAll = function (find, replacement)
+{
+    return this.split(find).join(replacement);
+}
+
+Array.prototype.select = function (del)
+{
+    var ret = [];
+    this.forEach(function (i) { ret.push(del(i)); });
+    return ret;
+}
+
+Array.prototype.padRight = function (length, filler)
+{
+    var currentLength = this == null ? 0 : this.length;
+    var newArray = [];
+    for (var i = 0; i < length; i++)
+    {
+        newArray[i] = i < currentLength ? this[i] : filler;
+    }
+    return newArray;
+}
