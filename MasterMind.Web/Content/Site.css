@@ -199,6 +199,10 @@ header, footer, nav, section {
 /* Styles for basic forms
 -----------------------------------------------------------*/
 
+a{
+    color: white
+}
+
 button{
     background-color:rgba(220,220,220,0.35);
     border-radius: 8px;
