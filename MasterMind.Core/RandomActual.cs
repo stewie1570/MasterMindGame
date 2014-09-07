@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MasterMind.Core
 {
-    public static class CreateRandomActualLogic
+    public static class RandomActual
     {
         public static GuessColor[] Create(int count)
         {

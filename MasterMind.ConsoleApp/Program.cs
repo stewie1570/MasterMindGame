@@ -17,7 +17,7 @@ namespace MasterMind.ConsoleApp
                         GuessWidth = int.Parse(Input("Guess Width")),
                         MaxAttempts = int.Parse(Input("Max Attempts"))
                     },
-                    actualProvider: width => CreateRandomActualLogic.Create(width));
+                    actualProvider: width => RandomActual.Create(width));
 
                 while (!game.IsOver)
                 {

@@ -1,5 +1,6 @@
 ﻿using MasterMind.Core;
 using MasterMind.Core.Models;
+using MasterMind.Core.Models.Extensions;
 using MasterMind.Web.Attributes;
 using MasterMind.Web.Exceptions;
 using MasterMind.Web.ViewModels;
@@ -40,9 +41,7 @@ namespace MasterMind.Web.Controllers
             Validate(width);
             _gameProcess.Setup(
                 newWidth: width,
-                logicType: resultLogic.ToLower().Contains("peg")
-                    ? GuessResultLogicType.PerPeg
-                    : GuessResultLogicType.PerColor);
+                logicType: resultLogic.ToGuessResultLogicType());
 
             return Result(new GuessResultVM { MaxAttempts = _contextProvider().MaxAttempts });
         }

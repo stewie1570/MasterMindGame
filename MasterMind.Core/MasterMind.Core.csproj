@@ -39,7 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateRandomActualLogic.cs" />
+    <Compile Include="Models\Extensions\GuessResultLogicTypeExtensions.cs" />
+    <Compile Include="RandomActual.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="GameProcess.cs" />
     <Compile Include="ResultLogic\GuessResultLogicProvider.cs" />
