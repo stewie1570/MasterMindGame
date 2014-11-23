@@ -62,48 +62,48 @@ var GameViewModel = function (serverVm, pubsub)
     }
 
     this.binders = {
-        setupSuccess: function (data)
+        setupSuccess: function (serverData)
         {
             self.isCommunicating(false);
-            if (data["Message"] != undefined)
-                alert(data.Message);
+            if (serverData["Message"] != undefined)
+                alert(serverData.Message);
             else
             {
-                self.binders.bindServerResults(data);
+                self.binders.bindServerResults(serverData);
                 self.isSetup(true);
             }
         },
 
         communicationFail: function () { self.isCommunicating(false); },
 
-        bindServerResults: function (data)
+        bindServerResults: function (serverData)
         {
-            data = JSONCasing.toCamel(data);
+            serverData = JSONCasing.toCamel(serverData);
             self.isCommunicating(false);
-            self.helpers.addTimeLapsePercentagesTo(data);
-            data.results = (data.results || []).padRight(data.maxAttempts, {
+            self.helpers.addTimeLapsePercentagesTo(serverData);
+            serverData.results = (serverData.results || []).padRight(serverData.maxAttempts, {
                 result: [].padRight(self.guessWidth(), constants.resultColors.indexOf("empty")),
                 guess: [].padRight(self.guessWidth(), constants.guessColors.indexOf("empty")),
                 timeLapsePercent: 0
             });
-            self.serverVm(data);
+            self.serverVm(serverData);
             self.currentGuess([]);
 
-            if (data.isOver)
-                pubsub.publish(data.isAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
+            if (serverData.isOver)
+                pubsub.publish(serverData.isAWin ? "thinkquick:win" : "thinkquick:lost", { width: self.guessWidth() });
         }
     };
 
     this.helpers = {
-        addTimeLapsePercentagesTo: function (data)
+        addTimeLapsePercentagesTo: function (serverData)
         {
-            if (data.results)
+            if (serverData.results)
             {
-                var maxTimeLapse = data.results.select(function (result)
+                var maxTimeLapse = serverData.results.select(function (result)
                 {
                     return result.timeLapse.totalMilliseconds;
                 }).max();
-                data.results = data.results.select(function (result)
+                serverData.results = serverData.results.select(function (result)
                 {
                     result.timeLapsePercent = maxTimeLapse == 0
                         ? 0 : (result.timeLapse.totalMilliseconds / maxTimeLapse) * 100;

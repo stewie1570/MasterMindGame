@@ -1,6 +1,7 @@
 ﻿using MasterMind.Core;
 using MasterMind.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MasterMind.Web.ViewModels.Extensions
@@ -14,11 +15,13 @@ namespace MasterMind.Web.ViewModels.Extensions
 
             return new GuessResultVM
             {
-                Results = results,
+                Results = results.ToViewModel(),
                 IsOver = gameProcess.IsOver,
                 IsAWin = gameProcess.IsAWin,
                 MaxAttempts = gameContext.MaxAttempts,
-                Actual = gameProcess.IsOver ? gameContext.Actual : null,
+                Actual = gameProcess.IsOver
+                    ? gameContext.Actual == null ? null : gameContext.Actual.Select(a => (int)a).ToArray()
+                    : null,
                 TotalTimeLapse = gameProcess.IsOver ? totalTimeLaps : TimeSpan.FromTicks(0),
                 ColorCount = gameProcess.IsOver ? distinctColorCount : (int?)null,
                 Score = gameProcess.IsOver
@@ -28,6 +31,21 @@ namespace MasterMind.Web.ViewModels.Extensions
         }
 
         #region Helpers
+
+        private static FullGuessResultRowVM[] ToViewModel(this IEnumerable<FullGuessResultRow> rows)
+        {
+            return rows.Select(resultRow => new FullGuessResultRowVM
+            {
+                Guess = resultRow.Guess == null
+                    ? null
+                    : resultRow.Guess.Select(g => (int)g).ToArray(),
+                Result = resultRow.Result == null
+                    ? null
+                    : resultRow.Result.Select(result => (int)result).ToArray(),
+                TimeLapse = resultRow.TimeLapse,
+                TimeStamp = resultRow.TimeStamp
+            }).ToArray();
+        }
 
         private static int ScoreFrom(int colorCount, TimeSpan totalTimeLapse, int actualWidth)
         {

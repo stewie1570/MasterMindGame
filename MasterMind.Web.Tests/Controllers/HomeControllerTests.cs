@@ -96,9 +96,9 @@ namespace MasterMind.Web.Tests.Controllers
             //Assert
             results.ShouldBeEquivalentTo(new GuessResultVM
             {
-                Actual = new GuessColor[0],
+                Actual = new int[0],
                 MaxAttempts = 12,
-                Results = new FullGuessResultRow[0]
+                Results = new FullGuessResultRowVM[0]
             });
         }
 
@@ -116,7 +116,7 @@ namespace MasterMind.Web.Tests.Controllers
             var results = (_controller.Guess("bbbb") as JsonResult).Data as GuessResultVM;
 
             //Assert
-            results.Actual.Should().BeEquivalentTo("rrrr".ToGuessArray());
+            results.Actual.Should().BeEquivalentTo("rrrr".ToGuessArray().Select(i => (int)i));
             results.TotalTimeLapse.Should().Be(TimeSpan.FromMinutes(5));
         }
 
@@ -155,7 +155,7 @@ namespace MasterMind.Web.Tests.Controllers
 
             //Assert
             vm.Should().BeAssignableTo<GuessResultVM>();
-            vm.Results.Should().BeEquivalentTo(expectedResults);
+            vm.Results.ShouldBeEquivalentTo(expectedResults);
             vm.IsAWin.Should().BeTrue();
             vm.IsOver.Should().BeTrue();
             vm.MaxAttempts.Should().Be(12);
