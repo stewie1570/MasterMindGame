@@ -19,8 +19,11 @@ var GameViewModel = function (serverVm, pubsub)
     {
         if (constants.guessColors.indexOf(peg) >= 0)
         {
-            if (self.currentGuess().length < self.guessWidth())
+            if (self.currentGuess().length < self.guessWidth() && !self.isCommunicating())
+            {
                 self.currentGuess.push(peg);
+                if(self.currentGuess().length == self.guessWidth()) self.sendGuess();
+            }
         }
         else
             self.currentGuess.pop();

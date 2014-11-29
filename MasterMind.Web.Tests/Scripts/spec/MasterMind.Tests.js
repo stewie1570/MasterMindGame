@@ -463,7 +463,7 @@
 
         beforeEach(function ()
         {
-            vm = new GameViewModel({});
+            vm = new GameViewModel({}, { publish: function () { } });
         });
 
         it("should remove the last peg when backspace 'peg' is clicked", function ()
@@ -503,6 +503,50 @@
 
             //Assert
             expect(vm.currentGuess()).toEqual(["red", "green", "blue"]);
+        });
+
+        it("should not add the peg that was clicked when game is communicating with server", function ()
+        {
+            //Arrange
+            vm.guessWidth(4);
+            vm.currentGuess(["red"]);
+            vm.isCommunicating(true);
+
+            //Act
+            vm.pegAction("blue");
+
+            //Assert
+            expect(vm.currentGuess()).toEqual(["red"]);
+        });
+
+        it("should send the guess when the current guess is filled", function ()
+        {
+            //Arrange
+            vm.guessWidth(4);
+            vm.currentGuess(["red", "green", "blue"]);
+            var sendGuessCalled = false;
+            vm.sendGuess = function () { sendGuessCalled = true; }
+
+            //Act
+            vm.pegAction("yellow");
+
+            //Assert
+            expect(sendGuessCalled).toBeTruthy();
+        });
+
+        it("should not send the guess when the current guess is not filled", function ()
+        {
+            //Arrange
+            vm.guessWidth(4);
+            vm.currentGuess(["red", "green"]);
+            var sendGuessCalled = false;
+            vm.sendGuess = function () { sendGuessCalled = true; }
+
+            //Act
+            vm.pegAction("yellow");
+
+            //Assert
+            expect(sendGuessCalled).toBeFalsy();
         });
     });
 });
