@@ -8,6 +8,10 @@
     pubsub.subscribe("thinkquick:lost", function (data) { self.track("Lost", data.width); });
     pubsub.subscribe("thinkquick:sharescore", function (data) { self.track("Share", data.width); });
     pubsub.subscribe("thinkquick:sharescore:published", function (data) { self.track("Facebook Publish", data.width); });
+    pubsub.subscribe("thinkquick:authenticate", function (name)
+    {
+        self.track("Authenticated", name);
+    });
 
     this.track = function (action, width)
     {

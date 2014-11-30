@@ -119,6 +119,7 @@
     <Content Include="Scripts\lib\jasmine-2.0.0\jasmine.js" />
     <Content Include="Scripts\lib\jasmine-2.0.0\jasmine_favicon.png" />
     <Content Include="Scripts\SpecRunner.html" />
+    <Content Include="Scripts\spec\facebook.tests.js" />
     <Content Include="Scripts\spec\MasterMind.Tests.js" />
   </ItemGroup>
   <ItemGroup>
