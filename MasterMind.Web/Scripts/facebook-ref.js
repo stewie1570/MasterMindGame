@@ -5,7 +5,6 @@
         status: true,
         xfbml: true
     });
-    window.pubsub.publish("thinkquick:facebook:init");
 };
 
 (function (d, s, id)
