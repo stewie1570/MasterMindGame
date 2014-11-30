@@ -10,7 +10,7 @@
     pubsub.subscribe("thinkquick:sharescore:published", function (data) { self.track("Facebook Publish", data.width); });
     pubsub.subscribe("thinkquick:authenticate", function (name)
     {
-        self.track("Authenticated", name);
+        ga('send', 'event', 'Think Quick Game', "Authenticate", name, 1);
     });
 
     this.track = function (action, width)
