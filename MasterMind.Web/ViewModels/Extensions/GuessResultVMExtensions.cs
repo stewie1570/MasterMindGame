@@ -36,12 +36,8 @@ namespace MasterMind.Web.ViewModels.Extensions
         {
             return rows.Select(resultRow => new FullGuessResultRowVM
             {
-                Guess = resultRow.Guess == null
-                    ? null
-                    : resultRow.Guess.Select(g => (int)g).ToArray(),
-                Result = resultRow.Result == null
-                    ? null
-                    : resultRow.Result.Select(result => (int)result).ToArray(),
+                Guess = resultRow.Guess.Select(c => (int)c).ToArray(),
+                Result = resultRow.Result.Select(r => (int)r).ToArray(),
                 TimeLapse = resultRow.TimeLapse,
                 TimeStamp = resultRow.TimeStamp
             }).ToArray();

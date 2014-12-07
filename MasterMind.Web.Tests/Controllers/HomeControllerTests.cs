@@ -19,15 +19,15 @@ namespace MasterMind.Web.Tests.Controllers
     public class HomeControllerTests
     {
         private HomeController _controller;
-        private IGameProcess _fakeGameProcess;
+        private IGameProcess _gameProcess;
         private Context _gameContext;
 
         [TestInitialize]
         public void Setup()
         {
             _gameContext = new Context();
-            _fakeGameProcess = Substitute.For<IGameProcess>();
-            _controller = new HomeController(_fakeGameProcess, () => _gameContext);
+            _gameProcess = Substitute.For<IGameProcess>();
+            _controller = new HomeController(_gameProcess, () => _gameContext);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace MasterMind.Web.Tests.Controllers
             _controller.Setup(6);
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerColor);
+            _gameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerColor);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace MasterMind.Web.Tests.Controllers
             _controller.Setup(6, "143peg233245");
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerPeg);
+            _gameProcess.Received(1).Setup(newWidth: 6, logicType: GuessResultLogicType.PerPeg);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace MasterMind.Web.Tests.Controllers
             _controller.Setup(6);
 
             //Assert
-            _fakeGameProcess.Received(1).Setup(newWidth: 6, logicType: Arg.Any<GuessResultLogicType>());
+            _gameProcess.Received(1).Setup(newWidth: 6, logicType: Arg.Any<GuessResultLogicType>());
         }
 
         [TestMethod]
@@ -106,7 +106,7 @@ namespace MasterMind.Web.Tests.Controllers
         public void ShouldShowActualAndTotalTimeWhenGameIsOver()
         {
             //Arrange
-            _fakeGameProcess.IsOver.Returns(true);
+            _gameProcess.IsOver.Returns(true);
             _gameContext.Actual = "rrrr".ToGuessArray();
             _gameContext.Results = new List<FullGuessResultRow>();
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:00 am") });
@@ -124,7 +124,7 @@ namespace MasterMind.Web.Tests.Controllers
         public void CertainFieldsShouldNotBePresentWhenGameIsNotOver()
         {
             //Arrange
-            _fakeGameProcess.IsOver.Returns(false);
+            _gameProcess.IsOver.Returns(false);
             _gameContext.Actual = "rrrr".ToGuessArray();
             _gameContext.Results = new List<FullGuessResultRow>();
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 12:00 am") });
@@ -145,15 +145,26 @@ namespace MasterMind.Web.Tests.Controllers
         {
             //Arrange
             _gameContext.MaxAttempts = 12;
-            var expectedResults = Builder<FullGuessResultRow>.CreateListOfSize(2).Build().ToArray();
-            _fakeGameProcess.Guess(Arg.Any<string>()).Returns(expectedResults);
-            _fakeGameProcess.IsAWin.Returns(true);
-            _fakeGameProcess.IsOver.Returns(true);
+            var results = Builder<FullGuessResultRow>
+                .CreateListOfSize(2)
+                .All().With(r => r.Guess = Builder<GuessColor>.CreateListOfSize(5).Build().ToArray())
+                .All().With(r => r.Result = Builder<GuessResult>.CreateListOfSize(5).Build().ToArray())
+                .Build()
+                .ToArray();
+            _gameProcess.Guess(Arg.Any<string>()).Returns(results);
+            _gameProcess.IsAWin.Returns(true);
+            _gameProcess.IsOver.Returns(true);
 
             //Act
             var vm = (_controller.Guess(string.Empty) as JsonResult).Data as GuessResultVM;
 
             //Assert
+            var expectedResults = Builder<FullGuessResultRowVM>
+                .CreateListOfSize(2)
+                .All().With(r => r.Guess = Builder<int>.CreateListOfSize(5).Build().ToArray())
+                .All().With(r => r.Result = Builder<int>.CreateListOfSize(5).Build().ToArray())
+                .Build()
+                .ToArray();
             vm.Should().BeAssignableTo<GuessResultVM>();
             vm.Results.ShouldBeEquivalentTo(expectedResults);
             vm.IsAWin.Should().BeTrue();
@@ -165,8 +176,8 @@ namespace MasterMind.Web.Tests.Controllers
         public void FinalResultShouldIncludeColorCount()
         {
             //Arrange
-            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
-            _fakeGameProcess.IsOver.Returns(true);
+            _gameProcess.Actual.Returns("rbry".ToGuessArray());
+            _gameProcess.IsOver.Returns(true);
 
             //Act
             var results = (_controller.Guess("rbry") as JsonResult).Data as GuessResultVM;
@@ -179,8 +190,8 @@ namespace MasterMind.Web.Tests.Controllers
         public void FinalResultShouldIncludeScore()
         {
             //Arrange
-            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
-            _fakeGameProcess.IsOver.Returns(true);
+            _gameProcess.Actual.Returns("rbry".ToGuessArray());
+            _gameProcess.IsOver.Returns(true);
             _gameContext.Results = new List<FullGuessResultRow>();
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 1:00:00 pm") });
             _gameContext.Results.Add(new FullGuessResultRow { TimeStamp = DateTime.Parse("1/1/2000 1:00:50 pm") });
@@ -196,15 +207,15 @@ namespace MasterMind.Web.Tests.Controllers
         public void ZeroTimeSpanShouldNotCrashScoring()
         {
             //Arrange
-            _fakeGameProcess.Actual.Returns("rbry".ToGuessArray());
-            _fakeGameProcess.IsOver.Returns(true);
+            _gameProcess.Actual.Returns("rbry".ToGuessArray());
+            _gameProcess.IsOver.Returns(true);
             _gameContext.Results = new List<FullGuessResultRow>();
 
             //Act
             var results = (_controller.Guess("rbry") as JsonResult).Data as GuessResultVM;
 
             //Assert
-            results.Score.Should().Be(_fakeGameProcess.Actual.Length * 100);
+            results.Score.Should().Be(_gameProcess.Actual.Length * 100);
         }
     }
 }
