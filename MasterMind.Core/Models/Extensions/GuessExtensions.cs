@@ -58,7 +58,6 @@ namespace MasterMind.Core.Models.Extensions
 
     public class InvalidGuessException : Exception
     {
-        public InvalidGuessException(string message, Exception inner) : base(message, inner) { }
         public InvalidGuessException(string message) : base(message) { }
     }
 }
