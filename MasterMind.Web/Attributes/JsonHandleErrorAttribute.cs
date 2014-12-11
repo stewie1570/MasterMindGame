@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MasterMind.Web.ViewModels;
+using System;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +13,7 @@ namespace MasterMind.Web.Attributes
         {
             filterContext.Result = new JsonResult
             {
-                Data = new { Message = filterContext.Exception.Message },
+                Data = new ExceptionVM { Message = filterContext.Exception.Message },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
 
