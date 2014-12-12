@@ -84,6 +84,19 @@ var GameViewModel = function (serverVm, pubsub)
             serverData = JSONCasing.toCamel(serverData);
             self.isCommunicating(false);
             self.helpers.addTimeLapsePercentagesTo(serverData);
+
+            if (serverData.results)
+            {
+                serverData.results.select(function (result) {
+                    var red = parseInt(255 * (result.timeLapsePercent * 0.01));
+                    var green = 255 - red;
+                    result.color = "#"
+                        + red.toString(16).padLeft(2, '0')
+                        + green.toString(16).padLeft(2, '0')
+                        + "00";
+                });
+            }
+
             serverData.results = (serverData.results || []).padRight(serverData.maxAttempts, {
                 result: [].padRight(self.guessWidth(), constants.resultColors.indexOf("empty")),
                 guess: [].padRight(self.guessWidth(), constants.guessColors.indexOf("empty")),
@@ -128,6 +141,13 @@ var GameViewModel = function (serverVm, pubsub)
 String.prototype.replaceAll = function (find, replacement)
 {
     return this.split(find).join(replacement);
+}
+
+String.prototype.padLeft = function (length, value) {
+    var ret = this;
+    while (ret.length < length)
+        ret += value;
+    return ret;
 }
 
 Array.prototype.max = function ()

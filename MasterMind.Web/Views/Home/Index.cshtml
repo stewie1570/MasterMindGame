@@ -70,10 +70,11 @@
             <!-- /ko -->
 
             <div class="guess-time-percent-container">
-                <div class="guess-time-percent" data-bind="attr:{style: 'width: ' + $data.timeLapsePercent + '%'}"></div>
+                <div class="guess-time-percent" data-bind="style:{width: $data.timeLapsePercent + '%'}"></div>
             </div>
 
-            <div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec'" class="guess-time">
+            @*<div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec', attr:{style: 'color: ' + $data.color}" class="guess-time">*@
+            <div data-bind="text: $data['timeLapse'] == undefined ? '' : $data.timeLapse.totalSeconds.toFixed(0) + ' sec', style:{color: $data.color}" class="guess-time">
             </div>
 
             <div class="clear"></div>

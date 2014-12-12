@@ -32,7 +32,7 @@
             isCommunicating = true;
         });
 
-        it("should add a relative time lapse percentage to each result", function ()
+        it("should add a relative time lapse percentage and color code to each result", function ()
         {
             //Arrange
             var data = null;
@@ -55,6 +55,37 @@
             for (var i = 0; i < expectedPercentages.length; i++)
             {
                 expect(data.results[i].timeLapsePercent).toEqual(expectedPercentages[i]);
+            }
+        });
+
+        it("should add color to each result based on time lapse percentage", function () {
+            //Arrange
+            var data = null;
+            vm.serverVm = function (arg) { data = arg; };
+
+            //Act
+            vm.binders.bindServerResults({
+                results: [
+                    { timeLapse: { totalMilliseconds: 40 } },
+                    { timeLapse: { totalMilliseconds: 20 } },
+                    { timeLapse: { totalMilliseconds: 60 } },
+                    { timeLapse: { totalMilliseconds: 100 } },
+                    { timeLapse: { totalMilliseconds: 80 } }
+                ],
+                maxAttempts: 6
+            });
+
+            //Assert
+            var expectedColors = [
+                "#669900",  //40%
+                "#33cc00",  //20%
+                "#996600",  //60%
+                "#ff0000",  //100%
+                "#cc3300",  //80%
+            ];
+            for (var i = 0; i < expectedColors.length; i++)
+            {
+                expect(data.results[i].color).toEqual(expectedColors[i]);
             }
         });
 
