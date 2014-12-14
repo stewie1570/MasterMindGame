@@ -146,7 +146,7 @@ String.prototype.replaceAll = function (find, replacement)
 String.prototype.padLeft = function (length, value) {
     var ret = this;
     while (ret.length < length)
-        ret += value;
+        ret = value + ret;
     return ret;
 }
 

@@ -70,7 +70,8 @@
                     { timeLapse: { totalMilliseconds: 20 } },
                     { timeLapse: { totalMilliseconds: 60 } },
                     { timeLapse: { totalMilliseconds: 100 } },
-                    { timeLapse: { totalMilliseconds: 80 } }
+                    { timeLapse: { totalMilliseconds: 80 } },
+                    { timeLapse: { totalMilliseconds: 95.6544248231166 } }
                 ],
                 maxAttempts: 6
             });
@@ -82,6 +83,7 @@
                 "#996600",  //60%
                 "#ff0000",  //100%
                 "#cc3300",  //80%
+                "#f30c00"   //95.6544248231166%
             ];
             for (var i = 0; i < expectedColors.length; i++)
             {
