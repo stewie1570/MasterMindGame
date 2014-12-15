@@ -1,7 +1,7 @@
 MasterMindGame
 ==============
 
-[![Build](http://thinkquickbuild.cloudapp.net:8080/app/rest/builds/buildType:ThinkQuick_Build/statusIcon)]
+Build Status: [![Build](http://thinkquickbuild.cloudapp.net:8080/app/rest/builds/buildType:ThinkQuick_Build/statusIcon)]
 (http://thinkquickbuild.cloudapp.net:8080/project.html?projectId=ThinkQuick&tab=projectOverview)
 
 A simple MasterMind web & console game implementation. See the full app at http://www.think-quick.net
