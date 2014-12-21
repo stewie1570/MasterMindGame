@@ -12,21 +12,21 @@ namespace MasterMind.Core.ResultLogic.Tests
         [TestMethod]
         public void EmptyContextDefaultsToPerColorLogic()
         {
-            new GuessResultLogicProvider(() => new GameContext())
+            new GuessResultLogicProvider(() => new Context())
                 .Create().Should().BeOfType<PerColorResultLogic>();
         }
 
         [TestMethod]
         public void ShouldBePerColorLogic()
         {
-            new GuessResultLogicProvider(() => new GameContext { ResultLogicType = GuessResultLogicType.PerColor })
+            new GuessResultLogicProvider(() => new Context { ResultLogicType = GuessResultLogicType.PerColor })
                 .Create().Should().BeOfType<PerColorResultLogic>();
         }
 
         [TestMethod]
         public void ShouldBePerPegLogic()
         {
-            new GuessResultLogicProvider(() => new GameContext { ResultLogicType = GuessResultLogicType.PerPeg })
+            new GuessResultLogicProvider(() => new Context { ResultLogicType = GuessResultLogicType.PerPeg })
                 .Create().Should().BeOfType<PerPegGuessResultLogic>();
         }
     }

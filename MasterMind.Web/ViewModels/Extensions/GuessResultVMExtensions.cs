@@ -8,7 +8,7 @@ namespace MasterMind.Web.ViewModels.Extensions
 {
     public static class GuessResultVMExtensions
     {
-        public static GuessResultVM AsGuessResultVM(this FullGuessResultRow[] results, IGameProcess gameProcess, GameContext gameContext)
+        public static GuessResultVM AsGuessResultVM(this FullGuessResultRow[] results, IGameProcess gameProcess, Context gameContext)
         {
             int distinctColorCount = gameProcess.Actual.Distinct().Count();
             var totalTimeLaps = TotalTimeSpanFrom(gameContext);
@@ -56,7 +56,7 @@ namespace MasterMind.Web.ViewModels.Extensions
                 );
         }
 
-        private static TimeSpan TotalTimeSpanFrom(GameContext gameContext)
+        private static TimeSpan TotalTimeSpanFrom(Context gameContext)
         {
             return (gameContext.Results == null)
                 ? TimeSpan.FromTicks(0)

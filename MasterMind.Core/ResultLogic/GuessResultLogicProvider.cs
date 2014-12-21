@@ -5,9 +5,9 @@ namespace MasterMind.Core.ResultLogic
 {
     public class GuessResultLogicProvider : IGuessResultLogicProvider
     {
-        private Func<GameContext> _contextProvider;
+        private Func<Context> _contextProvider;
 
-        public GuessResultLogicProvider(Func<GameContext> contextProvider)
+        public GuessResultLogicProvider(Func<Context> contextProvider)
         {
             _contextProvider = contextProvider;
         }

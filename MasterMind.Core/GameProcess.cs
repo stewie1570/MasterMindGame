@@ -10,19 +10,19 @@ namespace MasterMind.Core
     public class GameProcess : IGameProcess
     {
         private IGuessResultLogic _resultLogic;
-        private GameContext _context;
+        private Context _context;
         private Func<int, GuessColor[]> _actualProvider;
         private Func<DateTime> _timeProvider;
 
-        public GameProcess(Func<GameContext> contextProvider, Func<int, GuessColor[]> actualProvider)
+        public GameProcess(Func<Context> contextProvider, Func<int, GuessColor[]> actualProvider)
             : this(contextProvider, actualProvider, () => DateTime.UtcNow) { }
 
-        public GameProcess(Func<GameContext> contextProvider,
+        public GameProcess(Func<Context> contextProvider,
            Func<int, GuessColor[]> actualProvider,
            Func<DateTime> timeProvider)
             : this(contextProvider, actualProvider, timeProvider, new GuessResultLogicProvider(contextProvider)) { }
 
-        public GameProcess(Func<GameContext> contextProvider,
+        public GameProcess(Func<Context> contextProvider,
             Func<int, GuessColor[]> actualProvider,
             Func<DateTime> timeProvider,
             IGuessResultLogicProvider resultLogicProvider)

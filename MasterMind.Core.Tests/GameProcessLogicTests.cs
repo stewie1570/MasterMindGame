@@ -12,14 +12,14 @@ namespace MasterMind.Core.Tests
     public class GameProcessLogicTests
     {
         private GameProcess _game;
-        private GameContext _context;
+        private Context _context;
         private Func<int, GuessColor[]> _actualProvider;
         private Func<DateTime> _timeProvider = () => DateTime.Now;
 
         [TestInitialize]
         public void Setup()
         {
-            _context = new GameContext
+            _context = new Context
             {
                 GuessWidth = 4,
                 MaxAttempts = 10,
@@ -34,7 +34,7 @@ namespace MasterMind.Core.Tests
         public void ConstructorShouldNotResetContext()
         {
             //Arrange
-            var context = new GameContext
+            var context = new Context
             {
                 Actual = "rrrr".ToGuessArray(),
                 Results = Builder<FullGuessResultRow>.CreateListOfSize(2).Build().ToList(),
@@ -80,9 +80,9 @@ namespace MasterMind.Core.Tests
         {
             //Arrange
             //Act
-            Func<int, GameContext> newGameContextSetupWithWidthOf = guessWidth =>
+            Func<int, Context> newGameContextSetupWithWidthOf = guessWidth =>
             {
-                var context = new GameContext { GuessWidth = guessWidth };
+                var context = new Context { GuessWidth = guessWidth };
                 new GameProcess(() => context, _actualProvider).Setup(guessWidth);                
                 return context;
             };
@@ -98,7 +98,7 @@ namespace MasterMind.Core.Tests
         public void ConstructorShouldInitializeContext()
         {
             //Arrange
-            var context = new GameContext
+            var context = new Context
             {
                 GuessWidth = 4,
                 MaxAttempts = 10,
@@ -120,7 +120,7 @@ namespace MasterMind.Core.Tests
         {
             //Arrange
             //Act
-            var game = new GameProcess(() => new GameContext
+            var game = new GameProcess(() => new Context
             {
                 GuessWidth = 5,
                 MaxAttempts = 10,
