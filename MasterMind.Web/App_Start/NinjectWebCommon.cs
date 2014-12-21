@@ -57,8 +57,8 @@ namespace MasterMind.Web.App_Start
         {
             kernel.Bind<IGameProcess>().To<GameProcess>();
 
-            kernel.Bind<Func<Context>>()
-                .ToMethod(c => () => SessionSingleton("CurrentGameContext", () => new Context()));
+            kernel.Bind<Func<GameContext>>()
+                .ToMethod(c => () => SessionSingleton("CurrentGameContext", () => new GameContext()));
 
             kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => RandomActual.Create(width));
         }

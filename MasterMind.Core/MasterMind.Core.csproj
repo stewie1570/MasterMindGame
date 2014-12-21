@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextProvider.cs" />
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Extensions\GuessResultLogicTypeExtensions.cs" />
     <Compile Include="RandomActual.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />
@@ -50,7 +52,7 @@
     <Compile Include="ResultLogic\PerPegGuessResultLogic.cs" />
     <Compile Include="IGameProcess.cs" />
     <Compile Include="ResultLogic\IGuessResultLogic.cs" />
-    <Compile Include="Models\Context.cs" />
+    <Compile Include="Models\GameContext.cs" />
     <Compile Include="Models\Extensions\GuessExtensions.cs" />
     <Compile Include="Models\FullGuessResultRow.cs" />
     <Compile Include="Models\GuessColor.cs" />

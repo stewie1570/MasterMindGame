@@ -12,7 +12,7 @@ namespace MasterMind.ConsoleApp
         {
             try
             {
-                GameProcess game = new GameProcess(() => new Context
+                GameProcess game = new GameProcess(() => new GameContext
                     {
                         GuessWidth = int.Parse(Input("Guess Width")),
                         MaxAttempts = int.Parse(Input("Max Attempts"))

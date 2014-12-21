@@ -2,7 +2,7 @@
 
 namespace MasterMind.Core.Models
 {
-    public class Context
+    public class GameContext
     {
         public int MaxAttempts { get; set; }
         public int GuessWidth { get; set; }

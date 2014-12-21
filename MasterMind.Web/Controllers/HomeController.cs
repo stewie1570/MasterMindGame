@@ -14,11 +14,11 @@ namespace MasterMind.Web.Controllers
     public class HomeController : AutoResultControllerBase
     {
         private IGameProcess _gameProcess;
-        private Func<Context> _contextProvider;
+        private Func<GameContext> _contextProvider;
         private IntegerRange _acceptableGuessWidthRange = new IntegerRange { Min = 2, Max = 10 };
         private IntegerRange _acceptableMaxAttemptsRange = new IntegerRange { Min = 2, Max = 25 };
 
-        public HomeController(IGameProcess gameProcess, Func<Context> contextProvider)
+        public HomeController(IGameProcess gameProcess, Func<GameContext> contextProvider)
         {
             _gameProcess = gameProcess;
             _contextProvider = contextProvider;

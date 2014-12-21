@@ -1,17 +1,17 @@
-﻿using MasterMind.Core;
+﻿using FizzWare.NBuilder;
+using FluentAssertions;
+using MasterMind.Core;
 using MasterMind.Core.Models;
 using MasterMind.Core.Models.Extensions;
 using MasterMind.Web.Controllers;
-using MasterMind.Web.ViewModels;
 using MasterMind.Web.Exceptions;
+using MasterMind.Web.ViewModels;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
-using NSubstitute;
-using FizzWare.NBuilder;
 
 namespace MasterMind.Web.Tests.Controllers
 {
@@ -20,12 +20,12 @@ namespace MasterMind.Web.Tests.Controllers
     {
         private HomeController _controller;
         private IGameProcess _gameProcess;
-        private Context _gameContext;
+        private GameContext _gameContext;
 
         [TestInitialize]
         public void Setup()
         {
-            _gameContext = new Context();
+            _gameContext = new GameContext();
             _gameProcess = Substitute.For<IGameProcess>();
             _controller = new HomeController(_gameProcess, () => _gameContext);
         }
