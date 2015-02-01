@@ -81,11 +81,6 @@ namespace MasterMind.Core.Tests.AcutalProviders
         [TestMethod]
         public void PegCountAndRepeatLimitMustBePositive()
         {
-            //Arrange
-            int possiblesCount = Enum.GetValues(typeof(GuessColor)).Cast<GuessColor>().Count();
-
-            //Act
-            //Assert
             ((Action)(() => provider.Create(pegCount: -1, repeatLimit: 1)))
                 .ShouldThrow<InvalidOperationException>()
                 .WithMessage("Peg count and repeat limit must be positive.");
