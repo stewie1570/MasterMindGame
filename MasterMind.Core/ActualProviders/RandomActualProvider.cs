@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 
-namespace MasterMind.Core
+namespace MasterMind.Core.ActualProviders
 {
-    public static class RandomActual
+    public static class RandomActualProvider
     {
         public static GuessColor[] Create(int count)
         {

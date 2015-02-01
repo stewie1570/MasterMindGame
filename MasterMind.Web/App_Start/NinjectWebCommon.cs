@@ -3,15 +3,14 @@
 
 namespace MasterMind.Web.App_Start
 {
-    using System;
-    using System.Web;
-
+    using MasterMind.Core;
+    using MasterMind.Core.ActualProviders;
+    using MasterMind.Core.Models;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
     using Ninject;
     using Ninject.Web.Common;
-    using MasterMind.Core;
-    using MasterMind.Core.Models;
+    using System;
+    using System.Web;
 
     public static class NinjectWebCommon 
     {
@@ -60,7 +59,7 @@ namespace MasterMind.Web.App_Start
             kernel.Bind<Func<Context>>()
                 .ToMethod(c => () => SessionSingleton("CurrentGameContext", () => new Context()));
 
-            kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => RandomActual.Create(width));
+            kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => RandomActualProvider.Create(width));
         }
 
 

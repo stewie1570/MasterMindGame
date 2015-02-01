@@ -1,4 +1,5 @@
 ﻿using MasterMind.Core;
+using MasterMind.Core.ActualProviders;
 using MasterMind.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace MasterMind.ConsoleApp
                         GuessWidth = int.Parse(Input("Guess Width")),
                         MaxAttempts = int.Parse(Input("Max Attempts"))
                     },
-                    actualProvider: width => RandomActual.Create(width));
+                    actualProvider: width => RandomActualProvider.Create(width));
 
                 while (!game.IsOver)
                 {

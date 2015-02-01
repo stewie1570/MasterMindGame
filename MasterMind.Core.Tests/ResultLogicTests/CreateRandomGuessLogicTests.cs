@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using FluentAssertions;
+using MasterMind.Core.ActualProviders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
+using System.Linq;
 
-namespace MasterMind.Core.ResultLogic.Tests
+namespace MasterMind.Core.ResultLogic.ActualProviders.Tests
 {
     [TestClass]
     public class CreateRandomGuessLogicTests
@@ -14,7 +14,7 @@ namespace MasterMind.Core.ResultLogic.Tests
             //Arrange
             //Act
             //Assert
-            RandomActual.Create(4).Length.Should().Be(4);
+            RandomActualProvider.Create(4).Length.Should().Be(4);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace MasterMind.Core.ResultLogic.Tests
         {
             //Arrange
             //Act
-            var guess = RandomActual.Create(4);
+            var guess = RandomActualProvider.Create(4);
             
             //Assert
             var first = guess.First();
