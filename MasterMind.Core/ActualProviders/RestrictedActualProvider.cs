@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace MasterMind.Core.ActualProviders
 {
-    public class RestrictedRandomActualProvider : IActualProvider
+    public class RestrictedActualProvider : IActualProvider
     {
         private INumberGenerator numberGenerator;
 
-        public RestrictedRandomActualProvider(INumberGenerator numberGenerator)
+        public RestrictedActualProvider(INumberGenerator numberGenerator)
         {
             this.numberGenerator = numberGenerator;
         }

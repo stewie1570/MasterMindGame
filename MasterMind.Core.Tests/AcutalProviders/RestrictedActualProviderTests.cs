@@ -11,7 +11,7 @@ using System.Linq;
 namespace MasterMind.Core.Tests.AcutalProviders
 {
     [TestClass]
-    public class RestrictedRandomActualProviderTests
+    public class RestrictedActualProviderTests
     {
         private IActualProvider provider;
         private INumberGenerator numberGenerator;
@@ -20,7 +20,7 @@ namespace MasterMind.Core.Tests.AcutalProviders
         public void Setup()
         {
             numberGenerator = Substitute.For<INumberGenerator>();
-            provider = new RestrictedRandomActualProvider(numberGenerator);
+            provider = new RestrictedActualProvider(numberGenerator);
         }
 
         [TestMethod]

@@ -61,7 +61,7 @@ namespace MasterMind.Web.App_Start
 
             kernel.Bind<INumberGenerator>().To<RandomNumberGenerator>().InSingletonScope();
 
-            kernel.Bind<IActualProvider>().To<RestrictedRandomActualProvider>().InSingletonScope();
+            kernel.Bind<IActualProvider>().To<RestrictedActualProvider>().InSingletonScope();
             
             kernel
                 .Bind<Func<int, GuessColor[]>>()

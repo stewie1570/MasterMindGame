@@ -42,7 +42,7 @@
     <Compile Include="ActualProviders\IActualProvider.cs" />
     <Compile Include="ActualProviders\INumberGenerator.cs" />
     <Compile Include="ActualProviders\RandomNumberGenerator.cs" />
-    <Compile Include="ActualProviders\RestrictedRandomActualProvider.cs" />
+    <Compile Include="ActualProviders\RestrictedActualProvider.cs" />
     <Compile Include="Models\Extensions\GuessResultLogicTypeExtensions.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />
     <Compile Include="GameProcess.cs" />

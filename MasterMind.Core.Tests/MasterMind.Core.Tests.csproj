@@ -61,7 +61,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AcutalProviders\RestrictedRandomActualProviderTests.cs" />
+    <Compile Include="AcutalProviders\RestrictedActualProviderTests.cs" />
     <Compile Include="Extensions\GuessResultExtensions.cs" />
     <Compile Include="ResultLogic\PerPegGuessResultLogicTests.cs" />
     <Compile Include="Models\Extensions\GuessExtensionTests.cs" />
