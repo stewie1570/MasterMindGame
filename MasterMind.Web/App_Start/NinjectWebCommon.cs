@@ -59,7 +59,13 @@ namespace MasterMind.Web.App_Start
             kernel.Bind<Func<Context>>()
                 .ToMethod(c => () => SessionSingleton("CurrentGameContext", () => new Context()));
 
-            kernel.Bind<Func<int, GuessColor[]>>().ToMethod(c => width => RandomActualProvider.Create(width));
+            kernel.Bind<INumberGenerator>().To<RandomNumberGenerator>().InSingletonScope();
+
+            kernel.Bind<IActualProvider>().To<RestrictedRandomActualProvider>().InSingletonScope();
+            
+            kernel
+                .Bind<Func<int, GuessColor[]>>()
+                .ToMethod(c => width => kernel.Get<IActualProvider>().Create(pegCount: width, repeatLimit: 3));
         }
 
 

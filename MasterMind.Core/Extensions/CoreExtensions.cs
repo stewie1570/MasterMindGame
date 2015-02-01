@@ -9,5 +9,10 @@ namespace MasterMind.Core.Extensions
         {
             return Enumerable.Range(0, num).Select(i => result);
         }
+
+        public static string FormatWith(this string str, params object[] strings)
+        {
+            return string.Format(str, strings);
+        }
     }
 }

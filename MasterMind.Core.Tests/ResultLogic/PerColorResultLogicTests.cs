@@ -1,11 +1,7 @@
-﻿using MasterMind.Core.Models;
+﻿using FluentAssertions;
 using MasterMind.Core.Models.Extensions;
-using MasterMind.Core.ResultLogic;
-using System;
-using System.Linq;
+using MasterMind.Core.Tests.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
-using System.Collections.Generic;
 
 namespace MasterMind.Core.ResultLogic.Tests
 {
@@ -73,25 +69,6 @@ namespace MasterMind.Core.ResultLogic.Tests
 
             //Assert
             results.AsResultString().Should().Be("reee");
-        }
-    }
-
-    public static class GuessResultExtensions
-    {
-        public static string AsResultString(this IEnumerable<GuessResult> results)
-        {
-            return new String(results.Select(r => ResultToChar(r)).ToArray());
-        }
-
-        private static char ResultToChar(GuessResult result)
-        {
-            switch (result)
-            {
-                case GuessResult.Red: return 'r';
-                case GuessResult.White: return 'w';
-                case GuessResult.Empty: return 'e';
-                default: return ' ';
-            }
         }
     }
 }
