@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MasterMind.Core.ActualProviders
+namespace MasterMind.Core.NumberGenerators
 {
     public class RandomNumberGenerator : INumberGenerator
     {

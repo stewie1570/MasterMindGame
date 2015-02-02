@@ -3,6 +3,7 @@ using MasterMind.Core.ActualProviders;
 using MasterMind.Core.Extensions;
 using MasterMind.Core.Models;
 using MasterMind.Core.Models.Extensions;
+using MasterMind.Core.NumberGenerators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;

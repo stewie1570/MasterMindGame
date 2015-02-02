@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActualProviders\IActualProvider.cs" />
-    <Compile Include="ActualProviders\INumberGenerator.cs" />
-    <Compile Include="ActualProviders\RandomNumberGenerator.cs" />
+    <Compile Include="NumberGenerators\INumberGenerator.cs" />
+    <Compile Include="NumberGenerators\RandomNumberGenerator.cs" />
     <Compile Include="ActualProviders\RestrictedActualProvider.cs" />
     <Compile Include="Models\Extensions\GuessResultLogicTypeExtensions.cs" />
     <Compile Include="Extensions\CoreExtensions.cs" />

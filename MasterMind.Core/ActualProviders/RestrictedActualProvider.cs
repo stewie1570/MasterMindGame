@@ -1,5 +1,6 @@
 ﻿using MasterMind.Core.Extensions;
 using MasterMind.Core.Models;
+using MasterMind.Core.NumberGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;

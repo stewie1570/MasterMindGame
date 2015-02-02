@@ -1,5 +1,5 @@
 ﻿
-namespace MasterMind.Core.ActualProviders
+namespace MasterMind.Core.NumberGenerators
 {
     public interface INumberGenerator
     {

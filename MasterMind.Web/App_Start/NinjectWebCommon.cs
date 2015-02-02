@@ -6,6 +6,7 @@ namespace MasterMind.Web.App_Start
     using MasterMind.Core;
     using MasterMind.Core.ActualProviders;
     using MasterMind.Core.Models;
+    using MasterMind.Core.NumberGenerators;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
