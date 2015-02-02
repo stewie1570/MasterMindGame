@@ -30,7 +30,7 @@ namespace MasterMind.Core.Tests.AcutalProviders
             int possiblesCount = Enum.GetValues(typeof(GuessColor)).Cast<GuessColor>().Count();
             int currentNumber = 1;
             numberGenerator
-                .GetNumber(minValue: 1, maxValue: possiblesCount - 1)
+                .GetNumber(minValue: 1, maxValue: possiblesCount)
                 .Returns(ci => currentNumber++);
 
             //Act
