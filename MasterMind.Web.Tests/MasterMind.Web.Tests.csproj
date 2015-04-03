@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\JsonHandleErrorAttributeTests.cs" />
+    <Compile Include="Controllers\GameControllerTests.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Controllers\AutoResultBaseControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

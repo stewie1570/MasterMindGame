@@ -1,11 +1,11 @@
-﻿using System.Web;
-using System.Net;
-using System.Web.Routing;
-using System.Web.Mvc;
+﻿using FluentAssertions;
+using MasterMind.Web.Controllers.MVC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MasterMind.Web.Controllers;
-using FluentAssertions;
 using NSubstitute;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace MasterMind.Web.Tests.Controllers
 {

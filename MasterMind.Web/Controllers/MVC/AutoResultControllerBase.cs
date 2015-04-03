@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace MasterMind.Web.Controllers
+namespace MasterMind.Web.Controllers.MVC
 {
     public abstract class AutoResultControllerBase : Controller
     {

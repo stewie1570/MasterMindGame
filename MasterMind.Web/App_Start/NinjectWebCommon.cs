@@ -7,6 +7,8 @@ namespace MasterMind.Web.App_Start
     using MasterMind.Core.ActualProviders;
     using MasterMind.Core.Models;
     using MasterMind.Core.NumberGenerators;
+    using MasterMind.Web.Controllers;
+    using MasterMind.Web.Interfaces;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Web.Common;
@@ -67,6 +69,8 @@ namespace MasterMind.Web.App_Start
             kernel
                 .Bind<Func<int, GuessColor[]>>()
                 .ToMethod(c => width => kernel.Get<IActualProvider>().Create(pegCount: width, repeatLimit: 3));
+
+            kernel.Bind<IGameController>().To<GameController>();
         }
 
 
