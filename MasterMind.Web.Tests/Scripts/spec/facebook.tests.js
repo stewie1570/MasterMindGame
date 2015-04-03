@@ -17,10 +17,10 @@
 
             //Act
             //Assert
-            pubsub.askFor("thinkquick:userfullname").then(function (name) {
-                expect(name).toEqual("stewie");
-                done();
-            });
+            pubsub
+                .askFor("thinkquick:userfullname")
+                .then(function (name) { expect(name).toEqual("stewie"); })
+                .then(done);
         });
     });
 });

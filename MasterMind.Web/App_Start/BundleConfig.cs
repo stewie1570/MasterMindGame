@@ -15,6 +15,7 @@ namespace MasterMind.Web
                         "~/Scripts/knockout-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/mastermind").Include(
+                "~/Scripts/q.js",
                 "~/Scripts/pubsub.js",
                 "~/Scripts/facebook-ref.js",
                 "~/Scripts/facebook.js",

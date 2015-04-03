@@ -4,15 +4,13 @@
 
     pubsub.answerFor("thinkquick:userfullname", function ()
     {
-        return {
-            then: function (callback)
-            {
-                FB.api("/me", function (response)
-                {
-                    callback(response.name);
-                });
-            }
-        };
+        var deferred = Q.defer();
+        FB.api("/me", function (response)
+        {
+            deferred.resolve(response.name);
+        });
+        
+        return deferred.promise;
     });
 
     pubsub.subscribe("thinkquick:sharescore", function (data)

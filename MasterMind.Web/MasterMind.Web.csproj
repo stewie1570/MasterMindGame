@@ -233,6 +233,8 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\MasterMind.js" />
     <Content Include="Scripts\pubsub.js" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -120,6 +120,8 @@
     <Content Include="Scripts\lib\jasmine-2.0.0\jasmine.js" />
     <Content Include="Scripts\lib\jasmine-2.0.0\jasmine_favicon.png" />
     <Content Include="Scripts\phantomjs.exe" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\run-jasmine.js" />
     <Content Include="Scripts\SpecRunner.html" />
     <Content Include="Scripts\spec\facebook.tests.js" />
