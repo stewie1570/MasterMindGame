@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MasterMind.Web.Tests.Controllers
+namespace MasterMind.Web.Tests.Controllers.MVC
 {
     public class TestController : AutoResultControllerBase
     {

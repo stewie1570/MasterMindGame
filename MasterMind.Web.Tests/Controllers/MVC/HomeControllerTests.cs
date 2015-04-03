@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Web.Mvc;
 
-namespace MasterMind.Web.Tests.Controllers
+namespace MasterMind.Web.Tests.Controllers.MVC
 {
     [TestClass]
     public class HomeControllerTests
