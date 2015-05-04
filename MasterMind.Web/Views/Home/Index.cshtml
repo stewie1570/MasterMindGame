@@ -33,8 +33,8 @@
                         <th>Results By Peg</th>
                     </tr>
                     <tr>
-                        <td><img src='@Url.Content("~/Content/images/miniscreenshot_percolor.png")' alt="MasterMind Game via per color" /></td>
-                        <td><img src='@Url.Content("~/Content/images/miniscreenshot.png")' alt="MasterMind Game via per peg" /></td>
+                        <td class="game-method" data-bind="click: function(){resultLogic('perpeg');}, css: {'selected-game-method': resultLogic() == 'perpeg'}"><img src='@Url.Content("~/Content/images/miniscreenshot_percolor.png")' alt="MasterMind Game via per color" /></td>
+                        <td class="game-method" data-bind="click: function(){resultLogic('percolor');}, css: {'selected-game-method': resultLogic() == 'percolor'}"><img src='@Url.Content("~/Content/images/miniscreenshot.png")' alt="MasterMind Game via per peg" /></td>
                     </tr>
                 </table>
             </center>

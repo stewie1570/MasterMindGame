@@ -1,4 +1,15 @@
-﻿.game-description{
+﻿.game-method{
+    padding: 6px;
+    cursor: pointer;
+}
+
+.selected-game-method{
+    padding: 3px;
+    border: 3px solid white;
+    border-radius: 6px;
+}
+
+.game-description{
     min-width: 200px;
     white-space: normal;
     text-align: left;
