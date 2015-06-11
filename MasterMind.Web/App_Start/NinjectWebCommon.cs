@@ -1,5 +1,5 @@
-[assembly: WebActivator.PreApplicationStartMethod(typeof(MasterMind.Web.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(MasterMind.Web.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(MasterMind.Web.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(MasterMind.Web.App_Start.NinjectWebCommon), "Stop")]
 
 namespace MasterMind.Web.App_Start
 {
@@ -44,11 +44,19 @@ namespace MasterMind.Web.App_Start
         private static IKernel CreateKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-            
-            RegisterServices(kernel);
-            return kernel;
+            try
+            {
+                kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+
+                RegisterServices(kernel);
+                return kernel;
+            }
+            catch
+            {
+                kernel.Dispose();
+                throw;
+            }
         }
 
         /// <summary>
@@ -65,7 +73,7 @@ namespace MasterMind.Web.App_Start
             kernel.Bind<INumberGenerator>().To<RandomNumberGenerator>().InSingletonScope();
 
             kernel.Bind<IActualProvider>().To<RestrictedActualProvider>().InSingletonScope();
-            
+
             kernel
                 .Bind<Func<int, GuessColor[]>>()
                 .ToMethod(c => width => kernel.Get<IActualProvider>().Create(pegCount: width, repeatLimit: 3));
