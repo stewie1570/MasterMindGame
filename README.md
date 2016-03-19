@@ -1,7 +1,7 @@
 MasterMindGame
 ==============
 
-[![Build](http://thinkquickbuild.cloudapp.net:8080/app/rest/builds/buildType:ThinkQuick_Build/statusIcon)]
+[![Build](http://thinkquickbuild.cloudapp.net:8080/app/rest/builds/buildType:ThinkQuick_Build/statusIcon.svg)]
 (http://thinkquickbuild.cloudapp.net:8080/project.html?projectId=ThinkQuick&tab=projectOverview)
 
 A simple web implementation of the MasterMind game described here: https://en.wikipedia.org/wiki/Mastermind_(board_game).
